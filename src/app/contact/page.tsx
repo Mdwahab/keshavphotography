@@ -103,7 +103,7 @@ export default function Contact() {
                 <span className="font-space text-xs tracking-widest uppercase text-white relative z-10">WhatsApp</span>
               </a>
               
-              <a href="https://instagram.com/keshavphotography" target="_blank" rel="noreferrer" className="glass-panel p-6 flex flex-col items-center justify-center gap-4 group magnetic-item relative overflow-hidden">
+              <a href="https://www.instagram.com/keshav_fotographie?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noreferrer" className="glass-panel p-6 flex flex-col items-center justify-center gap-4 group magnetic-item relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#f09433]/5 via-[#e6683c]/5 to-[#bc1888]/5 transform translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500" />
                 <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:border-[#E1306C] transition-colors">
                   <Camera size={24} className="text-gray-400 group-hover:text-[#E1306C] transition-colors" />

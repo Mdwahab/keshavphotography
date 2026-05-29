@@ -53,7 +53,7 @@ export default function Footer() {
           <div>
             <h3 className="font-cinzel text-xl text-white mb-6">Connect</h3>
             <div className="flex gap-4">
-              <a href="https://instagram.com/keshavphotography" target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all magnetic-item group">
+              <a href="https://www.instagram.com/keshav_fotographie?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all magnetic-item group">
                 <Camera size={20} className="group-hover:scale-110 transition-transform" />
               </a>
               <a href="https://facebook.com" target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all magnetic-item group">
