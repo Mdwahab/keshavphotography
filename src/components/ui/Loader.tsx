@@ -1,95 +1,142 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import gsap from "gsap";
+import CameraLens3D from "../3d/CameraLens3D";
+import { useCinematicAudio } from "@/hooks/useCinematicAudio";
 
 export default function Loader({ onComplete }: { onComplete: () => void }) {
+  const [hasStarted, setHasStarted] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
+  const [flashActive, setFlashActive] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const audio = useCinematicAudio();
+
+  const handleStart = () => {
+    audio.initAudio();
+    setHasStarted(true);
+    audio.playAmbientHum();
+  };
 
   useEffect(() => {
+    if (!hasStarted) return;
+    
     // Prevent scrolling while loading
     document.body.style.overflow = "hidden";
     
     let current = 0;
     const interval = setInterval(() => {
-      current += Math.floor(Math.random() * 10) + 1;
+      // Non-linear progress simulation
+      current += Math.random() > 0.5 ? Math.floor(Math.random() * 5) : 0;
+      
+      if (current === 20 || current === 21) audio.playMotorFocus();
+      if (current === 50 || current === 51) audio.playClick();
+      if (current === 80 || current === 81) audio.playFocusLock();
+
       if (current >= 100) {
         current = 100;
+        setProgress(100);
         clearInterval(interval);
+        
+        // Completion Animation Sequence
+        audio.playShutter();
+        
         setTimeout(() => {
-          setIsVisible(false);
-          document.body.style.overflow = "auto";
-          setTimeout(onComplete, 1000);
-        }, 800);
+          setFlashActive(true);
+          audio.playFlashBoom();
+          audio.playZoomWhoosh();
+          
+          // GSAP Aggressive Zoom
+          if (containerRef.current) {
+             gsap.to(containerRef.current, {
+               scale: 10,
+               opacity: 0,
+               duration: 1.5,
+               ease: "power4.in",
+               onComplete: () => {
+                 setIsVisible(false);
+                 document.body.style.overflow = "auto";
+                 setTimeout(onComplete, 500);
+               }
+             });
+          }
+        }, 300); // Slight delay after shutter click for the flash
+      } else {
+        setProgress(current);
       }
-      setProgress(current);
-    }, 150);
+    }, 80);
 
     return () => clearInterval(interval);
-  }, [onComplete]);
+  }, [hasStarted, onComplete, audio]);
 
   return (
     <AnimatePresence>
       {isVisible && (
         <motion.div
+          ref={containerRef}
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
-          transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
+          exit={{ opacity: 0 }}
           className="fixed inset-0 z-[100] bg-[#050505] flex flex-col items-center justify-center overflow-hidden"
         >
-          {/* Ambient Particles */}
-          <div className="absolute inset-0 opacity-30 pointer-events-none">
-             <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-[#D4AF37] rounded-full blur-[100px] animate-pulse-slow" />
-             <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#3B0A0A] rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '1s' }} />
-          </div>
+          {/* Flash Bloom Overlay */}
+          <div 
+             className={`absolute inset-0 z-50 bg-white pointer-events-none transition-opacity duration-300 ease-out ${flashActive ? 'opacity-100' : 'opacity-0'}`}
+             style={{ mixBlendMode: 'screen' }}
+          />
 
-          <motion.div 
-            className="relative z-10 flex flex-col items-center"
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1 }}
-          >
-            {/* Morphing Camera Aperture / Logo concept */}
-            <div className="w-32 h-32 relative mb-12 flex items-center justify-center">
-              {[...Array(6)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute w-1 h-32 bg-gradient-to-b from-[#D4AF37] to-transparent origin-center"
-                  style={{ rotate: i * 60 }}
-                  animate={{ 
-                    rotate: [i * 60, i * 60 + 180],
-                    scale: [1, 1.2, 1],
-                  }}
-                  transition={{ 
-                    duration: 3, 
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-              ))}
-              <div className="absolute w-24 h-24 rounded-full border border-[#D4AF37]/50 border-t-[#D4AF37] animate-spin" style={{ animationDuration: '3s' }} />
-              <div className="absolute font-cinzel text-3xl text-[#D4AF37]">KP</div>
-            </div>
+          {!hasStarted ? (
+            <motion.div 
+               className="relative z-20 flex flex-col items-center justify-center cursor-pointer group"
+               onClick={handleStart}
+               initial={{ opacity: 0, y: 20 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ duration: 1 }}
+            >
+               <div className="w-16 h-16 rounded-full border border-[#D4AF37] flex items-center justify-center mb-6 relative overflow-hidden group-hover:bg-[#D4AF37]/10 transition-colors">
+                  <span className="absolute inset-0 rounded-full animate-ping bg-[#D4AF37]/30" />
+                  <div className="w-2 h-2 rounded-full bg-[#D4AF37]" />
+               </div>
+               <span className="font-space tracking-[0.4em] uppercase text-[#D4AF37] text-sm group-hover:scale-105 transition-transform">
+                 Tap to Enter
+               </span>
+            </motion.div>
+          ) : (
+            <>
+              {/* 3D Lens Background Component */}
+              <CameraLens3D progress={progress} />
 
-            <div className="font-space text-sm tracking-[0.5em] text-gray-400 mb-4 uppercase">
-              Initializing Universe
-            </div>
-
-            <div className="font-playfair text-6xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-300 to-white">
-              {progress}%
-            </div>
-            
-            {/* Progress line */}
-            <div className="w-64 h-[1px] bg-white/10 mt-8 relative overflow-hidden">
               <motion.div 
-                className="absolute top-0 left-0 h-full bg-[#D4AF37] shadow-[0_0_10px_#D4AF37]"
-                initial={{ width: 0 }}
-                animate={{ width: `${progress}%` }}
-                transition={{ ease: "easeOut" }}
-              />
-            </div>
-          </motion.div>
+                className="relative z-10 flex flex-col items-center mt-[40vh]"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 2 }}
+              >
+                <div className="font-space text-xs tracking-[0.5em] text-[#D4AF37] mb-2 uppercase">
+                  Initializing Memories
+                </div>
+                <div className="font-poppins text-[10px] tracking-widest text-gray-500 uppercase mb-8">
+                  Preparing Cinematic Experience
+                </div>
+
+                <div className="font-playfair text-5xl md:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-300 to-white">
+                  {progress}%
+                </div>
+                
+                {/* Gold Loading Bar */}
+                <div className="w-48 h-[2px] bg-white/10 mt-8 relative overflow-hidden rounded-full">
+                  <motion.div 
+                    className="absolute top-0 left-0 h-full bg-[#D4AF37] shadow-[0_0_10px_#D4AF37]"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${progress}%` }}
+                    transition={{ ease: "easeOut" }}
+                  />
+                </div>
+              </motion.div>
+            </>
+          )}
         </motion.div>
       )}
     </AnimatePresence>
