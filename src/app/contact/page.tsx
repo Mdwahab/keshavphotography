@@ -139,7 +139,7 @@ export default function Contact() {
           </div>
           
           <a 
-            href="https://maps.google.com" 
+            href="https://maps.app.goo.gl/1VKSb1bJSWsuVmrx6"
             target="_blank" 
             rel="noreferrer"
             className="absolute bottom-8 left-1/2 -translate-x-1/2 px-6 py-2 glass-panel border border-[#D4AF37]/50 text-[#D4AF37] font-space text-xs tracking-widest uppercase hover:bg-[#D4AF37] hover:text-black transition-all flex items-center gap-2 magnetic-item"
