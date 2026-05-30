@@ -40,11 +40,11 @@ export default function Navbar() {
       >
         <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
           {/* Logo */}
-          <Link href="/" className="relative z-50 group magnetic-item">
-            <span className="font-cinzel text-2xl md:text-3xl font-bold tracking-widest text-gradient-gold">
-              KESHAV
+          <Link href="/" className="relative z-50 group magnetic-item flex flex-col items-center">
+            <span className="font-great-vibes text-3xl md:text-4xl text-gradient-gold pr-2 inline-block pt-2">
+              KP&nbsp;
             </span>
-            <span className="block font-space text-[0.6rem] tracking-[0.3em] uppercase text-gray-400 group-hover:text-white transition-colors">
+            <span className="block font-cinzel text-[0.55rem] tracking-[0.4em] uppercase text-gray-400 group-hover:text-white transition-colors">
               Photography
             </span>
           </Link>
@@ -97,9 +97,12 @@ export default function Navbar() {
             className="fixed inset-0 z-40 bg-[#050505] flex flex-col justify-center items-center"
           >
             {/* Animated Watermark */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-5 pointer-events-none">
-              <span className="font-cinzel text-9xl tracking-widest text-[#D4AF37]">
-                KP
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-5 pointer-events-none flex flex-col items-center">
+              <span className="font-great-vibes text-9xl text-[#D4AF37] pr-6 inline-block pt-4">
+                KP&nbsp;
+              </span>
+              <span className="font-cinzel text-2xl tracking-[0.8em] text-[#D4AF37] uppercase mt-4">
+                Photography
               </span>
             </div>
 

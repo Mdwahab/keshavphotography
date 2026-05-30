@@ -11,6 +11,7 @@
   --font-playfair: var(--font-playfair);
   --font-poppins: var(--font-poppins);
   --font-space: var(--font-space-grotesk);
+  --font-great-vibes: var(--font-great-vibes);
 
   --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }

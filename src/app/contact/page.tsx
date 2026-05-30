@@ -68,13 +68,13 @@ export default function Contact() {
                   </div>
                 </a>
 
-                <a href="mailto:hello@keshavphotography.com" className="flex items-center gap-6 group/item magnetic-item">
+                <a href="mailto:keshavphotography0101@gmail.com" className="flex items-center gap-6 group/item magnetic-item">
                   <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover/item:border-[#D4AF37] transition-colors">
                     <Mail className="text-gray-400 group-hover/item:text-[#D4AF37] transition-colors" size={20} />
                   </div>
                   <div>
                     <p className="font-space text-xs tracking-widest text-gray-500 uppercase mb-1">Email</p>
-                    <p className="font-poppins text-lg text-white">hello@keshavphotography.com</p>
+                    <p className="font-poppins text-lg text-white">keshavphotography0101@gmail.com</p>
                   </div>
                 </a>
 

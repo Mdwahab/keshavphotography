@@ -47,7 +47,7 @@ export default function Home() {
       <main className="relative bg-[#050505] overflow-hidden" ref={containerRef}>
       
       {/* HERO SECTION */}
-      <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative w-full min-h-screen flex flex-col items-center justify-between overflow-hidden">
         {slides.map((slide, index) => (
           <motion.div
             key={slide.id}
@@ -69,32 +69,102 @@ export default function Home() {
           </motion.div>
         ))}
 
+        {/* Top Spacer for Flex Balance */}
+        <div className="h-10 w-full" />
+
         <motion.div 
-          className="relative z-20 flex flex-col items-center text-center mt-20"
+          className="relative z-20 flex flex-col items-center text-center mt-12 mb-12"
           style={{ y, opacity }}
         >
-          <motion.h1 
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1, delay: 0.5 }}
-            className="font-cinzel text-5xl md:text-8xl lg:text-[10rem] text-transparent bg-clip-text bg-gradient-to-b from-white via-gray-200 to-gray-500 tracking-wider mb-4 drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+
+
+          <motion.p 
+            initial={{ opacity: 0, letterSpacing: "0em" }}
+            animate={{ opacity: 1, letterSpacing: "0.4em" }}
+            transition={{ duration: 1.5, delay: 0.5 }}
+            className="font-space text-xs text-gray-400 uppercase mb-4"
           >
-            KESHAV
-          </motion.h1>
-          <motion.h2
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1, delay: 0.7 }}
-            className="font-playfair text-2xl md:text-4xl text-[#D4AF37] italic mb-12"
+            Welcome To
+          </motion.p>
+
+          {/* Luxury Logo Wordmark Group */}
+          <motion.div 
+            className="relative flex flex-col items-center mb-12"
+            animate={{ y: [0, -5, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          >
+            {/* Signature "Keshav" */}
+            <div className="relative overflow-hidden px-4">
+               {/* Shine Effect */}
+               <motion.div 
+                 initial={{ x: "-100%" }}
+                 animate={{ x: "200%" }}
+                 transition={{ duration: 2, delay: 2, ease: "easeInOut", repeat: Infinity, repeatDelay: 5 }}
+                 className="absolute inset-0 z-10 w-1/3 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg]"
+               />
+               <motion.h1 
+                 initial={{ opacity: 0, clipPath: "inset(0 100% 0 0)" }}
+                 animate={{ opacity: 1, clipPath: "inset(0 0% 0 0)" }}
+                 transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
+                 className="font-great-vibes text-7xl md:text-8xl lg:text-9xl text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] via-[#FFF3B0] to-[#D4AF37] font-normal tracking-normal drop-shadow-[0_0_15px_rgba(212,175,55,0.4)] relative z-0 py-4 pr-8 inline-block"
+                 style={{ lineHeight: '1.4' }}
+               >
+                 KP&nbsp;
+               </motion.h1>
+            </div>
+
+            {/* "Photography" */}
+            <motion.h2 
+              initial={{ opacity: 0, y: 10, letterSpacing: "0.1em" }}
+              animate={{ opacity: 1, y: 0, letterSpacing: "0.8em" }}
+              transition={{ duration: 1.2, delay: 1.8, ease: "easeOut" }}
+              className="font-cinzel text-sm md:text-lg lg:text-xl text-white font-light uppercase mt-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] ml-4"
+            >
+              Photography
+            </motion.h2>
+
+               {/* Golden Particles Background */}
+               <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 2, delay: 1 }}
+                  className="absolute inset-0 pointer-events-none -z-10"
+               >
+                  {[
+                    { ix: -80, iy: -40, ax: -30, ay: -20, d: 2 },
+                    { ix: 60, iy: 30, ax: 20, ay: 10, d: 3 },
+                    { ix: -40, iy: 60, ax: -10, ay: 30, d: 2.5 },
+                    { ix: 90, iy: -50, ax: 40, ay: -20, d: 4 },
+                    { ix: 10, iy: -80, ax: 5, ay: -40, d: 3.5 },
+                    { ix: -70, iy: 20, ax: -35, ay: 10, d: 2.8 }
+                  ].map((p, i) => (
+                     <motion.div 
+                        key={i}
+                        className="absolute w-1 h-1 bg-[#D4AF37] rounded-full blur-[1px] left-1/2 top-1/2"
+                        initial={{ x: p.ix, y: p.iy, opacity: 0 }}
+                        animate={{ x: p.ax, y: p.ay, opacity: [0, 0.8, 0] }}
+                        transition={{ duration: p.d, repeat: Infinity, ease: "easeInOut" }}
+                     />
+                  ))}
+               </motion.div>
+          </motion.div>
+
+          {/* Tagline */}
+          <motion.h3
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 2, delay: 3.5, ease: "easeOut" }}
+            className="font-playfair text-lg md:text-2xl text-[#D4AF37]/80 italic"
           >
             Capturing Emotions Forever
-          </motion.h2>
+          </motion.h3>
 
+          {/* Discover Button */}
           <motion.div 
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1, delay: 1 }}
-            className="flex flex-col sm:flex-row gap-6"
+            transition={{ duration: 1.5, delay: 4.5, ease: "easeOut" }}
+            className="mt-12 flex flex-col sm:flex-row gap-6 z-30 relative"
           >
             <Link href="/gallery" className="magnetic-item group">
               <button className="px-8 py-4 bg-[#D4AF37] text-black font-poppins text-sm tracking-widest uppercase hover:bg-white transition-all duration-500 rounded-sm shadow-[0_0_20px_rgba(212,175,55,0.3)]">
@@ -111,7 +181,7 @@ export default function Home() {
 
         {/* Scroll Indicator */}
         <motion.div 
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center"
+          className="relative z-20 flex flex-col items-center mb-8"
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
         >

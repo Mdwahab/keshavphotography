@@ -27,19 +27,45 @@ export default function Booking() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate backend submission
+    // Slight delay to show the redirecting animation
     setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
+      const message = `
+          𝙺𝙿 𝙱𝙾𝙾𝙺𝙸𝙽𝙶 𝙸𝙽𝚀𝚄𝙸𝚁𝚈
+
+Full Name : ${formData.name}
+
+Email Address : ${formData.email}
+
+Phone Number : ${formData.phone}
+
+Event Type : ${formData.eventType}
+
+Event Date : ${formData.date}
+
+Event Venue / Address : ${formData.address}
+
+Photography Specifications : ${formData.specs || 'N/A'}
+
+Additional Notes / Our Story : ${formData.notes || 'N/A'}
+━━━━━━━━━━━━━
+𝘚𝘶𝘣𝘮𝘪𝘵𝘵𝘦𝘥 𝘷𝘪𝘢
+𝙆𝙚𝙨𝙝𝙖𝙫 𝙋𝙝𝙤𝙩𝙤𝙜𝙧𝙖𝙥𝙝𝙮 𝙒𝙚𝙗𝙨𝙞𝙩𝙚
+
+Date Submitted :
+${new Date().toLocaleString()}
+━━━━━━━━━━━━━`;
+
+      window.open(
+        `https://wa.me/918886644868?text=${encodeURIComponent(message)}`,
+        "_blank"
+      );
       
-      // Reset form after a delay
-      setTimeout(() => {
-        setIsSuccess(false);
-        setFormData({
-          name: "", email: "", phone: "", eventType: "", date: "", address: "", specs: "", notes: ""
-        });
-      }, 5000);
-    }, 2000);
+      setIsSubmitting(false);
+      
+      setFormData({
+        name: "", email: "", phone: "", eventType: "", date: "", address: "", specs: "", notes: ""
+      });
+    }, 1000);
   };
 
   return (
@@ -74,29 +100,6 @@ export default function Booking() {
         >
           <form onSubmit={handleSubmit} className="glass-panel p-8 md:p-12 rounded-sm relative overflow-hidden">
             
-            {/* Success Overlay */}
-            <AnimatePresence>
-              {isSuccess && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="absolute inset-0 bg-[#050505]/95 backdrop-blur-md z-50 flex flex-col items-center justify-center text-center p-8"
-                >
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ type: "spring", delay: 0.2 }}
-                  >
-                    <CheckCircle2 size={80} className="text-[#D4AF37] mb-6 shadow-[0_0_30px_#D4AF37]" />
-                  </motion.div>
-                  <h2 className="font-cinzel text-3xl text-white mb-2">Experience Secured</h2>
-                  <p className="font-poppins text-gray-400 max-w-md">
-                    Thank you for choosing Keshav Photography. We will be in touch shortly to finalize the details of your cinematic journey.
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Name */}
@@ -161,7 +164,7 @@ export default function Booking() {
                 disabled={isSubmitting}
                 className="relative px-12 py-4 bg-[#D4AF37] text-black font-space tracking-[0.2em] uppercase text-sm hover:bg-white transition-colors duration-500 disabled:opacity-50 disabled:cursor-not-allowed magnetic-item group"
               >
-                {isSubmitting ? "Orchestrating..." : "Submit Inquiry"}
+                {isSubmitting ? "Redirecting to WhatsApp..." : "Submit Inquiry"}
                 {!isSubmitting && (
                   <span className="absolute inset-0 border border-[#D4AF37] scale-105 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500" />
                 )}

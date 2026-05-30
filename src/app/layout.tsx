@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cinzel, Playfair_Display, Poppins, Space_Grotesk } from "next/font/google";
+import { Cinzel, Playfair_Display, Poppins, Space_Grotesk, Great_Vibes } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/providers/SmoothScroll";
 import CustomCursor from "@/components/ui/CustomCursor";
@@ -31,6 +31,12 @@ const spaceGrotesk = Space_Grotesk({
   weight: ["300", "400", "500"],
 });
 
+const greatVibes = Great_Vibes({
+  subsets: ["latin"],
+  variable: "--font-great-vibes",
+  weight: ["400"],
+});
+
 export const metadata: Metadata = {
   title: "Keshav Photography | Capturing Emotions Forever",
   description: "A NEXT-GENERATION cinematic digital universe for Keshav Photography. Luxury wedding and event photography based in Eluru, India.",
@@ -49,7 +55,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${cinzel.variable} ${playfair.variable} ${poppins.variable} ${spaceGrotesk.variable} antialiased bg-[#050505] text-white selection:bg-[#D4AF37] selection:text-black`}
+        className={`${cinzel.variable} ${playfair.variable} ${poppins.variable} ${spaceGrotesk.variable} ${greatVibes.variable} antialiased bg-[#050505] text-white selection:bg-[#D4AF37] selection:text-black`}
       >
         <SmoothScroll>
           <CustomCursor />
