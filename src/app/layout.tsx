@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Cinzel, Playfair_Display, Poppins, Space_Grotesk, Great_Vibes } from "next/font/google";
 import "./globals.css";
-import SmoothScroll from "@/components/providers/SmoothScroll";
-import Navbar from "@/components/ui/Navbar";
-import Footer from "@/components/ui/Footer";
-import Scene3D from "@/components/3d/Scene";
+import PublicLayout from "@/components/layout/PublicLayout";
+import { PrismaClient } from "@prisma/client";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
+
+const prisma = new PrismaClient();
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -46,22 +47,36 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let theme: "dark" | "light" = "dark";
+  try {
+    // Safeguard for when Prisma Client hasn't generated the new model yet due to Windows EPERM lock
+    if (prisma.websiteSettings) {
+      const settings = await prisma.websiteSettings.findUnique({
+        where: { id: "global" }
+      });
+      if (settings?.theme === "light" || settings?.theme === "dark") {
+        theme = settings.theme;
+      }
+    }
+  } catch (error) {
+    console.error("Failed to fetch theme from DB", error);
+  }
+
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className={theme}>
       <body
-        className={`${cinzel.variable} ${playfair.variable} ${poppins.variable} ${spaceGrotesk.variable} ${greatVibes.variable} antialiased bg-[#050505] text-white selection:bg-[#D4AF37] selection:text-black`}
+        className={`${cinzel.variable} ${playfair.variable} ${poppins.variable} ${spaceGrotesk.variable} ${greatVibes.variable} antialiased selection:bg-[#D4AF37] selection:text-black`}
       >
-        <SmoothScroll>
-          <Scene3D />
-          <Navbar />
-          {children}
-          <Footer />
-        </SmoothScroll>
+        <ThemeProvider initialTheme={theme}>
+          <PublicLayout>
+            {children}
+          </PublicLayout>
+        </ThemeProvider>
       </body>
     </html>
   );

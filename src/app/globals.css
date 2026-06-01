@@ -14,12 +14,42 @@
   --font-great-vibes: var(--font-great-vibes);
 
   --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-shimmer: shimmer 3s infinite;
+  
+  @keyframes shimmer {
+    100% { transform: translateX(300%); }
+  }
 }
 
 @layer base {
-  :root {
+  :root, .dark {
     --background: #050505;
     --foreground: #FFFFFF;
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --border-subtle: rgba(255, 255, 255, 0.05);
+    --hover-bg: rgba(255, 255, 255, 0.05);
+    --overlay-bg: rgba(0, 0, 0, 0.6);
+    --overlay-bg-heavy: rgba(0, 0, 0, 0.85);
+    --nav-bg: #050505;
+    --scrollbar-track: #050505;
+    --scrollbar-thumb: #1a1a1a;
+    --muted-text: #9CA3AF;
+  }
+  
+  .light {
+    --background: #F8F6F2;
+    --foreground: #1C1C1C;
+    --card-bg: rgba(255, 255, 255, 0.85);
+    --border-color: rgba(212, 175, 55, 0.3); /* gold borders for glassmorphism */
+    --border-subtle: rgba(212, 175, 55, 0.15);
+    --hover-bg: rgba(255, 255, 255, 1);
+    --overlay-bg: rgba(248, 246, 242, 0.15); /* Significantly reduced from 0.6 */
+    --overlay-bg-heavy: rgba(248, 246, 242, 0.4); /* Significantly reduced from 0.85 */
+    --nav-bg: #F8F6F2;
+    --scrollbar-track: #F8F6F2;
+    --scrollbar-thumb: #D4AF37;
+    --muted-text: #6A6A6A;
   }
 }
 
@@ -29,6 +59,7 @@ body {
   font-family: var(--font-poppins), sans-serif;
   overflow-x: hidden;
   overscroll-behavior: none;
+  transition: background-color 0.8s ease, color 0.8s ease;
 }
 
 /* Custom Scrollbar */
@@ -36,29 +67,35 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #050505;
+  background: var(--scrollbar-track);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1a1a1a;
+  background: var(--scrollbar-thumb);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #D4AF37;
+  background: var(--color-gold);
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--card-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
 }
 
 .glass-panel {
-  background: rgba(10, 10, 10, 0.6);
+  background: var(--card-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(212, 175, 55, 0.1);
+  border: 1px solid var(--border-color);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: all 0.5s ease;
+}
+
+.light .glass-panel, .light .glass {
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  border-top: 1px solid rgba(255, 255, 255, 0.9);
 }
 
 .text-gradient-gold {
@@ -71,4 +108,107 @@ body {
 .magnetic-item {
   position: relative;
   display: inline-block;
+}
+
+/* --- Hero Light Mode Aesthetics --- */
+.sunlight-overlay {
+  opacity: 0;
+}
+.light .sunlight-overlay {
+  opacity: 1;
+}
+
+.logo-text {
+  filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4));
+}
+.light .logo-text {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.bokeh-particle {
+  width: 4px;
+  height: 4px;
+  background: #D4AF37;
+  filter: blur(1px);
+}
+.light .bokeh-particle {
+  width: 12px;
+  height: 12px;
+  background: #FFFFFF;
+  filter: blur(2px);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
+}
+
+/* --- Button Refinements & Light Sweep Hover --- */
+.btn-primary {
+  background-color: #D4AF37;
+  color: #000000;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+.btn-primary:hover {
+  background-color: #FFFFFF;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+}
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+  transform: skewX(-20deg);
+  transition: 0.5s;
+}
+.btn-primary:hover::after {
+  left: 200%;
+}
+
+.btn-secondary {
+  border-color: #D4AF37;
+  color: #D4AF37;
+}
+.btn-secondary:hover {
+  background-color: #D4AF37;
+  color: #000000;
+}
+.btn-secondary::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(212,175,55,0.4), transparent);
+  transform: skewX(-20deg);
+  transition: 0.5s;
+}
+.btn-secondary:hover::after {
+  left: 200%;
+}
+
+/* Light Mode Specific Buttons */
+.light .btn-primary {
+  background-color: #1C1C1C;
+  color: #F8F6F2;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+.light .btn-primary:hover {
+  background-color: #D4AF37;
+  color: #FFFFFF;
+}
+.light .btn-primary::after {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+}
+
+.light .btn-secondary {
+  border-color: #1C1C1C;
+  color: #1C1C1C;
+}
+.light .btn-secondary:hover {
+  background-color: #1C1C1C;
+  color: #F8F6F2;
+}
+.light .btn-secondary::after {
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.1), transparent);
 }

@@ -39,11 +39,11 @@ export default function Navbar() {
       >
         <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
           {/* Logo */}
-          <Link href="/" className="relative z-50 group magnetic-item flex flex-col items-center">
+          <Link href="/" className="relative z-50 group magnetic-item flex flex-col items-center transform scale-90 md:scale-100 origin-left">
             <span className="font-great-vibes text-3xl md:text-4xl text-gradient-gold pr-2 inline-block pt-2">
               KP&nbsp;
             </span>
-            <span className="block font-cinzel text-[0.55rem] tracking-[0.4em] uppercase text-gray-400 group-hover:text-white transition-colors">
+            <span className="block font-cinzel text-[0.55rem] md:text-[0.55rem] tracking-[0.4em] uppercase text-[var(--muted-text)] group-hover:text-[var(--foreground)] transition-colors">
               Photography
             </span>
           </Link>
@@ -55,7 +55,7 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 className={`font-poppins text-sm tracking-widest uppercase transition-all duration-300 relative group magnetic-item ${
-                  pathname === link.href ? "text-[#D4AF37]" : "text-gray-300 hover:text-white"
+                  pathname === link.href ? "text-[#D4AF37]" : "text-[var(--muted-text)] hover:text-[var(--foreground)]"
                 }`}
               >
                 {link.name}
@@ -77,10 +77,10 @@ export default function Navbar() {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden relative z-50 text-white magnetic-item"
+            className="md:hidden relative z-50 text-[var(--foreground)] magnetic-item transition-transform active:scale-90"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {mobileMenuOpen ? <X size={32} /> : <Menu size={32} />}
+            {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
       </motion.nav>
@@ -89,35 +89,35 @@ export default function Navbar() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, clipPath: "circle(0% at top right)" }}
-            animate={{ opacity: 1, clipPath: "circle(150% at top right)" }}
-            exit={{ opacity: 0, clipPath: "circle(0% at top right)" }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="fixed inset-0 z-40 bg-[#050505] flex flex-col justify-center items-center"
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed top-0 right-0 w-full h-full z-40 bg-[var(--background)] flex flex-col justify-center items-center border-l border-[var(--border-subtle)]"
           >
             {/* Animated Watermark */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-5 pointer-events-none flex flex-col items-center">
-              <span className="font-great-vibes text-9xl text-[#D4AF37] pr-6 inline-block pt-4">
+              <span className="font-great-vibes text-8xl md:text-9xl text-[#D4AF37] pr-6 inline-block pt-4">
                 KP&nbsp;
               </span>
-              <span className="font-cinzel text-2xl tracking-[0.8em] text-[#D4AF37] uppercase mt-4">
+              <span className="font-cinzel text-xl md:text-2xl tracking-[0.8em] text-[#D4AF37] uppercase mt-4">
                 Photography
               </span>
             </div>
 
-            <div className="flex flex-col space-y-8 text-center relative z-10">
+            <div className="flex flex-col space-y-6 text-center relative z-10 w-full px-8">
               {navLinks.map((link, i) => (
                 <motion.div
                   key={link.name}
-                  initial={{ y: 50, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: i * 0.1 + 0.3, duration: 0.5 }}
+                  initial={{ x: 50, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: i * 0.1 + 0.2, duration: 0.5, ease: "easeOut" }}
                 >
                   <Link
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`font-cinzel text-4xl tracking-widest ${
-                      pathname === link.href ? "text-[#D4AF37]" : "text-white hover:text-gray-400"
+                    className={`block font-cinzel text-3xl tracking-widest py-2 border-b border-transparent ${
+                      pathname === link.href ? "text-[#D4AF37] border-[var(--border-subtle)]" : "text-[var(--foreground)] hover:text-[#D4AF37]"
                     }`}
                   >
                     {link.name}

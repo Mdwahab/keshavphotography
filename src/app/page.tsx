@@ -100,22 +100,32 @@ export default function Home() {
   return (
     <>
       {loading && <Loader onComplete={() => setLoading(false)} />}
-      <main className="relative bg-[#050505] overflow-hidden" ref={containerRef}>
+      <main className="relative bg-[var(--background)] overflow-hidden" ref={containerRef}>
       
       {/* HERO SECTION */}
       <section className="relative w-full min-h-screen flex flex-col items-center justify-between overflow-hidden">
+        {/* Sunlight Rays Overlay (Light Mode Only) */}
+        <div className="sunlight-overlay absolute inset-0 z-10 pointer-events-none transition-opacity duration-1000 mix-blend-screen">
+          <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[150%] bg-gradient-to-br from-white/10 via-[#D4AF37]/5 to-transparent rotate-12 blur-[80px]" />
+          <div className="absolute top-[-10%] right-[-20%] w-[50%] h-[120%] bg-gradient-to-bl from-white/5 via-transparent to-transparent -rotate-12 blur-[100px]" />
+          <div className="absolute bottom-[-20%] left-[20%] w-[40%] h-[60%] bg-gradient-to-t from-[#D4AF37]/10 to-transparent blur-[60px]" />
+        </div>
+
         {slides.map((slide, index) => (
           <motion.div
             key={slide.id}
             className="absolute inset-0 z-0"
-            initial={{ opacity: 0, scale: 1.1 }}
+            initial={{ opacity: 0, scale: 1 }}
             animate={{ 
               opacity: index === currentSlide ? 1 : 0,
-              scale: index === currentSlide ? 1 : 1.1,
+              scale: index === currentSlide ? 1.05 : 1,
             }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
+            transition={{ 
+              opacity: { duration: 1.5, ease: "easeInOut" },
+              scale: { duration: 8, ease: "linear" } 
+            }}
           >
-            <div className="absolute inset-0 bg-black/40 z-10" />
+            <div className="absolute inset-0 bg-[var(--overlay-bg)] z-10 transition-colors duration-1000" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
               src={slide.image} 
@@ -138,7 +148,7 @@ export default function Home() {
             initial={{ opacity: 0, letterSpacing: "0em" }}
             animate={{ opacity: 1, letterSpacing: "0.4em" }}
             transition={{ duration: 1.5, delay: 0.5 }}
-            className="font-space text-xs text-gray-400 uppercase mb-4"
+            className="font-space text-xs text-[var(--muted-text)] uppercase mb-4"
           >
             Welcome To
           </motion.p>
@@ -150,7 +160,7 @@ export default function Home() {
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           >
             {/* Signature "Keshav" */}
-            <div className="relative overflow-hidden px-4">
+            <div className="relative overflow-hidden px-6 md:px-0">
                {/* Shine Effect */}
                <motion.div 
                  initial={{ x: "-100%" }}
@@ -162,7 +172,7 @@ export default function Home() {
                  initial={{ opacity: 0, clipPath: "inset(0 100% 0 0)" }}
                  animate={{ opacity: 1, clipPath: "inset(0 0% 0 0)" }}
                  transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
-                 className="font-great-vibes text-7xl md:text-8xl lg:text-9xl text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] via-[#FFF3B0] to-[#D4AF37] font-normal tracking-normal drop-shadow-[0_0_15px_rgba(212,175,55,0.4)] relative z-0 py-4 pr-8 inline-block"
+                 className="logo-text font-great-vibes text-7xl md:text-8xl lg:text-9xl text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] via-[#FFF3B0] to-[#D4AF37] font-normal tracking-normal relative z-0 py-4 pr-8 inline-block"
                  style={{ lineHeight: '1.4' }}
                >
                  KP&nbsp;
@@ -174,12 +184,12 @@ export default function Home() {
               initial={{ opacity: 0, y: 10, letterSpacing: "0.1em" }}
               animate={{ opacity: 1, y: 0, letterSpacing: "0.8em" }}
               transition={{ duration: 1.2, delay: 1.8, ease: "easeOut" }}
-              className="font-cinzel text-sm md:text-lg lg:text-xl text-white font-light uppercase mt-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] ml-4"
+              className="font-cinzel text-sm md:text-lg lg:text-xl text-[var(--foreground)] font-light uppercase mt-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] ml-4"
             >
               Photography
             </motion.h2>
 
-               {/* Golden Particles Background */}
+               {/* Golden Particles Background / Light Mode Bokeh */}
                <motion.div 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -196,7 +206,7 @@ export default function Home() {
                   ].map((p, i) => (
                      <motion.div 
                         key={i}
-                        className="absolute w-1 h-1 bg-[#D4AF37] rounded-full blur-[1px] left-1/2 top-1/2"
+                        className="bokeh-particle absolute rounded-full left-1/2 top-1/2"
                         initial={{ x: p.ix, y: p.iy, opacity: 0 }}
                         animate={{ x: p.ax, y: p.ay, opacity: [0, 0.8, 0] }}
                         transition={{ duration: p.d, repeat: Infinity, ease: "easeInOut" }}
@@ -223,13 +233,13 @@ export default function Home() {
             className="mt-12 flex flex-col sm:flex-row gap-6 z-30 relative"
           >
             <Link href="/gallery" className="magnetic-item group">
-              <button className="px-8 py-4 bg-[#D4AF37] text-black font-poppins text-sm tracking-widest uppercase hover:bg-white transition-all duration-500 rounded-sm shadow-[0_0_20px_rgba(212,175,55,0.3)]">
-                Explore Gallery
+              <button className="btn-primary px-8 py-4 font-poppins text-sm tracking-widest uppercase transition-all duration-500 rounded-sm relative overflow-hidden">
+                <span className="relative z-10">Explore Gallery</span>
               </button>
             </Link>
             <Link href="/booking" className="magnetic-item group">
-              <button className="px-8 py-4 border border-[#D4AF37] text-[#D4AF37] font-poppins text-sm tracking-widest uppercase hover:bg-[#D4AF37] hover:text-black transition-all duration-500 rounded-sm">
-                Book Experience
+              <button className="btn-secondary px-8 py-4 border font-poppins text-sm tracking-widest uppercase transition-all duration-500 rounded-sm relative overflow-hidden">
+                <span className="relative z-10">Book Experience</span>
               </button>
             </Link>
           </motion.div>
@@ -241,91 +251,123 @@ export default function Home() {
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          <span className="font-space text-xs tracking-widest uppercase text-gray-400 mb-2">Scroll</span>
+          <span className="font-space text-xs tracking-widest uppercase text-[var(--muted-text)] mb-2">Scroll</span>
           <div className="w-[1px] h-12 bg-gradient-to-b from-[#D4AF37] to-transparent" />
         </motion.div>
       </section>
 
       {/* IMMERSIVE CATEGORY PORTALS */}
-      <section className="relative w-full py-32 px-4 md:px-12 bg-[#050505]">
+      <section className="relative w-full pt-[60px] pb-[50px] md:py-32 px-6 md:px-12 bg-[var(--background)]">
         <div className="container mx-auto">
-          <div className="mb-20 text-center">
-            <h2 className="font-cinzel text-4xl md:text-6xl text-white mb-4">Enter Our Worlds</h2>
+          <div className="mb-10 md:mb-20 text-center">
+            <h2 className="font-cinzel text-4xl md:text-6xl text-[var(--foreground)] mb-4">Enter Our Worlds</h2>
             <div className="w-24 h-1 bg-[#D4AF37] mx-auto opacity-50" />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
-            {portals.map((portal, idx) => (
-              <motion.div
-                key={portal.name}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.8, delay: (idx % 2) * 0.2 }}
-                className={`group relative h-[60vh] overflow-hidden rounded-sm cursor-pointer magnetic-item w-full ${idx === portals.length - 1 && portals.length % 2 !== 0 ? "md:col-span-2" : ""}`}
-              >
-                <div className="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition-all duration-700 z-10" />
-                {/* Glowing border effect */}
-                <div className="absolute inset-0 border border-white/10 group-hover:border-[#D4AF37]/50 transition-colors duration-700 z-20 pointer-events-none" />
-                
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img 
-                  src={portal.image} 
-                  alt={portal.name}
-                  className="absolute inset-0 w-full h-full object-cover transform scale-110 group-hover:scale-100 transition-transform duration-1000 ease-out"
-                />
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-3 md:gap-16">
+            {portals.map((portal, idx) => {
+              const slug = portal.name.toLowerCase().replace(/\s+/g, '-');
+              return (
+                <motion.div
+                  key={portal.name}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.8, delay: (idx % 2) * 0.2 }}
+                  onClick={() => window.location.href = `/gallery/${slug}`}
+                  className={`group relative aspect-[4/5] md:aspect-auto md:h-[70vh] overflow-hidden rounded-2xl md:rounded-sm cursor-pointer magnetic-item w-full active:scale-[0.98] md:active:scale-100 transition-transform duration-300 ${idx === portals.length - 1 && portals.length % 2 !== 0 ? "col-span-2 aspect-[2/1] sm:aspect-[4/5] md:aspect-auto md:col-span-2" : ""}`}
+                >
+                  {/* Overlays */}
+                  <div className="absolute inset-0 bg-[var(--overlay-bg)] group-hover:bg-black/10 transition-colors duration-700 z-10" />
+                  {/* Dark gradient for text readability at bottom */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent z-10 opacity-80 md:opacity-60 transition-opacity duration-700" />
+                  
+                  {/* Glowing border effect */}
+                  <div className="absolute inset-0 border border-[var(--border-color)] group-hover:border-[#D4AF37]/50 transition-colors duration-700 z-20 pointer-events-none rounded-2xl md:rounded-sm" />
+                  
+                  {/* Image */}
+                  <img 
+                    src={portal.image} 
+                    alt={portal.name}
+                    className="absolute inset-0 w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-1000 ease-out"
+                  />
 
-                <div className="absolute inset-0 z-30 flex flex-col items-center justify-center p-8">
-                  <h3 className="font-cinzel text-4xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500 opacity-80 group-hover:opacity-100 group-hover:scale-110 group-hover:text-white transition-all duration-700 text-center mb-6">
-                    {portal.name}
-                  </h3>
-                  <div className="opacity-0 group-hover:opacity-100 transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 flex items-center gap-2">
-                    <span className="font-poppins text-sm tracking-widest text-[#D4AF37] uppercase">Discover</span>
-                    <ArrowRight className="text-[#D4AF37]" size={16} />
+                  {/* Text Content - Premium Bottom Left Glass Label */}
+                  <div className="absolute inset-0 z-30 flex flex-col justify-end p-2 sm:p-4 md:p-8">
+                    <div className="glass-panel backdrop-blur-md bg-black/40 border border-[#D4AF37]/30 group-hover:border-[#D4AF37] p-3 sm:p-5 md:p-8 rounded-xl inline-flex flex-col items-start transform translate-y-1 sm:translate-y-2 group-hover:translate-y-0 transition-all duration-500 w-[95%] md:w-fit max-w-sm group-hover:bg-black/60 shadow-[0_0_15px_rgba(212,175,55,0.1)] group-hover:shadow-[0_0_25px_rgba(212,175,55,0.3)]">
+                      <h3 className="font-cinzel text-sm sm:text-2xl md:text-4xl text-white opacity-90 group-hover:opacity-100 transition-opacity duration-700 text-left mb-1 sm:mb-3 leading-tight group-hover:text-[#D4AF37]">
+                        {portal.name}
+                      </h3>
+                      <div className="opacity-80 group-hover:opacity-100 flex items-center gap-1 sm:gap-3">
+                        <span className="font-poppins text-[0.55rem] sm:text-xs tracking-[0.1em] sm:tracking-[0.2em] md:tracking-widest text-[#D4AF37] uppercase">Discover<span className="hidden sm:inline"> Collection</span></span>
+                        <ArrowRight className="text-[#D4AF37] group-hover:translate-x-1 sm:group-hover:translate-x-2 transition-transform duration-300 w-3 h-3 sm:w-4 sm:h-4" />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* CINEMATIC VIDEOS SECTION */}
-      <section className="relative w-full py-32 px-4 md:px-12 bg-[#050505] border-t border-white/5">
+      <section className="relative w-full py-[50px] md:py-32 px-6 md:px-12 bg-[var(--background)] border-t border-[var(--border-subtle)]">
         <div className="container mx-auto">
-          <div className="mb-20 flex flex-col md:flex-row justify-between items-end gap-8">
-            <div>
-              <motion.h2 
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="font-cinzel text-4xl md:text-6xl text-white mb-4"
-              >
-                Cinematic Videos
-              </motion.h2>
-              <motion.p 
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="font-playfair text-xl text-[#D4AF37] italic"
-              >
-                Experience stories through motion.
-              </motion.p>
-            </div>
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+          <div className="mb-10 md:mb-12 flex flex-col items-center text-center max-w-4xl mx-auto">
+            <motion.div 
+              initial={{ scaleX: 0, opacity: 0 }}
+              whileInView={{ scaleX: 1, opacity: 1 }}
               viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="w-16 h-[2px] bg-[#D4AF37] mb-8 opacity-70 origin-center" 
+            />
+            
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="font-cinzel text-3xl md:text-5xl lg:text-6xl text-[var(--foreground)] mb-8 tracking-wider uppercase"
             >
-              <a href="https://www.youtube.com/@Keshav_Photography/featured" target="_blank" rel="noreferrer" className="flex items-center gap-3 px-6 py-3 border border-[#D4AF37] text-[#D4AF37] font-poppins text-sm tracking-widest uppercase hover:bg-[#D4AF37] hover:text-black transition-all duration-500 rounded-sm group magnetic-item">
-                <YoutubeIcon size={18} />
-                <span>View All Videos</span>
+              Our Cinematic Films
+            </motion.h2>
+            
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="flex flex-col items-center gap-6 mb-8 px-4"
+            >
+              <p className="font-playfair text-xl md:text-2xl lg:text-3xl text-[#D4AF37] italic opacity-90 leading-relaxed max-w-2xl">
+                "Every love story deserves to be felt, <br className="hidden sm:block" />not just remembered."
+              </p>
+              <p className="text-[var(--muted-text)] font-poppins text-sm md:text-base tracking-wide max-w-xl leading-loose">
+                Experience weddings through emotion, movement, music, and timeless storytelling.
+              </p>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              <a 
+                href="https://www.youtube.com/@Keshav_Photography/featured" 
+                target="_blank" 
+                rel="noreferrer" 
+                className="inline-flex items-center gap-4 px-8 py-4 border border-[#D4AF37]/50 text-[#D4AF37] font-poppins text-xs md:text-sm tracking-[0.2em] uppercase hover:bg-[#D4AF37] hover:border-[#D4AF37] hover:text-black transition-all duration-500 rounded-sm group relative overflow-hidden shadow-[0_0_0_rgba(212,175,55,0.0)] hover:shadow-[0_0_30px_rgba(212,175,55,0.25)]"
+              >
+                <YoutubeIcon size={16} className="relative z-10 group-hover:scale-110 transition-transform duration-300" />
+                <span className="relative z-10 font-medium">Explore Our Films</span>
+                <ArrowRight size={16} className="relative z-10 group-hover:translate-x-2 transition-transform duration-300" />
               </a>
             </motion.div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-3 gap-3 sm:gap-8">
             {cinematicVideos.map((video, idx) => (
               <motion.div
                 key={idx}
@@ -334,11 +376,11 @@ export default function Home() {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.8, delay: (idx % 3) * 0.2 }}
                 onClick={() => setActiveVideo(video.id)}
-                className="group relative cursor-pointer magnetic-item rounded-sm overflow-hidden border border-white/5 hover:border-[#D4AF37]/50 transition-colors duration-500 bg-white/5"
+                className="group relative cursor-pointer magnetic-item rounded-sm overflow-hidden border border-[var(--border-subtle)] hover:border-[#D4AF37]/50 transition-colors duration-500 bg-white/5"
               >
                 {/* Thumbnail Container */}
                 <div className="relative aspect-video overflow-hidden">
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors duration-500 z-10" />
+                  <div className="absolute inset-0 bg-[var(--overlay-bg)] group-hover:bg-black/10 transition-colors duration-500 z-10" />
                   <img 
                     src={`https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`} 
                     alt={video.title}
@@ -347,18 +389,18 @@ export default function Home() {
                   />
                   {/* Play Button Overlay */}
                   <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
-                    <div className="w-16 h-16 rounded-full bg-black/50 backdrop-blur-md border border-white/20 flex items-center justify-center group-hover:bg-[#D4AF37] group-hover:border-[#D4AF37] transition-all duration-500 transform group-hover:scale-110 shadow-lg">
-                      <Play className="text-white group-hover:text-black ml-1" size={24} fill="currentColor" />
+                    <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-[var(--overlay-bg)] backdrop-blur-md border border-[var(--border-color)] flex items-center justify-center group-hover:bg-[#D4AF37] group-hover:border-[#D4AF37] transition-all duration-500 transform group-hover:scale-110 shadow-lg">
+                      <Play className="text-[var(--foreground)] group-hover:text-black ml-1 w-4 h-4 sm:w-6 sm:h-6" fill="currentColor" />
                     </div>
                   </div>
                 </div>
                 
                 {/* Content */}
-                <div className="p-6 relative z-30">
-                  <h3 className="font-cinzel text-xl text-white mb-2 group-hover:text-[#D4AF37] transition-colors">
+                <div className="p-3 sm:p-6 relative z-30">
+                  <h3 className="font-cinzel text-xs sm:text-xl text-[var(--foreground)] mb-1 sm:mb-2 group-hover:text-[#D4AF37] transition-colors line-clamp-1 sm:line-clamp-none">
                     {video.title}
                   </h3>
-                  <p className="font-poppins text-sm text-gray-400 line-clamp-2">
+                  <p className="font-poppins text-[0.6rem] sm:text-sm text-[var(--muted-text)] line-clamp-2">
                     {video.description}
                   </p>
                 </div>
@@ -369,20 +411,20 @@ export default function Home() {
       </section>
 
       {/* Philosophy Teaser */}
-      <section className="relative w-full py-40 bg-[#050505] flex items-center justify-center overflow-hidden">
-         <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-[#3B0A0A]/10 to-[#050505]" />
+      <section className="relative w-full py-[50px] md:py-40 bg-[var(--background)] flex items-center justify-center overflow-hidden">
+         <div className="absolute inset-0 bg-gradient-to-b from-[var(--background)] via-[var(--border-subtle)] to-[var(--background)]" />
          <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 1.5 }}
-            className="container mx-auto text-center px-4 relative z-10"
+            className="container mx-auto text-center px-6 relative z-10"
          >
-            <p className="font-playfair text-3xl md:text-5xl lg:text-7xl leading-tight text-white mb-12 max-w-5xl mx-auto">
+            <p className="font-playfair text-3xl md:text-5xl lg:text-7xl leading-tight text-[var(--foreground)] mb-12 max-w-5xl mx-auto">
                "We don't just take photographs. We freeze time, capture souls, and turn fleeting emotions into <span className="text-[#D4AF37] italic">eternal masterpieces</span>."
             </p>
             <Link href="/about" className="magnetic-item">
-              <span className="font-space text-sm tracking-[0.3em] text-gray-400 hover:text-[#D4AF37] uppercase transition-colors border-b border-gray-400 hover:border-[#D4AF37] pb-2">
+              <span className="font-space text-sm tracking-[0.3em] text-[var(--muted-text)] hover:text-[#D4AF37] uppercase transition-colors border-b border-gray-400 hover:border-[#D4AF37] pb-2">
                  Read Our Story
               </span>
             </Link>
@@ -396,11 +438,11 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-12"
+            className="fixed inset-0 z-[100] bg-[var(--overlay-bg-heavy)] backdrop-blur-xl flex items-center justify-center p-4 md:p-12"
             onClick={() => setActiveVideo(null)}
           >
             <button 
-              className="absolute top-8 right-8 text-white hover:text-[#D4AF37] transition-colors z-[110] magnetic-item"
+              className="absolute top-8 right-8 text-[var(--foreground)] hover:text-[#D4AF37] transition-colors z-[110] magnetic-item"
               onClick={() => setActiveVideo(null)}
             >
               <X size={32} />
@@ -410,7 +452,7 @@ export default function Home() {
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 50 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="w-full max-w-6xl aspect-video bg-black rounded-sm overflow-hidden shadow-[0_0_50px_rgba(212,175,55,0.2)] border border-[#D4AF37]/20"
+              className="w-full max-w-6xl aspect-video bg-[var(--background)] rounded-sm overflow-hidden shadow-[0_0_50px_rgba(212,175,55,0.2)] border border-[#D4AF37]/20"
               onClick={(e) => e.stopPropagation()}
             >
               <iframe 

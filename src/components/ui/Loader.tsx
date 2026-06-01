@@ -62,7 +62,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] bg-[#050505] flex items-center justify-center overflow-hidden"
+          className="fixed inset-0 z-[100] bg-[var(--background)] flex items-center justify-center overflow-hidden"
         >
           {/* Flash Overlay - GPU Accelerated Opacity */}
           <div 
@@ -74,7 +74,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
           <div ref={lensRef} className="relative z-10 flex flex-col items-center justify-center w-full h-full" style={{ willChange: 'transform, opacity' }}>
             
             <motion.div 
-              className="relative w-[280px] h-[280px] md:w-[400px] md:h-[400px] rounded-full border-[10px] border-[#111] bg-[#0a0a0a] flex items-center justify-center overflow-hidden"
+              className="relative w-[280px] h-[280px] md:w-[400px] md:h-[400px] rounded-full border-[10px] border-[#111] bg-[var(--card-bg)] flex items-center justify-center overflow-hidden"
               animate={{ rotate: 360 }}
               transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
               style={{ willChange: 'transform' }}
@@ -87,7 +87,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
               <div className="absolute inset-[30px] rounded-full border-[2px] border-gray-700" />
               
               {/* Aperture Blades */}
-              <div className="absolute inset-[40px] rounded-full flex items-center justify-center bg-[#050505]">
+              <div className="absolute inset-[40px] rounded-full flex items-center justify-center bg-[var(--background)]">
                 {[...Array(8)].map((_, i) => (
                   <motion.div
                     key={i}
@@ -112,7 +112,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
               </div>
 
               {/* Glass Reflection (Optimized) */}
-              <div className="absolute inset-[40px] rounded-full bg-gradient-to-tr from-transparent via-white/5 to-transparent border border-white/10" />
+              <div className="absolute inset-[40px] rounded-full bg-gradient-to-tr from-transparent via-white/5 to-transparent border border-[var(--border-color)]" />
               <div className="absolute top-[25%] left-[25%] w-[30%] h-[30%] bg-white/10 rounded-full blur-[8px]" />
               <div className="absolute bottom-[30%] right-[30%] w-[15%] h-[15%] bg-[#D4AF37]/10 rounded-full blur-[10px]" />
             </motion.div>
@@ -127,10 +127,10 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
               <h1 className="font-playfair text-5xl md:text-7xl text-[#D4AF37] mb-4 drop-shadow-[0_0_15px_rgba(0,0,0,0.8)] italic font-bold">
                 KP
               </h1>
-              <div className="font-space text-[10px] tracking-[0.5em] text-[#D4AF37] mb-2 uppercase text-center bg-black/50 px-4 py-1 rounded-full backdrop-blur-sm border border-[#D4AF37]/20">
+              <div className="font-space text-[10px] tracking-[0.5em] text-[#D4AF37] mb-2 uppercase text-center bg-[var(--overlay-bg)] px-4 py-1 rounded-full backdrop-blur-sm border border-[#D4AF37]/20">
                 Autofocusing
               </div>
-              <div className="font-playfair text-6xl md:text-8xl text-white font-light drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+              <div className="font-playfair text-6xl md:text-8xl text-[var(--foreground)] font-light drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
                 {progress}%
               </div>
             </motion.div>

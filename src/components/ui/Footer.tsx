@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MapPin, Phone, Mail } from "lucide-react";
+import { motion } from "framer-motion";
 
 const InstagramIcon = ({ size = 20, className = "" }: { size?: number, className?: string }) => (
   <svg 
@@ -53,95 +54,124 @@ const YoutubeIcon = ({ size = 20, className = "" }: { size?: number, className?:
 
 export default function Footer() {
   return (
-    <footer className="relative bg-[#050505] pt-32 pb-12 overflow-hidden border-t border-white/5">
+    <footer className="relative bg-[var(--background)] pt-0 md:pt-32 pb-6 md:pb-12 overflow-hidden md:border-t border-[var(--border-subtle)]">
       {/* Cinematic ambient background glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-64 bg-[#D4AF37]/5 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-6 md:px-12 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-20">
-          
-          {/* Brand */}
-          <div className="col-span-1 lg:col-span-1">
-            <h2 className="font-great-vibes text-5xl text-gradient-gold mb-2 pr-4 inline-block pt-2">KP&nbsp;</h2>
-            <p className="font-cinzel text-xs tracking-[0.4em] uppercase text-[#D4AF37] mb-6">Photography</p>
-            <p className="font-poppins text-sm text-gray-400 leading-relaxed max-w-xs">
-              Capturing Emotions Forever. A luxury cinematic universe preserving your most precious memories in art.
+        
+        {/* ---------------- MOBILE ONLY MINIMAL FOOTER ---------------- */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-20px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="block md:hidden relative z-10 px-4 pb-2 pt-0"
+        >
+          <div className="flex flex-col items-center justify-center text-center mt-2">
+            {/* Thin Gold Divider */}
+            <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37]/40 to-transparent mb-5" />
+            
+            {/* Copyright Line */}
+            <p className="font-space text-[0.55rem] text-[var(--muted-text)] tracking-[0.2em] uppercase mb-3 opacity-60">
+              © 2026 KP Photography. All Rights Reserved.
+            </p>
+            
+            {/* Credits Line */}
+            <p className="font-cinzel text-[0.65rem] text-[var(--muted-text)] tracking-[0.15em] uppercase leading-loose">
+              Designed & Developed by<br/>
+              <span className="text-[#D4AF37] tracking-[0.25em]">Sadiq Mohammad</span>
             </p>
           </div>
+        </motion.div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="font-cinzel text-xl text-white mb-6">Explore</h3>
-            <ul className="space-y-4 font-poppins text-sm text-gray-400">
-              <li><Link href="/gallery" className="hover:text-[#D4AF37] transition-colors">The Gallery</Link></li>
-              <li><Link href="/about" className="hover:text-[#D4AF37] transition-colors">Our Philosophy</Link></li>
-              <li><Link href="/booking" className="hover:text-[#D4AF37] transition-colors">Book Experience</Link></li>
-            </ul>
-          </div>
-
-          {/* Contact Info */}
-          <div>
-            <h3 className="font-cinzel text-xl text-white mb-6">Reach Us</h3>
-            <ul className="space-y-4 font-poppins text-sm text-gray-400">
-              <li className="flex items-start gap-3">
-                <MapPin size={18} className="text-[#D4AF37] mt-0.5 shrink-0" />
-                <span>Narasimharao Pet,<br />Eluru, Andhra Pradesh,<br />India</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone size={18} className="text-[#D4AF37] shrink-0" />
-                <span>+91 8886644868 <br /> +91 9703644868</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Mail size={18} className="text-[#D4AF37] shrink-0" />
-                <span>keshavphotography0101@gmail.com</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Social */}
-          <div>
-            <h3 className="font-cinzel text-xl text-white mb-6">Connect</h3>
-            <div className="flex gap-4">
-              {/* Instagram */}
-              <div className="magnetic-item">
-                <a href="https://www.instagram.com/keshav_fotographie?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all group">
-                  <InstagramIcon size={20} className="group-hover:scale-110 transition-transform" />
-                </a>
-              </div>
-              <div className="magnetic-item">
-                <a href="https://www.youtube.com/@Keshav_Photography/featured" target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all group">
-                  <YoutubeIcon size={20} className="group-hover:scale-110 transition-transform" />
-                </a>
-              </div>
-              {/* WhatsApp Pulse Orb */}
-              <div className="magnetic-item">
-                <a href="https://wa.me/918886644868" target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/50 flex items-center justify-center text-[#D4AF37] hover:bg-[#D4AF37] hover:text-black transition-all relative group">
-                  <span className="absolute inset-0 rounded-full animate-pulse-slow bg-[#D4AF37]/20"></span>
-                  <WhatsAppIcon size={20} className="group-hover:scale-110 transition-transform relative z-10" />
-                </a>
-              </div>
-              {/* Normal Call */}
-              <div className="magnetic-item">
-                <a href="tel:+918886644868" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all group">
-                  <Phone size={20} className="group-hover:scale-110 transition-transform" />
-                </a>
-              </div>
+        {/* ---------------- TABLET & DESKTOP FOOTER (UNCHANGED) ---------------- */}
+        <div className="hidden md:block">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-20">
+            
+            {/* Brand */}
+            <div className="col-span-1 lg:col-span-1">
+              <h2 className="font-great-vibes text-5xl text-gradient-gold mb-2 pr-4 inline-block pt-2">KP&nbsp;</h2>
+              <p className="font-cinzel text-xs tracking-[0.4em] uppercase text-[#D4AF37] mb-6">Photography</p>
+              <p className="font-poppins text-sm text-[var(--muted-text)] leading-relaxed max-w-xs">
+                Capturing Emotions Forever. A luxury cinematic universe preserving your most precious memories in art.
+              </p>
             </div>
-            <p className="mt-6 font-poppins text-xs text-gray-500">
-              Mon–Sat: 10 AM – 7 PM<br />Sunday Closed
-            </p>
+
+            {/* Quick Links */}
+            <div>
+              <h3 className="font-cinzel text-xl text-[var(--foreground)] mb-6">Explore</h3>
+              <ul className="space-y-4 font-poppins text-sm text-[var(--muted-text)]">
+                <li><Link href="/gallery" className="hover:text-[#D4AF37] transition-colors">The Gallery</Link></li>
+                <li><Link href="/about" className="hover:text-[#D4AF37] transition-colors">Our Philosophy</Link></li>
+                <li><Link href="/booking" className="hover:text-[#D4AF37] transition-colors">Book Experience</Link></li>
+              </ul>
+            </div>
+
+            {/* Contact Info */}
+            <div>
+              <h3 className="font-cinzel text-xl text-[var(--foreground)] mb-6">Reach Us</h3>
+              <ul className="space-y-4 font-poppins text-sm text-[var(--muted-text)]">
+                <li className="flex items-start gap-3">
+                  <MapPin size={18} className="text-[#D4AF37] mt-0.5 shrink-0" />
+                  <span>Narasimharao Pet,<br />Eluru, Andhra Pradesh,<br />India</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Phone size={18} className="text-[#D4AF37] shrink-0" />
+                  <span>+91 8886644868 <br /> +91 9703644868</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Mail size={18} className="text-[#D4AF37] shrink-0" />
+                  <span>keshavphotography0101@gmail.com</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Social */}
+            <div>
+              <h3 className="font-cinzel text-xl text-[var(--foreground)] mb-6">Connect</h3>
+              <div className="flex gap-4">
+                {/* Instagram */}
+                <div className="magnetic-item">
+                  <a href="https://www.instagram.com/keshav_fotographie?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full border border-[var(--border-color)] flex items-center justify-center text-[var(--foreground)] hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all group">
+                    <InstagramIcon size={20} className="group-hover:scale-110 transition-transform" />
+                  </a>
+                </div>
+                <div className="magnetic-item">
+                  <a href="https://www.youtube.com/@Keshav_Photography/featured" target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full border border-[var(--border-color)] flex items-center justify-center text-[var(--foreground)] hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all group">
+                    <YoutubeIcon size={20} className="group-hover:scale-110 transition-transform" />
+                  </a>
+                </div>
+                {/* WhatsApp Pulse Orb */}
+                <div className="magnetic-item">
+                  <a href="https://wa.me/918886644868" target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/50 flex items-center justify-center text-[#D4AF37] hover:bg-[#D4AF37] hover:text-black transition-all relative group">
+                    <span className="absolute inset-0 rounded-full animate-pulse-slow bg-[#D4AF37]/20"></span>
+                    <WhatsAppIcon size={20} className="group-hover:scale-110 transition-transform relative z-10" />
+                  </a>
+                </div>
+                {/* Normal Call */}
+                <div className="magnetic-item">
+                  <a href="tel:+918886644868" className="w-12 h-12 rounded-full border border-[var(--border-color)] flex items-center justify-center text-[var(--foreground)] hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all group">
+                    <Phone size={20} className="group-hover:scale-110 transition-transform" />
+                  </a>
+                </div>
+              </div>
+              <p className="mt-6 font-poppins text-xs text-[var(--muted-text)]">
+                Mon–Sat: 10 AM – 7 PM<br />Sunday Closed
+              </p>
+            </div>
+
           </div>
 
-        </div>
-
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="font-poppins text-xs text-gray-500">
-            © 2026 KP Photography. All Rights Reserved.
-          </p>
-          <p className="font-poppins text-xs text-gray-500">
-            Designed & Developed by <span className="text-[#D4AF37]">Sadhiq Mohammad</span>
-          </p>
+          {/* Bottom Bar */}
+          <div className="pt-8 border-t border-[var(--border-color)] flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="font-poppins text-xs text-[var(--muted-text)]">
+              © 2026 KP Photography. All Rights Reserved.
+            </p>
+            <p className="font-poppins text-xs text-[var(--muted-text)]">
+              Designed & Developed by <span className="text-[#D4AF37]">Sadhiq Mohammad</span>
+            </p>
+          </div>
         </div>
       </div>
     </footer>

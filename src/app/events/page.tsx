@@ -18,7 +18,7 @@ const events = [
 
 export default function Events() {
   return (
-    <main className="bg-[#050505] min-h-screen pt-32 pb-20 overflow-hidden text-white">
+    <main className="bg-[var(--background)] min-h-screen pt-32 pb-20 overflow-hidden text-[var(--foreground)]">
       <section className="container mx-auto px-6 md:px-12 mb-20 text-center relative">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -28,7 +28,7 @@ export default function Events() {
           <h1 className="font-cinzel text-5xl md:text-7xl lg:text-8xl mb-4">
             Memory <span className="text-gradient-gold">Capsules</span>
           </h1>
-          <p className="font-poppins text-gray-400 max-w-2xl mx-auto tracking-wide">
+          <p className="font-poppins text-[var(--muted-text)] max-w-2xl mx-auto tracking-wide">
             Dive into the cinematic archives of our most unforgettable celebrations.
           </p>
         </motion.div>
@@ -65,7 +65,7 @@ function MemoryCapsule({ event, index }: { event: any, index: number }) {
     >
       <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm bg-[#111]">
         {/* Dynamic Hover Lighting */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10 opacity-80 group-hover:opacity-40 transition-opacity duration-700" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--background)] via-transparent to-transparent z-10 opacity-80 group-hover:opacity-40 transition-opacity duration-700" />
         <div className="absolute inset-0 bg-[#D4AF37]/20 mix-blend-overlay z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
         
         <motion.img 
@@ -81,11 +81,11 @@ function MemoryCapsule({ event, index }: { event: any, index: number }) {
             <span className="inline-block px-3 py-1 border border-[#D4AF37]/50 text-[#D4AF37] font-space text-[0.6rem] tracking-[0.3em] uppercase mb-4 backdrop-blur-md">
               {event.date}
             </span>
-            <h3 className="font-cinzel text-3xl md:text-5xl text-white mb-2 leading-tight drop-shadow-lg">
+            <h3 className="font-cinzel text-3xl md:text-5xl text-[var(--foreground)] mb-2 leading-tight drop-shadow-lg">
               {event.title}
             </h3>
             <div className="h-0 overflow-hidden group-hover:h-20 transition-all duration-700 ease-in-out opacity-0 group-hover:opacity-100">
-              <p className="font-poppins text-sm text-gray-300 mt-4 leading-relaxed">
+              <p className="font-poppins text-sm text-[var(--muted-text)] mt-4 leading-relaxed">
                 {event.desc}
               </p>
               <p className="font-space text-xs text-[#D4AF37] mt-2 uppercase tracking-widest flex items-center gap-2">
