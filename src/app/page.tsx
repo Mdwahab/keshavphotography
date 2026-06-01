@@ -6,6 +6,7 @@ import gsap from "gsap";
 import Loader from "@/components/ui/Loader";
 import Link from "next/link";
 import { ArrowRight, Play, X } from "lucide-react";
+import { getBackgroundImages } from "./actions";
 
 const YoutubeIcon = ({ size = 20, className = "" }: { size?: number, className?: string }) => (
   <svg 
@@ -32,16 +33,16 @@ const initialSlides = [
 ];
 
 const portals = [
-  { name: "Weddings", image: "/photos/Weddings/Bride Sparsha (1).jpg" },
-  { name: "Shoots", image: "/photos/Shoots/Model ........%23fashionphotographyoftheday %23model📷 %23ｍodelshoot %23hot🔥 %23blues %23fashionblogger %23mo (1).jpg" },
-  { name: "Ceremonies", image: "/photos/Ceremonies/Family portraits 📸.jpg" },
-  { name: "Birthdays", image: "/photos/Birthdays/Screenshot 2026-06-01 114211.png" },
-  { name: "Engagement", image: "/photos/Engagement/Big Vows ❤️.jpg" },
-  { name: "Haldi", image: "/photos/haldi/Kalyan Sarika  Haldi @kalyan_gandham.jpg" },
-  { name: "Reception", image: "/photos/Reception/Chandu ❤️ Vasudha (1).jpg" },
-  { name: "Pre Weddings", image: "/photos/Pre Weddings/perwedding1.jpg" },
-  { name: "Baby Shoots", image: "/photos/Baby Shoots/ButtaBomma 💫 (1).jpg" },
-  { name: "Maternity Shoots", image: "/photos/Maternity Shoot/🤰🏻.jpg" }
+  { name: "Weddings", image: encodeURI("/photos/Weddings/Bride Sparsha (1).jpg") },
+  { name: "Shoots", image: encodeURI("/photos/shoots/shoots1.jpg") },
+  { name: "Ceremonies", image: encodeURI("/photos/ceremonies/Family portraits (1).jpg") },
+  { name: "Birthdays", image: encodeURI("/photos/Birthdays/Screenshot 2026-06-01 114211.png") },
+  { name: "Engagement", image: encodeURI("/photos/engagement/Big Vows ❤️.jpg") },
+  { name: "Haldi", image: encodeURI("/photos/haldi/Kalyan Sarika  Haldi @kalyan_gandham.jpg") },
+  { name: "Reception", image: encodeURI("/photos/Reception/Chandu ❤️ Vasudha (1).jpg") },
+  { name: "Pre Weddings", image: encodeURI("/photos/Pre Weddings/perwedding1.jpg") },
+  { name: "Baby Shoots", image: encodeURI("/photos/Baby Shoots/ButtaBomma (1).jpg") },
+  { name: "Maternity Shoots", image: encodeURI("/photos/Maternity Shoot/🤰🏻.jpg") }
 ];
 
 const cinematicVideos = [
@@ -69,8 +70,23 @@ export default function Home() {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   useEffect(() => {
-    // Randomize slides on client load
+    // Randomize initial slides on client load just in case fetch is slow
     setSlides([...initialSlides].sort(() => Math.random() - 0.5));
+    
+    // Dynamically fetch all images from the background folder
+    async function fetchDynamicBackgrounds() {
+      const dynamicImages = await getBackgroundImages();
+      if (dynamicImages.length > 0) {
+        // Randomize order
+        const shuffled = dynamicImages.sort(() => Math.random() - 0.5);
+        setSlides(shuffled.map((img, idx) => ({ 
+          id: idx + 1, 
+          image: img, 
+          title: "Keshav Photography" 
+        })));
+      }
+    }
+    fetchDynamicBackgrounds();
   }, []);
 
   useEffect(() => {
