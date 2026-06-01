@@ -33,7 +33,7 @@ export default function Contact() {
             <div className="relative aspect-square max-w-md mx-auto overflow-hidden rounded-full border border-white/10 group">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
-                src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?q=80&w=1000&auto=format&fit=crop"
+                src="/photos/haldi/Kalyan Sarika  Haldi @kalyan_gandham.jpg"
                 alt="Keshav - Chief Photographer"
                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-100 group-hover:scale-105"
               />
@@ -125,7 +125,7 @@ export default function Contact() {
           {/* We use an image as a stylized map placeholder for cinematic feel, or a styled iframe */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img 
-            src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1200&auto=format&fit=crop" 
+            src="/photos/Reception/Chandu ❤️ Vasudha (1).jpg" 
             alt="Map Location"
             className="w-full h-full object-cover grayscale opacity-50 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-1000 scale-100 group-hover:scale-105"
           />

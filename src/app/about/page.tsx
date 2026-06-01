@@ -51,7 +51,7 @@ export default function About() {
               
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop" 
+                src="/photos/Shoots/Portrait ......................%23bridalessentials %23canonfamily %23ethicalfashion %23ethicalsourcing %23.jpg"
                 alt="Keshav - Founder"
                 className="absolute inset-0 w-full h-full object-cover rounded-sm z-10 grayscale hover:grayscale-0 transition-all duration-1000"
               />

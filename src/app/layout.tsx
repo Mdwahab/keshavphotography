@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Cinzel, Playfair_Display, Poppins, Space_Grotesk, Great_Vibes } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/providers/SmoothScroll";
-import CustomCursor from "@/components/ui/CustomCursor";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import Scene3D from "@/components/3d/Scene";
@@ -58,7 +57,6 @@ export default function RootLayout({
         className={`${cinzel.variable} ${playfair.variable} ${poppins.variable} ${spaceGrotesk.variable} ${greatVibes.variable} antialiased bg-[#050505] text-white selection:bg-[#D4AF37] selection:text-black`}
       >
         <SmoothScroll>
-          <CustomCursor />
           <Scene3D />
           <Navbar />
           {children}

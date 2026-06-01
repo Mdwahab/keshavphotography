@@ -33,6 +33,24 @@ const WhatsAppIcon = ({ size = 20, className = "" }: { size?: number, className?
   </svg>
 );
 
+const YoutubeIcon = ({ size = 20, className = "" }: { size?: number, className?: string }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
+    <path d="m10 15 5-3-5-3z" />
+  </svg>
+);
+
 export default function Footer() {
   return (
     <footer className="relative bg-[#050505] pt-32 pb-12 overflow-hidden border-t border-white/5">
@@ -56,7 +74,6 @@ export default function Footer() {
             <h3 className="font-cinzel text-xl text-white mb-6">Explore</h3>
             <ul className="space-y-4 font-poppins text-sm text-gray-400">
               <li><Link href="/gallery" className="hover:text-[#D4AF37] transition-colors">The Gallery</Link></li>
-              <li><Link href="/events" className="hover:text-[#D4AF37] transition-colors">Memory Capsules</Link></li>
               <li><Link href="/about" className="hover:text-[#D4AF37] transition-colors">Our Philosophy</Link></li>
               <li><Link href="/booking" className="hover:text-[#D4AF37] transition-colors">Book Experience</Link></li>
             </ul>
@@ -89,6 +106,11 @@ export default function Footer() {
               <div className="magnetic-item">
                 <a href="https://www.instagram.com/keshav_fotographie?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all group">
                   <InstagramIcon size={20} className="group-hover:scale-110 transition-transform" />
+                </a>
+              </div>
+              <div className="magnetic-item">
+                <a href="https://www.youtube.com/@Keshav_Photography/featured" target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all group">
+                  <YoutubeIcon size={20} className="group-hover:scale-110 transition-transform" />
                 </a>
               </div>
               {/* WhatsApp Pulse Orb */}

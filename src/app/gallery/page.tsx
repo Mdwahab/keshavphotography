@@ -4,17 +4,44 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 
-const categories = ["All", "Weddings", "Shoots", "Ceremonies", "Birthdays"];
+const categories = ["All", "Weddings", "Engagement", "Haldi", "Reception", "Pre Weddings", "Maternity Shoots", "Baby Shoots", "Shoots", "Ceremonies", "Birthdays"];
 
 const images = [
-  { id: 1, category: "Weddings", src: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop" },
-  { id: 2, category: "Shoots", src: "https://images.unsplash.com/photo-1554046920-90dc5f3acb71?q=80&w=1200&auto=format&fit=crop" },
-  { id: 3, category: "Ceremonies", src: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=1200&auto=format&fit=crop" },
-  { id: 4, category: "Birthdays", src: "https://images.unsplash.com/photo-1530103862676-de8892bf309c?q=80&w=1200&auto=format&fit=crop" },
-  { id: 5, category: "Weddings", src: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1200&auto=format&fit=crop" },
-  { id: 6, category: "Shoots", src: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=1200&auto=format&fit=crop" },
-  { id: 7, category: "Ceremonies", src: "https://images.unsplash.com/photo-1532712938310-34cb3982ef74?q=80&w=1200&auto=format&fit=crop" },
-  { id: 8, category: "Birthdays", src: "https://images.unsplash.com/photo-1544124499-58912cbddaad?q=80&w=1200&auto=format&fit=crop" },
+  { id: 1, category: "Weddings", src: "/photos/Weddings/Bride Sparsha (1).jpg" },
+  { id: 2, category: "Weddings", src: "/photos/Weddings/Bride Sparsha (2).jpg" },
+  { id: 3, category: "Weddings", src: "/photos/Weddings/సూత్ర ధారణ.jpg" },
+  { id: 4, category: "Engagement", src: "/photos/Engagement/Bhavya 💖 Karthik (1).jpg" },
+  { id: 5, category: "Engagement", src: "/photos/Engagement/Bhavya 💖 Karthik.jpg" },
+  { id: 6, category: "Engagement", src: "/photos/Engagement/Big Vows ❤️.jpg" },
+  { id: 7, category: "Engagement", src: "/photos/Engagement/Congratulations on the engagement of Yogitha and Lohith! Its a wonderful occasion filled with l.jpg" },
+  { id: 8, category: "Haldi", src: "/photos/haldi/Kalyan Sarika  Haldi @kalyan_gandham.jpg" },
+  { id: 9, category: "Haldi", src: "/photos/haldi/Vintage soul ..............Shot by -- @swathi_photography ( kpteam ).jpg" },
+  { id: 10, category: "Reception", src: "/photos/Reception/Chandu ❤️ Vasudha (1).jpg" },
+  { id: 11, category: "Reception", src: "/photos/Reception/Chandu ❤️ Vasudha.jpg" },
+  { id: 12, category: "Baby Shoots", src: "/photos/Baby Shoots/ButtaBomma 💫 (1).jpg" },
+  { id: 13, category: "Baby Shoots", src: "/photos/Baby Shoots/ButtaBomma 💫.jpg" },
+  { id: 14, category: "Pre Weddings", src: "/photos/Pre Weddings/perwedding1.jpg" },
+  { id: 15, category: "Pre Weddings", src: "/photos/Pre Weddings/perwedding2.jpg" },
+  { id: 16, category: "Shoots", src: "/photos/Shoots/%23fashionphotography %23model %23keshavphotography %23professionalgear %23potrait %23blackandwhite.jpg" },
+  { id: 161, category: "Shoots", src: "/photos/Shoots/Model ........%23fashionphotographyoftheday %23model📷 %23ｍodelshoot %23hot🔥 %23blues %23fashionblogger %23mo (1).jpg" },
+  { id: 162, category: "Shoots", src: "/photos/Shoots/Model ........%23fashionphotographyoftheday %23model📷 %23ｍodelshoot %23hot🔥 %23blues %23fashionblogger %23mo (2).jpg" },
+  { id: 163, category: "Shoots", src: "/photos/Shoots/Model ........%23fashionphotographyoftheday %23model📷 %23ｍodelshoot %23hot🔥 %23blues %23fashionblogger %23mo.jpg" },
+  { id: 164, category: "Shoots", src: "/photos/Shoots/Portrait ......................%23bridalessentials %23canonfamily %23ethicalfashion %23ethicalsourcing %23.jpg" },
+  { id: 165, category: "Shoots", src: "/photos/Shoots/Queen👑 pose..... @slaghini............... %23gitam %23vizag %23freshers %23b5 %23clientdaires %23potrait %23c.jpg" },
+  { id: 166, category: "Shoots", src: "/photos/Shoots/Spark ⚡️ ......... .................%23ethicalfashion %23potrait %23charminggirl %23bluenails %23bluedress.jpg" },
+  { id: 17, category: "Ceremonies", src: "/photos/Ceremonies/Family portraits 📸 (1).jpg" },
+  { id: 171, category: "Ceremonies", src: "/photos/Ceremonies/Family portraits 📸.jpg" },
+  { id: 172, category: "Ceremonies", src: "/photos/Ceremonies/h.jpg" },
+  { id: 18, category: "Birthdays", src: "/photos/Birthdays/Screenshot 2026-06-01 114211.png" },
+  { id: 19, category: "Birthdays", src: "/photos/Birthdays/Screenshot 2026-06-01 114231.png" },
+  { id: 20, category: "Birthdays", src: "/photos/Birthdays/Screenshot 2026-06-01 114249.png" },
+  { id: 21, category: "Birthdays", src: "/photos/Birthdays/Screenshot 2026-06-01 114307.png" },
+  { id: 22, category: "Birthdays", src: "/photos/Birthdays/Screenshot 2026-06-01 114324.png" },
+  { id: 23, category: "Maternity Shoots", src: "/photos/Maternity Shoot/619265833_18091615709060376_4948422069590568797_n.jpg" },
+  { id: 24, category: "Maternity Shoots", src: "/photos/Maternity Shoot/622496044_18091910290953095_8340231542531770894_n.jpg" },
+  { id: 25, category: "Maternity Shoots", src: "/photos/Maternity Shoot/622682885_18097112557734211_4456094619096742153_n.jpg" },
+  { id: 26, category: "Maternity Shoots", src: "/photos/Maternity Shoot/🤰🏻 (1).jpg" },
+  { id: 27, category: "Maternity Shoots", src: "/photos/Maternity Shoot/🤰🏻.jpg" }
 ];
 
 export default function Gallery() {

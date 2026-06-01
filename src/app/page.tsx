@@ -1,28 +1,63 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import Loader from "@/components/ui/Loader";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Play, X } from "lucide-react";
 
-const slides = [
-  { id: 1, image: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2000&auto=format&fit=crop", title: "Eternal" },
-  { id: 2, image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2000&auto=format&fit=crop", title: "Moments" },
-  { id: 3, image: "https://images.unsplash.com/photo-1532712938310-34cb3982ef74?q=80&w=2000&auto=format&fit=crop", title: "Forever" }
+const YoutubeIcon = ({ size = 20, className = "" }: { size?: number, className?: string }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
+    <path d="m10 15 5-3-5-3z" />
+  </svg>
+);
+
+const initialSlides = [
+  { id: 1, image: "/photos/background/Engagement%20Rings%20%F0%9F%92%8D.jpg", title: "Eternal" },
+  { id: 2, image: "/photos/background/f.jpg", title: "Moments" },
+  { id: 3, image: "/photos/background/h.jpg", title: "Forever" }
 ];
 
 const portals = [
-  { name: "Weddings", image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=1000&auto=format&fit=crop" },
-  { name: "Shoots", image: "https://images.unsplash.com/photo-1554046920-90dc5f3acb71?q=80&w=1000&auto=format&fit=crop" },
-  { name: "Ceremonies", image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=1000&auto=format&fit=crop" },
-  { name: "Birthdays", image: "https://images.unsplash.com/photo-1530103862676-de8892bf309c?q=80&w=1000&auto=format&fit=crop" }
+  { name: "Weddings", image: "/photos/Weddings/Bride Sparsha (1).jpg" },
+  { name: "Shoots", image: "/photos/Shoots/Model ........%23fashionphotographyoftheday %23model📷 %23ｍodelshoot %23hot🔥 %23blues %23fashionblogger %23mo (1).jpg" },
+  { name: "Ceremonies", image: "/photos/Ceremonies/Family portraits 📸.jpg" },
+  { name: "Birthdays", image: "/photos/Birthdays/Screenshot 2026-06-01 114211.png" },
+  { name: "Engagement", image: "/photos/Engagement/Big Vows ❤️.jpg" },
+  { name: "Haldi", image: "/photos/haldi/Kalyan Sarika  Haldi @kalyan_gandham.jpg" },
+  { name: "Reception", image: "/photos/Reception/Chandu ❤️ Vasudha (1).jpg" },
+  { name: "Pre Weddings", image: "/photos/Pre Weddings/perwedding1.jpg" },
+  { name: "Baby Shoots", image: "/photos/Baby Shoots/ButtaBomma 💫 (1).jpg" },
+  { name: "Maternity Shoots", image: "/photos/Maternity Shoot/🤰🏻.jpg" }
+];
+
+const cinematicVideos = [
+  { id: "gm26cEnjVqM", title: "Eternal Vows", description: "A beautiful cinematic journey of love and commitment." },
+  { id: "W2OUt-nRhY4", title: "The Grand Celebration", description: "Experiencing the magic of a timeless celebration." },
+  { id: "Bmc8xDWUKGw", title: "Moments of Joy", description: "Capturing the purest emotions and untold stories." },
+  { id: "wE0aYgtSy90", title: "A Love Story", description: "Two souls, one beautiful destination." },
+  { id: "wE0aYgtSy90", title: "The Haldi Ceremony", description: "Vibrant colors and unforgettable traditions." },
+  { id: "nHmXnY7teoQ", title: "A Magical Evening", description: "The grand reception filled with love and laughter." }
 ];
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
+  const [activeVideo, setActiveVideo] = useState<string | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [slides, setSlides] = useState(initialSlides);
   const containerRef = useRef<HTMLDivElement>(null);
   
   const { scrollYProgress } = useScroll({
@@ -34,12 +69,17 @@ export default function Home() {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   useEffect(() => {
+    // Randomize slides on client load
+    setSlides([...initialSlides].sort(() => Math.random() - 0.5));
+  }, []);
+
+  useEffect(() => {
     if (loading) return;
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
+    }, 6000); // Changed to 6 seconds as requested
     return () => clearInterval(interval);
-  }, [loading]);
+  }, [loading, slides.length]);
 
   return (
     <>
@@ -205,8 +245,8 @@ export default function Home() {
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.8, delay: idx * 0.2 }}
-                className="group relative h-[60vh] overflow-hidden rounded-sm cursor-pointer magnetic-item w-full"
+                transition={{ duration: 0.8, delay: (idx % 2) * 0.2 }}
+                className={`group relative h-[60vh] overflow-hidden rounded-sm cursor-pointer magnetic-item w-full ${idx === portals.length - 1 && portals.length % 2 !== 0 ? "md:col-span-2" : ""}`}
               >
                 <div className="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition-all duration-700 z-10" />
                 {/* Glowing border effect */}
@@ -234,6 +274,84 @@ export default function Home() {
         </div>
       </section>
 
+      {/* CINEMATIC VIDEOS SECTION */}
+      <section className="relative w-full py-32 px-4 md:px-12 bg-[#050505] border-t border-white/5">
+        <div className="container mx-auto">
+          <div className="mb-20 flex flex-col md:flex-row justify-between items-end gap-8">
+            <div>
+              <motion.h2 
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="font-cinzel text-4xl md:text-6xl text-white mb-4"
+              >
+                Cinematic Videos
+              </motion.h2>
+              <motion.p 
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="font-playfair text-xl text-[#D4AF37] italic"
+              >
+                Experience stories through motion.
+              </motion.p>
+            </div>
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <a href="https://www.youtube.com/@Keshav_Photography/featured" target="_blank" rel="noreferrer" className="flex items-center gap-3 px-6 py-3 border border-[#D4AF37] text-[#D4AF37] font-poppins text-sm tracking-widest uppercase hover:bg-[#D4AF37] hover:text-black transition-all duration-500 rounded-sm group magnetic-item">
+                <YoutubeIcon size={18} />
+                <span>View All Videos</span>
+              </a>
+            </motion.div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {cinematicVideos.map((video, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.8, delay: (idx % 3) * 0.2 }}
+                onClick={() => setActiveVideo(video.id)}
+                className="group relative cursor-pointer magnetic-item rounded-sm overflow-hidden border border-white/5 hover:border-[#D4AF37]/50 transition-colors duration-500 bg-white/5"
+              >
+                {/* Thumbnail Container */}
+                <div className="relative aspect-video overflow-hidden">
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors duration-500 z-10" />
+                  <img 
+                    src={`https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`} 
+                    alt={video.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700"
+                  />
+                  {/* Play Button Overlay */}
+                  <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
+                    <div className="w-16 h-16 rounded-full bg-black/50 backdrop-blur-md border border-white/20 flex items-center justify-center group-hover:bg-[#D4AF37] group-hover:border-[#D4AF37] transition-all duration-500 transform group-hover:scale-110 shadow-lg">
+                      <Play className="text-white group-hover:text-black ml-1" size={24} fill="currentColor" />
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Content */}
+                <div className="p-6 relative z-30">
+                  <h3 className="font-cinzel text-xl text-white mb-2 group-hover:text-[#D4AF37] transition-colors">
+                    {video.title}
+                  </h3>
+                  <p className="font-poppins text-sm text-gray-400 line-clamp-2">
+                    {video.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Philosophy Teaser */}
       <section className="relative w-full py-40 bg-[#050505] flex items-center justify-center overflow-hidden">
          <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-[#3B0A0A]/10 to-[#050505]" />
@@ -254,6 +372,45 @@ export default function Home() {
             </Link>
          </motion.div>
       </section>
+
+      {/* Video Modal */}
+      <AnimatePresence>
+        {activeVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-12"
+            onClick={() => setActiveVideo(null)}
+          >
+            <button 
+              className="absolute top-8 right-8 text-white hover:text-[#D4AF37] transition-colors z-[110] magnetic-item"
+              onClick={() => setActiveVideo(null)}
+            >
+              <X size={32} />
+            </button>
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 50 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 50 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="w-full max-w-6xl aspect-video bg-black rounded-sm overflow-hidden shadow-[0_0_50px_rgba(212,175,55,0.2)] border border-[#D4AF37]/20"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <iframe 
+                width="100%" 
+                height="100%" 
+                src={`https://www.youtube.com/embed/${activeVideo}?autoplay=1&rel=0`} 
+                title="YouTube cinematic video player" 
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowFullScreen
+                className="w-full h-full"
+              ></iframe>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </main>
     </>
