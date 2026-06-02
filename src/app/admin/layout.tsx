@@ -37,7 +37,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: "Settings", href: "/admin/settings", icon: Settings },
   ];
 
-  const SidebarContent = () => (
+  const renderSidebarContent = () => (
     <>
       <div className="p-6 border-b border-[var(--border-color)]">
         <h2 className="font-cinzel text-xl text-[#D4AF37] leading-tight">Keshav Photography</h2>
@@ -82,7 +82,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       
       {/* Desktop Sidebar */}
       <aside className="w-64 border-r border-[var(--border-color)] glass-panel hidden md:flex flex-col z-20">
-        <SidebarContent />
+        {renderSidebarContent()}
       </aside>
 
       {/* Mobile Sidebar Overlay */}
@@ -90,7 +90,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="fixed inset-0 z-50 md:hidden flex">
           <div className="fixed inset-0 bg-[var(--overlay-bg-heavy)] backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
           <aside className="w-64 bg-[var(--card-bg)] border-r border-[var(--border-color)] flex flex-col relative z-50">
-            <SidebarContent />
+            {renderSidebarContent()}
           </aside>
         </div>
       )}

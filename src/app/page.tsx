@@ -71,6 +71,7 @@ export default function Home() {
 
   useEffect(() => {
     // Randomize initial slides on client load just in case fetch is slow
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSlides([...initialSlides].sort(() => Math.random() - 0.5));
     
     // Dynamically fetch all images from the background folder
@@ -341,7 +342,7 @@ export default function Home() {
               className="flex flex-col items-center gap-6 mb-8 px-4"
             >
               <p className="font-playfair text-xl md:text-2xl lg:text-3xl text-[#D4AF37] italic opacity-90 leading-relaxed max-w-2xl">
-                "Every love story deserves to be felt, <br className="hidden sm:block" />not just remembered."
+                &quot;Every love story deserves to be felt, <br className="hidden sm:block" />not just remembered.&quot;
               </p>
               <p className="text-[var(--muted-text)] font-poppins text-sm md:text-base tracking-wide max-w-xl leading-loose">
                 Experience weddings through emotion, movement, music, and timeless storytelling.
@@ -421,7 +422,7 @@ export default function Home() {
             className="container mx-auto text-center px-6 relative z-10"
          >
             <p className="font-playfair text-3xl md:text-5xl lg:text-7xl leading-tight text-[var(--foreground)] mb-12 max-w-5xl mx-auto">
-               "We don't just take photographs. We freeze time, capture souls, and turn fleeting emotions into <span className="text-[#D4AF37] italic">eternal masterpieces</span>."
+               &quot;We don&apos;t just take photographs. We freeze time, capture souls, and turn fleeting emotions into <span className="text-[#D4AF37] italic">eternal masterpieces</span>.&quot;
             </p>
             <Link href="/about" className="magnetic-item">
               <span className="font-space text-sm tracking-[0.3em] text-[var(--muted-text)] hover:text-[#D4AF37] uppercase transition-colors border-b border-gray-400 hover:border-[#D4AF37] pb-2">

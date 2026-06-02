@@ -154,7 +154,7 @@ export default function CameraLens3D({ progress }: CameraLensProps) {
     apertureBladesRef.current.forEach((blade) => {
       // Open and close based on progress steps
       let scaleX = 1;
-      let rotZ = blade.rotation.z;
+      const rotZ = blade.rotation.z;
 
       if (progress > 20 && progress < 50) {
         // Breathing

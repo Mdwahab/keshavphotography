@@ -18,7 +18,7 @@ export default function Contact() {
           className="text-center mb-24"
         >
           <h1 className="font-cinzel text-5xl md:text-7xl mb-4">Connect With <span className="text-gradient-gold">Us</span></h1>
-          <p className="font-poppins text-[var(--muted-text)] max-w-lg mx-auto">Let's create something timeless together.</p>
+          <p className="font-poppins text-[var(--muted-text)] max-w-lg mx-auto">Let&apos;s create something timeless together.</p>
         </motion.div>
 
         {/* ---------------- MOBILE ONLY LAYOUT (PHONES) ---------------- */}

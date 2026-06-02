@@ -45,7 +45,7 @@ export default function Events() {
   );
 }
 
-function MemoryCapsule({ event, index }: { event: any, index: number }) {
+function MemoryCapsule({ event, index }: { event: { id: number, title: string, date: string, location: string, image: string, desc: string }, index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,

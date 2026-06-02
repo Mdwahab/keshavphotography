@@ -104,7 +104,7 @@ export default function CategoryGallery() {
                   onClick={() => setSelectedImage(img.imageUrl)}
                 >
                   <div className="absolute inset-0 bg-[var(--overlay-bg)] group-hover:bg-transparent transition-colors duration-500 z-10" />
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  { }
                   <motion.img 
                     layoutId={`image-${img.imageUrl}`}
                     src={img.imageUrl} 

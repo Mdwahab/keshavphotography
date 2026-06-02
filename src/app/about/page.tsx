@@ -116,7 +116,7 @@ export default function About() {
                  <p>Through countless weddings, I have come to understand that a wedding is never just a single day. It is a beautiful story of love, family, emotions, and traditions that become cherished memories for generations.</p>
                  <p>Today, my work reflects not only technical expertise but also a deep understanding of emotions, human connections, and visual storytelling.</p>
                  <p className="font-playfair text-lg italic text-[#D4AF37] mt-6 text-center border-l-2 border-[#D4AF37] pl-4 py-1">
-                   "For me, wedding photography is more than a profession—it is a lifelong journey of capturing love, one frame at a time."
+                   &quot;For me, wedding photography is more than a profession—it is a lifelong journey of capturing love, one frame at a time.&quot;
                  </p>
                </div>
             </motion.div>
@@ -192,7 +192,7 @@ export default function About() {
                   Today, with over 16 years of experience, my work reflects not only technical expertise but also a deep understanding of emotions, human connections, and visual storytelling. Every frame is captured with passion, precision, creativity, and the responsibility of preserving memories that will last a lifetime.
                 </p>
                 <p className="font-playfair text-xl italic text-[#D4AF37] mt-8 text-center md:text-left border-l-4 border-[#D4AF37] pl-6 py-2">
-                  "For me, wedding photography is more than a profession—it is a lifelong journey of capturing love, emotions, and unforgettable stories, one frame at a time."
+                  &quot;For me, wedding photography is more than a profession—it is a lifelong journey of capturing love, emotions, and unforgettable stories, one frame at a time.&quot;
                 </p>
               </div>
             </motion.div>
