@@ -1,6 +1,8 @@
 import prisma from "@/lib/prisma";
 import { categories } from "@/lib/constants";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminCategories() {
   // Fetch image counts per category
   const categoryCounts = await prisma.galleryImage.groupBy({
