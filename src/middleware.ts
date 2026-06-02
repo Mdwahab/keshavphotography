@@ -18,7 +18,7 @@ export async function middleware(request: NextRequest) {
     }
 
     try {
-      const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+      const secret = new TextEncoder().encode(process.env.JWT_SECRET || "keshav-photography-super-secret-key-2024");
       await jose.jwtVerify(token, secret);
       return NextResponse.next();
     } catch (err) {
