@@ -30,7 +30,12 @@ export default function CategoryGallery() {
       try {
         const res = await fetch(`/api/images?category=${encodeURIComponent(dbCategory)}`);
         const data = await res.json();
-        setImages(data);
+        if (Array.isArray(data)) {
+          setImages(data);
+        } else {
+          setImages([]);
+          console.error("API returned error:", data);
+        }
       } catch (err) {
         console.error("Failed to load images", err);
       } finally {

@@ -28,7 +28,12 @@ export default function AdminGallery() {
     try {
       const res = await fetch(`/api/images?category=${filter}`);
       const data = await res.json();
-      setImages(data);
+      if (Array.isArray(data)) {
+        setImages(data);
+      } else {
+        setImages([]);
+        console.error("API returned error:", data);
+      }
     } catch (err) {
       console.error(err);
     } finally {

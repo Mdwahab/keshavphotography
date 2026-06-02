@@ -3,20 +3,25 @@ import prisma from "@/lib/prisma";
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
-  const totalImages = await prisma.galleryImage.count();
-  
-  // Group by category counts
-  const categoryCounts = await prisma.galleryImage.groupBy({
-    by: ['category'],
-    _count: {
-      category: true,
-    },
-  });
+  let totalImages = 0;
+  let categoryCounts: any[] = [];
+  let recentUploads: any[] = [];
 
-  const recentUploads = await prisma.galleryImage.findMany({
-    orderBy: { createdAt: 'desc' },
-    take: 4,
-  });
+  try {
+    totalImages = await prisma.galleryImage.count();
+    
+    categoryCounts = await prisma.galleryImage.groupBy({
+      by: ['category'],
+      _count: { category: true },
+    });
+
+    recentUploads = await prisma.galleryImage.findMany({
+      orderBy: { createdAt: 'desc' },
+      take: 4,
+    });
+  } catch (error) {
+    console.error("Database connection failed:", error);
+  }
 
   return (
     <div className="max-w-6xl mx-auto">
