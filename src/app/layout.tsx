@@ -2,10 +2,8 @@ import type { Metadata } from "next";
 import { Cinzel, Playfair_Display, Poppins, Space_Grotesk, Great_Vibes } from "next/font/google";
 import "./globals.css";
 import PublicLayout from "@/components/layout/PublicLayout";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/prisma";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
-
-const prisma = new PrismaClient();
 
 const cinzel = Cinzel({
   subsets: ["latin"],

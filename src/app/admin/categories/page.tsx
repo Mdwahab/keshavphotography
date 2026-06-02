@@ -1,8 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-
+import prisma from "@/lib/prisma";
 import { categories } from "@/lib/constants";
-
-const prisma = new PrismaClient();
 
 export default async function AdminCategories() {
   // Fetch image counts per category
