@@ -4,8 +4,8 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
   let totalImages = 0;
-  let categoryCounts: any[] = [];
-  let recentUploads: any[] = [];
+  let categoryCounts: any = [];
+  let recentUploads: any = [];
 
   try {
     totalImages = await prisma.galleryImage.count();
@@ -50,7 +50,7 @@ export default async function AdminDashboard() {
           <p className="text-[var(--muted-text)] font-poppins text-sm py-4">No images uploaded yet.</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-            {recentUploads.map((img) => (
+            {(recentUploads as any[]).map((img: any) => (
               <div key={img.id} className="relative group rounded-sm overflow-hidden aspect-square border border-[var(--border-color)]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={img.imageUrl} alt={img.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />

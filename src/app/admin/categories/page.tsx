@@ -4,7 +4,7 @@ import { categories } from "@/lib/constants";
 export const dynamic = "force-dynamic";
 
 export default async function AdminCategories() {
-  let categoryCounts: any[] = [];
+  let categoryCounts: any = [];
   try {
     categoryCounts = await prisma.galleryImage.groupBy({
       by: ['category'],
@@ -14,7 +14,7 @@ export default async function AdminCategories() {
     console.error("Database connection failed:", error);
   }
 
-  const countMap = categoryCounts.reduce((acc, curr) => {
+  const countMap = (categoryCounts as any[]).reduce((acc: Record<string, number>, curr: any) => {
     acc[curr.category] = curr._count.category;
     return acc;
   }, {} as Record<string, number>);
