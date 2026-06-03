@@ -3,18 +3,28 @@ import { categories } from "@/lib/constants";
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminCategories() {
-  let categoryCounts: any = [];
-  try {
-    categoryCounts = await prisma.galleryImage.groupBy({
-      by: ['category'],
-      _count: { category: true },
-    });
-  } catch (error) {
-    console.error("Database connection failed:", error);
-  }
+type CategoryCount = {
+  category: string;
+  _count: { category: number };
+};
 
-  const countMap = (categoryCounts as any[]).reduce((acc: Record<string, number>, curr: any) => {
+export default async function AdminCategories() {
+  const getCategoryCounts = async (): Promise<CategoryCount[]> => {
+    try {
+      const counts = await prisma.galleryImage.groupBy({
+        by: ['category'],
+        _count: { category: true },
+      });
+      return counts;
+    } catch (error) {
+      console.error("Database connection failed:", error);
+      return [];
+    }
+  };
+
+  const categoryCounts = await getCategoryCounts();
+
+  const countMap = categoryCounts.reduce((acc, curr) => {
     acc[curr.category] = curr._count.category;
     return acc;
   }, {} as Record<string, number>);

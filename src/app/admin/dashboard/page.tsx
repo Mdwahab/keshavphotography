@@ -1,27 +1,36 @@
 import prisma from "@/lib/prisma";
+import { GalleryImage } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
+type CategoryCount = {
+  category: string;
+  _count: { category: number };
+};
+
 export default async function AdminDashboard() {
-  let totalImages = 0;
-  let categoryCounts: any = [];
-  let recentUploads: any = [];
+  const getDashboardData = async () => {
+    try {
+      const totalImages = await prisma.galleryImage.count();
+      
+      const counts = await prisma.galleryImage.groupBy({
+        by: ['category'],
+        _count: { category: true },
+      });
 
-  try {
-    totalImages = await prisma.galleryImage.count();
-    
-    categoryCounts = await prisma.galleryImage.groupBy({
-      by: ['category'],
-      _count: { category: true },
-    });
+      const recent = await prisma.galleryImage.findMany({
+        orderBy: { createdAt: 'desc' },
+        take: 4,
+      });
+      
+      return { totalImages, categoryCounts: counts as CategoryCount[], recentUploads: recent };
+    } catch (error) {
+      console.error("Database connection failed:", error);
+      return { totalImages: 0, categoryCounts: [] as CategoryCount[], recentUploads: [] as GalleryImage[] };
+    }
+  };
 
-    recentUploads = await prisma.galleryImage.findMany({
-      orderBy: { createdAt: 'desc' },
-      take: 4,
-    });
-  } catch (error) {
-    console.error("Database connection failed:", error);
-  }
+  const { totalImages, categoryCounts, recentUploads } = await getDashboardData();
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -50,7 +59,7 @@ export default async function AdminDashboard() {
           <p className="text-[var(--muted-text)] font-poppins text-sm py-4">No images uploaded yet.</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-            {(recentUploads as any[]).map((img: any) => (
+            {recentUploads.map((img) => (
               <div key={img.id} className="relative group rounded-sm overflow-hidden aspect-square border border-[var(--border-color)]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={img.imageUrl} alt={img.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
