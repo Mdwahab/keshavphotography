@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
-import * as fs from "fs";
 import prisma from "@/lib/prisma";
+import { v2 as cloudinary } from "cloudinary";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export async function POST(req: Request) {
   try {
@@ -19,25 +23,20 @@ export async function POST(req: Request) {
 
     const buffer = Buffer.from(await file.arrayBuffer());
     
-    // Sanitize filename: remove spaces, special chars, keep dots and dashes
-    const originalName = file.name || "image.jpg";
-    const extension = path.extname(originalName);
-    const basename = path.basename(originalName, extension);
+    // Upload directly to Cloudinary using a stream
+    const uploadResult = await new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        { folder: "keshav_photography" },
+        (error, result) => {
+          if (error) return reject(error);
+          resolve(result);
+        }
+      );
+      uploadStream.end(buffer);
+    }) as any;
     
-    // Replace all non-alphanumeric characters with dashes
-    const safeBasename = basename.replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-    const filename = `${Date.now()}-${safeBasename}${extension}`;
-    
-    // Ensure upload directory exists
-    const uploadDir = path.join(process.cwd(), "public/uploads");
-    if (!fs.existsSync(uploadDir)) {
-      await mkdir(uploadDir, { recursive: true });
-    }
-    
-    const filepath = path.join(uploadDir, filename);
-    await writeFile(filepath, buffer);
-    
-    const imageUrl = `/uploads/${encodeURIComponent(filename)}`;
+    const imageUrl = uploadResult.secure_url;
+    const publicId = uploadResult.public_id;
 
     const newImage = await prisma.galleryImage.create({
       data: {
@@ -45,13 +44,14 @@ export async function POST(req: Request) {
         description,
         category,
         imageUrl,
+        publicId,
       }
     });
 
     console.log(`
     [UPLOAD SUCCESS]
-    Filename: ${filename}
-    Saved Image URL: ${imageUrl}
+    Cloudinary URL: ${imageUrl}
+    Public ID: ${publicId}
     Selected Category: ${category}
     Database ID: ${newImage.id}
     `);

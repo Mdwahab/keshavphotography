@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -13,6 +13,7 @@ model GalleryImage {
   description String?
   category    String
   imageUrl    String
+  publicId    String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

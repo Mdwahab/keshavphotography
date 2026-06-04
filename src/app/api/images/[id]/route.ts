@@ -1,13 +1,18 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { unlink } from "fs/promises";
-import path from "path";
+import { v2 as cloudinary } from "cloudinary";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
     
-    // Get image to find URL
+    // Get image to find URL and publicId
     const image = await prisma.galleryImage.findUnique({
       where: { id }
     });
@@ -16,13 +21,12 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
       return NextResponse.json({ error: "Image not found" }, { status: 404 });
     }
 
-    // Try to delete file from local storage if it's a local upload
-    if (image.imageUrl.startsWith("/uploads/")) {
+    // Try to delete file from Cloudinary if it has a publicId
+    if (image.publicId) {
       try {
-        const filepath = path.join(process.cwd(), "public", image.imageUrl);
-        await unlink(filepath);
+        await cloudinary.uploader.destroy(image.publicId);
       } catch (err) {
-        console.error("Failed to delete local file:", err);
+        console.error("Failed to delete Cloudinary file:", err);
       }
     }
 
