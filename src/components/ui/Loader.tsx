@@ -6,38 +6,40 @@ import Image from "next/image";
 
 export default function Loader({ onComplete }: { onComplete: () => void }) {
   const [isVisible, setIsVisible] = useState(true);
-  const [shouldAnimate, setShouldAnimate] = useState(false);
+  const [shouldAnimate, setShouldAnimate] = useState(true); // Force true for testing
 
   useEffect(() => {
-    // Check if this is the first visit in this session
-    const hasPlayed = sessionStorage.getItem("kp_intro_played_v4");
+    console.log("[Splash] Splash mounted");
+    console.log("[Splash] Animation started");
+    console.log("[Splash] Timer started (6000ms)");
+
+    document.body.style.overflow = "hidden";
     
-    if (hasPlayed) {
-      // Skip intro immediately for returning users in same session
+    // Temporarily disabled sessionStorage logic for testing
+    // const hasPlayed = sessionStorage.getItem("kp_intro_played_v5");
+    // if (hasPlayed) { ... }
+
+    const timer = setTimeout(() => {
+      console.log("[Splash] Timer completed. Splash fading out.");
       setIsVisible(false);
-      onComplete();
-    } else {
-      // Play intro
-      setShouldAnimate(true);
-      document.body.style.overflow = "hidden";
-      sessionStorage.setItem("kp_intro_played_v4", "true");
+      document.body.style.overflow = "auto";
       
-      // Sequence timing: 6 seconds total
-      const timer = setTimeout(() => {
-        setIsVisible(false);
-        document.body.style.overflow = "auto";
+      // Wait for exit animation to complete before removing from DOM
+      setTimeout(() => {
+        console.log("[Splash] Splash removed. Homepage fading in.");
         onComplete();
-      }, 6000);
-      
-      return () => {
-        clearTimeout(timer);
-        document.body.style.overflow = "auto";
-      };
-    }
-  }, [onComplete]);
+      }, 800); 
+    }, 6000);
+    
+    return () => {
+      clearTimeout(timer);
+      document.body.style.overflow = "auto";
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Prevent server-side rendering mismatch or flashing
-  if (!shouldAnimate) return null;
+  // if (!shouldAnimate) return null;
 
   return (
     <AnimatePresence>
