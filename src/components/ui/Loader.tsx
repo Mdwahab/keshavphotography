@@ -10,7 +10,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
 
   useEffect(() => {
     // Check if this is the first visit in this session
-    const hasPlayed = sessionStorage.getItem("kp_intro_played_v3");
+    const hasPlayed = sessionStorage.getItem("kp_intro_played_v4");
     
     if (hasPlayed) {
       // Skip intro immediately for returning users in same session
@@ -20,14 +20,14 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
       // Play intro
       setShouldAnimate(true);
       document.body.style.overflow = "hidden";
-      sessionStorage.setItem("kp_intro_played_v3", "true");
+      sessionStorage.setItem("kp_intro_played_v4", "true");
       
-      // Sequence timing: 4 seconds total
+      // Sequence timing: 6 seconds total
       const timer = setTimeout(() => {
         setIsVisible(false);
         document.body.style.overflow = "auto";
         onComplete();
-      }, 4000);
+      }, 6000);
       
       return () => {
         clearTimeout(timer);
@@ -51,14 +51,14 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
           {/* Stage 1: Ambient Gold Light Sweep */}
           <motion.div 
             initial={{ x: "-100%", opacity: 0 }}
-            animate={{ x: "100%", opacity: [0, 0.4, 0] }}
-            transition={{ duration: 3.5, ease: "easeInOut" }}
+            animate={{ x: "100%", opacity: [0, 0.4, 0.4, 0] }}
+            transition={{ duration: 6, times: [0, 0.16, 0.83, 1], ease: "easeInOut" }}
             className="absolute top-1/2 -translate-y-1/2 w-[150vw] h-64 bg-[#D4AF37]/10 blur-[100px] pointer-events-none"
           />
 
           {/* Stage 1: Ambient Particles / Dust */}
           <div className="absolute inset-0 pointer-events-none">
-            {[...Array(40)].map((_, i) => (
+            {[...Array(50)].map((_, i) => (
               <motion.div
                 key={i}
                 initial={{ 
@@ -73,27 +73,29 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
                   y: `+=${Math.random() * -60 - 20}`
                 }}
                 transition={{ 
-                  duration: Math.random() * 2 + 2,
-                  delay: Math.random() * 0.5,
-                  ease: "easeInOut"
+                  duration: Math.random() * 3 + 3,
+                  delay: Math.random() * 1.0,
+                  ease: "easeInOut",
+                  repeat: Infinity,
+                  repeatType: "loop"
                 }}
                 className="absolute w-[2px] h-[2px] md:w-1 md:h-1 bg-[#D4AF37] rounded-full blur-[1px]"
               />
             ))}
           </div>
 
-          {/* Stage 2: Logo Fade In and Scale */}
+          {/* Stage 2-5: Logo Orchestration */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: [0, 1, 1, 1], scale: [0.8, 1, 1.03, 1] }}
+            transition={{ duration: 5, delay: 1, times: [0, 0.2, 0.6, 1], ease: "easeInOut" }}
             className="relative z-10 flex items-center justify-center overflow-visible px-8 py-4"
           >
             {/* Deep Expanding Gold Glow Behind Logo */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: [0, 0.6, 0.4], scale: [0.5, 1.2, 1] }}
-              transition={{ duration: 2.5, delay: 0.5, ease: "easeOut" }}
+              animate={{ opacity: [0, 0.8, 0.8, 0], scale: [0.5, 1.2, 1.1, 1.2] }}
+              transition={{ duration: 5, delay: 1, times: [0, 0.2, 0.7, 1], ease: "easeInOut" }}
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 md:w-64 md:h-64 bg-[#D4AF37] rounded-full blur-[60px] md:blur-[80px] pointer-events-none z-0"
             />
 
@@ -111,7 +113,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
             <motion.div 
               initial={{ opacity: 0, scaleX: 0 }}
               animate={{ opacity: [0, 1, 0], scaleX: [0, 1.5, 0] }}
-              transition={{ duration: 1.5, delay: 1.0, ease: "easeInOut" }}
+              transition={{ duration: 1.5, delay: 2, ease: "easeInOut" }}
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[2px] bg-gradient-to-r from-transparent via-[#FFF3B0] to-transparent z-20 pointer-events-none"
               style={{ boxShadow: '0 0 15px 2px rgba(212,175,55,0.8)' }}
             />
@@ -120,19 +122,21 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
             <motion.div 
               initial={{ left: "-100%" }}
               animate={{ left: "200%" }}
-              transition={{ duration: 1.5, delay: 1.0, ease: "easeInOut" }}
+              transition={{ duration: 1.5, delay: 2, ease: "easeInOut" }}
               className="absolute top-0 w-[40%] h-full bg-gradient-to-r from-transparent via-[#FFF3B0]/60 to-transparent skew-x-[-25deg] pointer-events-none z-20"
               style={{ mixBlendMode: 'screen' }}
             />
             
-            {/* Stage 3: Directed Sparkles around the logo */}
+            {/* Sparkles around the logo */}
             {[
-              { top: "10%", left: "10%", delay: 1.3 },
-              { top: "80%", left: "85%", delay: 1.6 },
-              { top: "15%", left: "90%", delay: 1.9 },
-              { top: "85%", left: "15%", delay: 1.4 },
-              { top: "40%", left: "5%", delay: 1.7 },
-              { top: "50%", left: "95%", delay: 1.5 }
+              { top: "10%", left: "10%", delay: 2.1 },
+              { top: "80%", left: "85%", delay: 2.4 },
+              { top: "15%", left: "90%", delay: 3.0 },
+              { top: "85%", left: "15%", delay: 2.5 },
+              { top: "40%", left: "5%", delay: 2.8 },
+              { top: "50%", left: "95%", delay: 3.5 },
+              { top: "20%", left: "40%", delay: 3.8 },
+              { top: "70%", left: "60%", delay: 4.1 }
             ].map((sparkle, i) => (
               <motion.div
                 key={`sparkle-${i}`}
