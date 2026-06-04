@@ -32,7 +32,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
         console.log("[Splash] Splash removed. Homepage fading in.");
         onComplete();
       }, 800); 
-    }, 6000);
+    }, 6700);
     
     return () => {
       clearTimeout(timer);
@@ -101,15 +101,15 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
           {/* Stage 2-5: Logo Orchestration (Foreground Layer) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: [0, 1, 1, 1], scale: [0.8, 1, 1.03, 1] }}
-            transition={{ duration: 5, delay: 1, times: [0, 0.2, 0.6, 1], ease: "easeInOut" }}
+            animate={{ opacity: [0, 1, 1, 1.15, 1.15], scale: [0.8, 1, 1.03, 1.15, 1.15] }}
+            transition={{ duration: 4.9, delay: 1, times: [0, 0.2, 0.6, 0.96, 1], ease: "easeInOut" }}
             className="relative z-20 flex items-center justify-center overflow-visible px-8 py-4"
           >
             {/* Deep Expanding Gold Glow Behind Logo */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: [0, 0.8, 0.8, 0], scale: [0.5, 1.2, 1.1, 1.2] }}
-              transition={{ duration: 5, delay: 1, times: [0, 0.2, 0.7, 1], ease: "easeInOut" }}
+              animate={{ opacity: [0, 0.8, 0.8, 1, 0], scale: [0.5, 1.2, 1.1, 1.4, 1.4] }}
+              transition={{ duration: 4.9, delay: 1, times: [0, 0.2, 0.7, 0.96, 1], ease: "easeInOut" }}
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 md:w-64 md:h-64 bg-[#D4AF37] rounded-full blur-[60px] md:blur-[80px] pointer-events-none z-0"
             />
 
@@ -161,10 +161,10 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
           {/* Stage 6: Cinematic Camera Flash Ending */}
           <motion.div
             initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 1, 0] }}
-            transition={{ duration: 0.5, delay: 5.5, times: [0, 0.2, 1], ease: "easeOut" }}
-            className="fixed inset-0 z-[200] bg-white pointer-events-none"
-            style={{ mixBlendMode: 'screen' }}
+            animate={{ opacity: [0, 1, 1, 0] }}
+            transition={{ duration: 0.7, delay: 5.9, times: [0, 0.14, 0.57, 1], ease: "easeOut" }}
+            className="fixed inset-0 w-[100vw] h-[100vh] bg-white pointer-events-none"
+            style={{ zIndex: 999999 }}
           />
 
         </motion.div>
