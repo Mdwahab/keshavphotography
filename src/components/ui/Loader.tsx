@@ -61,8 +61,17 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
             className="absolute top-1/2 -translate-y-1/2 w-[150vw] h-64 bg-[#D4AF37]/10 blur-[100px] pointer-events-none"
           />
 
-          {/* Stage 1: Ambient Particles / Dust */}
-          <div className="absolute inset-0 pointer-events-none">
+          {/* Stage 3: Full-Height Cinematic Light Beam Sweep (Middle Layer) */}
+          <motion.div 
+            initial={{ left: "-50vw" }}
+            animate={{ left: "150vw" }}
+            transition={{ duration: 2, delay: 1.8, ease: "easeInOut" }}
+            className="absolute top-0 h-[100vh] w-[40vw] bg-gradient-to-r from-transparent via-[#D4AF37]/20 to-transparent skew-x-[-25deg] pointer-events-none z-10"
+            style={{ mixBlendMode: 'screen', filter: 'blur(8px)' }}
+          />
+
+          {/* Stage 1: Ambient Particles / Dust (Background Layer) */}
+          <div className="absolute inset-0 pointer-events-none z-0">
             {[...Array(50)].map((_, i) => (
               <motion.div
                 key={i}
@@ -89,12 +98,12 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
             ))}
           </div>
 
-          {/* Stage 2-5: Logo Orchestration */}
+          {/* Stage 2-5: Logo Orchestration (Foreground Layer) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: [0, 1, 1, 1], scale: [0.8, 1, 1.03, 1] }}
             transition={{ duration: 5, delay: 1, times: [0, 0.2, 0.6, 1], ease: "easeInOut" }}
-            className="relative z-10 flex items-center justify-center overflow-visible px-8 py-4"
+            className="relative z-20 flex items-center justify-center overflow-visible px-8 py-4"
           >
             {/* Deep Expanding Gold Glow Behind Logo */}
             <motion.div 
@@ -119,17 +128,8 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
               initial={{ opacity: 0, scaleX: 0 }}
               animate={{ opacity: [0, 1, 0], scaleX: [0, 1.5, 0] }}
               transition={{ duration: 1.5, delay: 2, ease: "easeInOut" }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[2px] bg-gradient-to-r from-transparent via-[#FFF3B0] to-transparent z-20 pointer-events-none"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] md:w-[120%] h-[2px] bg-gradient-to-r from-transparent via-[#FFF3B0] to-transparent z-20 pointer-events-none"
               style={{ boxShadow: '0 0 15px 2px rgba(212,175,55,0.8)' }}
-            />
-
-            {/* Stage 3: Shimmer Sweep across the logo */}
-            <motion.div 
-              initial={{ left: "-100%" }}
-              animate={{ left: "200%" }}
-              transition={{ duration: 1.5, delay: 2, ease: "easeInOut" }}
-              className="absolute top-0 w-[40%] h-full bg-gradient-to-r from-transparent via-[#FFF3B0]/60 to-transparent skew-x-[-25deg] pointer-events-none z-20"
-              style={{ mixBlendMode: 'screen' }}
             />
             
             {/* Sparkles around the logo */}
