@@ -1,61 +1,43 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import gsap from "gsap";
 
 export default function Loader({ onComplete }: { onComplete: () => void }) {
-  const [progress, setProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
-  const [isZooming, setIsZooming] = useState(false);
-  const [flashActive, setFlashActive] = useState(false);
-  
-  const lensRef = useRef<HTMLDivElement>(null);
+  const [shouldAnimate, setShouldAnimate] = useState(false);
 
   useEffect(() => {
-    document.body.style.overflow = "hidden";
+    // Check if this is the first visit in this session
+    const hasPlayed = sessionStorage.getItem("kp_intro_played");
     
-    let current = 0;
-    const interval = setInterval(() => {
-      current += Math.floor(Math.random() * 4) + 2;
+    if (hasPlayed) {
+      // Skip intro immediately for returning users in same session
+      setIsVisible(false);
+      onComplete();
+    } else {
+      // Play intro
+      setShouldAnimate(true);
+      document.body.style.overflow = "hidden";
+      sessionStorage.setItem("kp_intro_played", "true");
+      
+      // Sequence timing: 4 seconds total
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+        document.body.style.overflow = "auto";
+        onComplete();
+      }, 4000);
+      
+      return () => {
+        clearTimeout(timer);
+        document.body.style.overflow = "auto";
+      };
+    }
+  }, [onComplete]);
 
-      if (current >= 100) {
-        current = 100;
-        setProgress(100);
-        clearInterval(interval);
-        
-        // 100% Sequence
-        setTimeout(() => {
-          setFlashActive(true);
-          
-          setTimeout(() => {
-            setFlashActive(false);
-            setIsZooming(true);
-            
-            if (lensRef.current) {
-               gsap.to(lensRef.current, {
-                 scale: 25,
-                 opacity: 0,
-                 duration: 0.6,
-                 ease: "power2.in",
-                 onComplete: () => {
-                   setIsVisible(false);
-                   document.body.style.overflow = "auto";
-                   onComplete();
-                 }
-               });
-            }
-          }, 150); // Flash duration max 150ms
-        }, 100);
-      } else {
-        setProgress(current);
-      }
-    }, 40);
-
-    return () => clearInterval(interval);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // Prevent server-side rendering mismatch or flashing
+  if (!shouldAnimate) return null;
 
   return (
     <AnimatePresence>
@@ -63,84 +45,98 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] bg-[var(--background)] flex items-center justify-center overflow-hidden"
+          transition={{ duration: 0.8, ease: "easeInOut" }}
+          className="fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden"
         >
-          {/* Flash Overlay - GPU Accelerated Opacity */}
-          <div 
-             className={`absolute inset-0 z-50 bg-white pointer-events-none transition-opacity ease-out ${flashActive ? 'opacity-100 duration-50' : 'opacity-0 duration-200'}`}
-             style={{ mixBlendMode: 'screen', willChange: 'opacity' }}
+          {/* Stage 1: Ambient Gold Light Sweep */}
+          <motion.div 
+            initial={{ x: "-100%", opacity: 0 }}
+            animate={{ x: "100%", opacity: [0, 0.4, 0] }}
+            transition={{ duration: 3.5, ease: "easeInOut" }}
+            className="absolute top-1/2 -translate-y-1/2 w-[150vw] h-64 bg-[#D4AF37]/10 blur-[100px] pointer-events-none"
           />
 
-          {/* 2D CSS DSLR Lens Container */}
-          <div ref={lensRef} className="relative z-10 flex flex-col items-center justify-center w-full h-full" style={{ willChange: 'transform, opacity' }}>
-            
-            <motion.div 
-              className="relative w-[280px] h-[280px] md:w-[400px] md:h-[400px] rounded-full border-[10px] border-[#111] bg-[var(--card-bg)] flex items-center justify-center overflow-hidden"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-              style={{ willChange: 'transform' }}
-            >
-              {/* Gold Ring Edge */}
-              <div className="absolute inset-0 rounded-full border-4 border-[#D4AF37]/80" />
-              
-              {/* Inner Lens Barrels */}
-              <div className="absolute inset-[15px] rounded-full border-[8px] border-[#1a1a1a]" />
-              <div className="absolute inset-[30px] rounded-full border-[2px] border-gray-700" />
-              
-              {/* Aperture Blades */}
-              <div className="absolute inset-[40px] rounded-full flex items-center justify-center bg-[var(--background)]">
-                {[...Array(8)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="absolute w-[120%] h-[1px] bg-gray-800 origin-center"
-                    style={{ rotate: i * 45, willChange: 'transform' }}
-                  >
-                    <motion.div 
-                      className="w-1/2 h-full bg-gray-600"
-                      animate={{ 
-                        scaleX: [1, 1.2, 1],
-                        opacity: [0.5, 1, 0.5]
-                      }}
-                      transition={{ 
-                        duration: 1.5, 
-                        repeat: Infinity,
-                        delay: i * 0.1,
-                        ease: "easeInOut"
-                      }}
-                    />
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Glass Reflection (Optimized) */}
-              <div className="absolute inset-[40px] rounded-full bg-gradient-to-tr from-transparent via-white/5 to-transparent border border-[var(--border-color)]" />
-              <div className="absolute top-[25%] left-[25%] w-[30%] h-[30%] bg-white/10 rounded-full blur-[8px]" />
-              <div className="absolute bottom-[30%] right-[30%] w-[15%] h-[15%] bg-[#D4AF37]/10 rounded-full blur-[10px]" />
-            </motion.div>
-
-            {/* Typography Overlay */}
-            <motion.div 
-              className="absolute z-20 flex flex-col items-center pointer-events-none"
-              animate={{ opacity: isZooming || flashActive ? 0 : 1 }}
-              transition={{ duration: 0.2 }}
-              style={{ willChange: 'opacity' }}
-            >
-              <Image 
-                src="/logo/Layer 0.png" 
-                alt="Keshav Photography" 
-                width={200} 
-                height={100} 
-                className="mb-4 drop-shadow-[0_0_15px_rgba(0,0,0,0.8)] object-contain w-32 md:w-48 h-auto" 
+          {/* Stage 1: Ambient Particles / Dust */}
+          <div className="absolute inset-0 pointer-events-none">
+            {[...Array(40)].map((_, i) => (
+              <motion.div
+                key={i}
+                initial={{ 
+                  opacity: 0, 
+                  scale: 0,
+                  x: Math.random() * window.innerWidth,
+                  y: Math.random() * window.innerHeight
+                }}
+                animate={{ 
+                  opacity: [0, Math.random() * 0.8 + 0.2, 0],
+                  scale: [0, Math.random() * 1.5 + 0.5, 0],
+                  y: `+=${Math.random() * -60 - 20}`
+                }}
+                transition={{ 
+                  duration: Math.random() * 2 + 2,
+                  delay: Math.random() * 0.5,
+                  ease: "easeInOut"
+                }}
+                className="absolute w-[2px] h-[2px] md:w-1 md:h-1 bg-[#D4AF37] rounded-full blur-[1px]"
               />
-              <div className="font-space text-[10px] tracking-[0.5em] text-[#D4AF37] mb-2 uppercase text-center bg-[var(--overlay-bg)] px-4 py-1 rounded-full backdrop-blur-sm border border-[#D4AF37]/20">
-                Autofocusing
-              </div>
-              <div className="font-playfair text-6xl md:text-8xl text-[var(--foreground)] font-light drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
-                {progress}%
-              </div>
-            </motion.div>
-
+            ))}
           </div>
+
+          {/* Stage 2 & 4: Logo Fade In, Scale, and Pulse */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.7 }}
+            animate={{ 
+              opacity: [0, 1, 1, 1], 
+              scale: [0.7, 1, 1.05, 1] 
+            }}
+            transition={{ 
+              duration: 3.5, 
+              times: [0, 0.3, 0.7, 0.85], 
+              ease: "easeInOut" 
+            }}
+            className="relative z-10 flex items-center justify-center overflow-hidden px-8 py-4"
+          >
+            {/* The Logo */}
+            <Image 
+              src="/logo/Layer 0.png" 
+              alt="Keshav Photography" 
+              width={400} 
+              height={200} 
+              priority
+              className="object-contain w-64 md:w-80 lg:w-96 h-auto filter drop-shadow-[0_0_25px_rgba(212,175,55,0.4)] relative z-10" 
+            />
+
+            {/* Stage 3: Shimmer Sweep across the logo */}
+            <motion.div 
+              initial={{ left: "-100%" }}
+              animate={{ left: "200%" }}
+              transition={{ duration: 1.5, delay: 1.2, ease: "easeInOut" }}
+              className="absolute top-0 w-[40%] h-full bg-gradient-to-r from-transparent via-[#FFF3B0]/60 to-transparent skew-x-[-25deg] pointer-events-none z-20"
+              style={{ mixBlendMode: 'screen' }}
+            />
+            
+            {/* Stage 3: Directed Sparkles around the logo */}
+            {[
+              { top: "10%", left: "10%", delay: 1.5 },
+              { top: "80%", left: "85%", delay: 1.8 },
+              { top: "15%", left: "90%", delay: 2.1 },
+              { top: "85%", left: "15%", delay: 1.6 }
+            ].map((sparkle, i) => (
+              <motion.div
+                key={`sparkle-${i}`}
+                initial={{ opacity: 0, scale: 0, rotate: 0 }}
+                animate={{ opacity: [0, 1, 0], scale: [0, 1.5, 0], rotate: 180 }}
+                transition={{ duration: 1, delay: sparkle.delay, ease: "easeInOut" }}
+                className="absolute w-4 h-4 md:w-6 md:h-6 z-30"
+                style={{ top: sparkle.top, left: sparkle.left }}
+              >
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 0L13.5 10.5L24 12L13.5 13.5L12 24L10.5 13.5L0 12L10.5 10.5L12 0Z" fill="#FFF3B0" className="drop-shadow-[0_0_5px_rgba(212,175,55,1)]"/>
+                </svg>
+              </motion.div>
+            ))}
+          </motion.div>
+          
         </motion.div>
       )}
     </AnimatePresence>
