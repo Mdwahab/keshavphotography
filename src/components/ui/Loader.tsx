@@ -32,7 +32,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
         console.log("[Splash] Splash removed. Homepage fading in.");
         onComplete();
       }, 800); 
-    }, 6700);
+    }, 6000);
     
     return () => {
       clearTimeout(timer);
@@ -161,8 +161,8 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
           {/* Stage 6: Cinematic Camera Flash Ending */}
           <motion.div
             initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 1, 1, 0] }}
-            transition={{ duration: 0.7, delay: 5.9, times: [0, 0.14, 0.57, 1], ease: "easeOut" }}
+            animate={{ opacity: [0, 1] }}
+            transition={{ duration: 0.1, delay: 5.9, ease: "easeOut" }}
             className="fixed inset-0 w-[100vw] h-[100vh] bg-white pointer-events-none"
             style={{ zIndex: 999999 }}
           />
