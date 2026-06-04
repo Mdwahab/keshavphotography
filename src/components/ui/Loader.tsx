@@ -6,9 +6,12 @@ import Image from "next/image";
 
 export default function Loader({ onComplete }: { onComplete: () => void }) {
   const [isVisible, setIsVisible] = useState(true);
-  const [shouldAnimate, setShouldAnimate] = useState(true); // Force true for testing
+  const [shouldAnimate, setShouldAnimate] = useState(false); 
 
   useEffect(() => {
+    // Set shouldAnimate to true only on the client
+    setShouldAnimate(true);
+    
     console.log("[Splash] Splash mounted");
     console.log("[Splash] Animation started");
     console.log("[Splash] Timer started (6000ms)");
@@ -39,7 +42,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
   }, []);
 
   // Prevent server-side rendering mismatch or flashing
-  // if (!shouldAnimate) return null;
+  if (!shouldAnimate) return null;
 
   return (
     <AnimatePresence>
