@@ -23,6 +23,11 @@ export function ThemeProvider({
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [nextTheme, setNextTheme] = useState<Theme | null>(null);
 
+  // Sync state if server passes a new initialTheme (e.g. after revalidatePath)
+  useEffect(() => {
+    setTheme(initialTheme);
+  }, [initialTheme]);
+
   // Sync with document element on mount and theme change
   useEffect(() => {
     const root = document.documentElement;

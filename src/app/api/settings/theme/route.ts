@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
+
+export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
@@ -34,6 +37,9 @@ export async function PUT(req: Request) {
       update: { theme },
       create: { id: "global", theme },
     });
+
+    // Clear the Next.js cache so layout.tsx refetches the updated theme on the next load
+    revalidatePath("/", "layout");
 
     return NextResponse.json({ success: true, theme: settings.theme });
   } catch (error) {
