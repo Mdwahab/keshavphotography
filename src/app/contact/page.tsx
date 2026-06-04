@@ -58,12 +58,12 @@ export default function Contact() {
 
             {/* Contact Details Card */}
             <div className="glass-panel p-6 rounded-2xl relative overflow-hidden mb-6">
-              <div className="space-y-6 relative z-10">
+              <div className="flex flex-col gap-6 relative z-10">
                 <a href="tel:+918886644868" className="flex items-center gap-5 group">
                   <div className="w-10 h-10 shrink-0 rounded-full border border-white/10 flex items-center justify-center bg-white/5 group-hover:border-[#D4AF37] group-hover:bg-[#D4AF37]/10 transition-colors">
                     <Phone className="text-[var(--muted-text)] group-hover:text-[#D4AF37] transition-colors" size={16} />
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <p className="font-space text-[0.6rem] tracking-widest text-[var(--muted-text)] uppercase mb-0.5">Call Us</p>
                     <p className="font-poppins text-sm text-[var(--foreground)] leading-snug">+91 88866 44868 <br/> +91 97036 44868</p>
                   </div>
@@ -73,9 +73,9 @@ export default function Contact() {
                   <div className="w-10 h-10 shrink-0 rounded-full border border-white/10 flex items-center justify-center bg-white/5 group-hover:border-[#D4AF37] group-hover:bg-[#D4AF37]/10 transition-colors">
                     <Mail className="text-[var(--muted-text)] group-hover:text-[#D4AF37] transition-colors" size={16} />
                   </div>
-                  <div className="overflow-hidden">
+                  <div className="flex-1 min-w-0">
                     <p className="font-space text-[0.6rem] tracking-widest text-[var(--muted-text)] uppercase mb-0.5">Email</p>
-                    <p className="font-poppins text-[0.75rem] text-[var(--foreground)] truncate">keshavphotography0101@gmail.com</p>
+                    <p className="font-poppins text-[0.75rem] text-[var(--foreground)] break-all">keshavphotography0101@gmail.com</p>
                   </div>
                 </a>
 
@@ -83,7 +83,7 @@ export default function Contact() {
                   <div className="w-10 h-10 shrink-0 rounded-full border border-white/10 flex items-center justify-center bg-white/5 group-hover:border-[#D4AF37] group-hover:bg-[#D4AF37]/10 transition-colors">
                     <MapPin className="text-[var(--muted-text)] group-hover:text-[#D4AF37] transition-colors" size={16} />
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <p className="font-space text-[0.6rem] tracking-widest text-[var(--muted-text)] uppercase mb-0.5">Studio Address</p>
                     <p className="font-poppins text-[0.75rem] text-[var(--foreground)] leading-relaxed">
                       Narasimharao Pet,<br/>Eluru, Andhra Pradesh
@@ -151,34 +151,34 @@ export default function Contact() {
               <div className="absolute inset-0 bg-gradient-to-r from-[#D4AF37]/0 to-[#D4AF37]/5 transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-700" />
               <h2 className="font-cinzel text-2xl text-[var(--foreground)] mb-8 relative z-10">Direct Inquiries</h2>
               
-              <div className="space-y-6 relative z-10">
+              <div className="flex flex-col gap-8 relative z-10">
                 <a href="tel:+918886644868" className="flex items-center gap-6 group/item magnetic-item">
-                  <div className="w-12 h-12 rounded-full border border-[var(--border-color)] flex items-center justify-center group-hover/item:border-[#D4AF37] transition-colors">
+                  <div className="w-12 h-12 shrink-0 rounded-full border border-[var(--border-color)] flex items-center justify-center group-hover/item:border-[#D4AF37] transition-colors">
                     <Phone className="text-[var(--muted-text)] group-hover/item:text-[#D4AF37] transition-colors" size={20} />
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <p className="font-space text-xs tracking-widest text-[var(--muted-text)] uppercase mb-1">Call Us</p>
                     <p className="font-poppins text-lg text-[var(--foreground)]">+91 88866 44868 <br/> +91 97036 44868</p>
                   </div>
                 </a>
 
                 <a href="mailto:keshavphotography0101@gmail.com" className="flex items-center gap-6 group/item magnetic-item">
-                  <div className="w-12 h-12 rounded-full border border-[var(--border-color)] flex items-center justify-center group-hover/item:border-[#D4AF37] transition-colors">
+                  <div className="w-12 h-12 shrink-0 rounded-full border border-[var(--border-color)] flex items-center justify-center group-hover/item:border-[#D4AF37] transition-colors">
                     <Mail className="text-[var(--muted-text)] group-hover/item:text-[#D4AF37] transition-colors" size={20} />
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <p className="font-space text-xs tracking-widest text-[var(--muted-text)] uppercase mb-1">Email</p>
-                    <p className="font-poppins text-lg text-[var(--foreground)]">keshavphotography0101@gmail.com</p>
+                    <p className="font-poppins text-lg text-[var(--foreground)] break-all">keshavphotography0101@gmail.com</p>
                   </div>
                 </a>
 
                 <div className="flex items-center gap-6 group/item">
-                  <div className="w-12 h-12 rounded-full border border-[var(--border-color)] flex items-center justify-center group-hover/item:border-[#D4AF37] transition-colors">
+                  <div className="w-12 h-12 shrink-0 rounded-full border border-[var(--border-color)] flex items-center justify-center group-hover/item:border-[#D4AF37] transition-colors">
                     <MapPin className="text-[var(--muted-text)] group-hover/item:text-[#D4AF37] transition-colors" size={20} />
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <p className="font-space text-xs tracking-widest text-[var(--muted-text)] uppercase mb-1">Visit</p>
-                    <p className="font-poppins text-[var(--foreground)] leading-relaxed">
+                    <p className="font-poppins text-lg text-[var(--foreground)] leading-relaxed">
                       Narasimharao Pet,<br/>Eluru, Andhra Pradesh,<br/>India
                     </p>
                   </div>
