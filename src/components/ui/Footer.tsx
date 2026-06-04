@@ -81,7 +81,7 @@ export default function Footer() {
             {/* Credits Line */}
             <p className="font-cinzel text-[0.65rem] text-[var(--muted-text)] tracking-[0.15em] uppercase leading-loose">
               Designed & Developed by<br/>
-              <span className="text-[#D4AF37] tracking-[0.25em]">Sadiq Mohammad</span>
+              <span className="text-[#D4AF37] tracking-[0.25em]">Sadhiq Mohammad</span>
             </p>
           </div>
         </motion.div>
