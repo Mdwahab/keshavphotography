@@ -10,7 +10,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
 
   useEffect(() => {
     // Check if this is the first visit in this session
-    const hasPlayed = sessionStorage.getItem("kp_intro_played");
+    const hasPlayed = sessionStorage.getItem("kp_intro_played_v3");
     
     if (hasPlayed) {
       // Skip intro immediately for returning users in same session
@@ -20,7 +20,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
       // Play intro
       setShouldAnimate(true);
       document.body.style.overflow = "hidden";
-      sessionStorage.setItem("kp_intro_played", "true");
+      sessionStorage.setItem("kp_intro_played_v3", "true");
       
       // Sequence timing: 4 seconds total
       const timer = setTimeout(() => {
@@ -82,20 +82,21 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
             ))}
           </div>
 
-          {/* Stage 2 & 4: Logo Fade In, Scale, and Pulse */}
+          {/* Stage 2: Logo Fade In and Scale */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.7 }}
-            animate={{ 
-              opacity: [0, 1, 1, 1], 
-              scale: [0.7, 1, 1.05, 1] 
-            }}
-            transition={{ 
-              duration: 3.5, 
-              times: [0, 0.3, 0.7, 0.85], 
-              ease: "easeInOut" 
-            }}
-            className="relative z-10 flex items-center justify-center overflow-hidden px-8 py-4"
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            className="relative z-10 flex items-center justify-center overflow-visible px-8 py-4"
           >
+            {/* Deep Expanding Gold Glow Behind Logo */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: [0, 0.6, 0.4], scale: [0.5, 1.2, 1] }}
+              transition={{ duration: 2.5, delay: 0.5, ease: "easeOut" }}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 md:w-64 md:h-64 bg-[#D4AF37] rounded-full blur-[60px] md:blur-[80px] pointer-events-none z-0"
+            />
+
             {/* The Logo */}
             <Image 
               src="/logo/Layer 0.png" 
@@ -103,30 +104,41 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
               width={400} 
               height={200} 
               priority
-              className="object-contain w-64 md:w-80 lg:w-96 h-auto filter drop-shadow-[0_0_25px_rgba(212,175,55,0.4)] relative z-10" 
+              className="object-contain w-64 md:w-80 lg:w-96 h-auto relative z-10" 
+            />
+
+            {/* Stage 3: Intense Horizontal Lens Flare */}
+            <motion.div 
+              initial={{ opacity: 0, scaleX: 0 }}
+              animate={{ opacity: [0, 1, 0], scaleX: [0, 1.5, 0] }}
+              transition={{ duration: 1.5, delay: 1.0, ease: "easeInOut" }}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[2px] bg-gradient-to-r from-transparent via-[#FFF3B0] to-transparent z-20 pointer-events-none"
+              style={{ boxShadow: '0 0 15px 2px rgba(212,175,55,0.8)' }}
             />
 
             {/* Stage 3: Shimmer Sweep across the logo */}
             <motion.div 
               initial={{ left: "-100%" }}
               animate={{ left: "200%" }}
-              transition={{ duration: 1.5, delay: 1.2, ease: "easeInOut" }}
+              transition={{ duration: 1.5, delay: 1.0, ease: "easeInOut" }}
               className="absolute top-0 w-[40%] h-full bg-gradient-to-r from-transparent via-[#FFF3B0]/60 to-transparent skew-x-[-25deg] pointer-events-none z-20"
               style={{ mixBlendMode: 'screen' }}
             />
             
             {/* Stage 3: Directed Sparkles around the logo */}
             {[
-              { top: "10%", left: "10%", delay: 1.5 },
-              { top: "80%", left: "85%", delay: 1.8 },
-              { top: "15%", left: "90%", delay: 2.1 },
-              { top: "85%", left: "15%", delay: 1.6 }
+              { top: "10%", left: "10%", delay: 1.3 },
+              { top: "80%", left: "85%", delay: 1.6 },
+              { top: "15%", left: "90%", delay: 1.9 },
+              { top: "85%", left: "15%", delay: 1.4 },
+              { top: "40%", left: "5%", delay: 1.7 },
+              { top: "50%", left: "95%", delay: 1.5 }
             ].map((sparkle, i) => (
               <motion.div
                 key={`sparkle-${i}`}
                 initial={{ opacity: 0, scale: 0, rotate: 0 }}
                 animate={{ opacity: [0, 1, 0], scale: [0, 1.5, 0], rotate: 180 }}
-                transition={{ duration: 1, delay: sparkle.delay, ease: "easeInOut" }}
+                transition={{ duration: 1.5, delay: sparkle.delay, ease: "easeInOut" }}
                 className="absolute w-4 h-4 md:w-6 md:h-6 z-30"
                 style={{ top: sparkle.top, left: sparkle.left }}
               >
