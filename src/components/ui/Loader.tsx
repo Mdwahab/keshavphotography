@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import gsap from "gsap";
 
 export default function Loader({ onComplete }: { onComplete: () => void }) {
@@ -124,9 +125,13 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
               transition={{ duration: 0.2 }}
               style={{ willChange: 'opacity' }}
             >
-              <h1 className="font-playfair text-5xl md:text-7xl text-[#D4AF37] mb-4 drop-shadow-[0_0_15px_rgba(0,0,0,0.8)] italic font-bold">
-                KP
-              </h1>
+              <Image 
+                src="/logo/Layer 0.png" 
+                alt="Keshav Photography" 
+                width={200} 
+                height={100} 
+                className="mb-4 drop-shadow-[0_0_15px_rgba(0,0,0,0.8)] object-contain w-32 md:w-48 h-auto" 
+              />
               <div className="font-space text-[10px] tracking-[0.5em] text-[#D4AF37] mb-2 uppercase text-center bg-[var(--overlay-bg)] px-4 py-1 rounded-full backdrop-blur-sm border border-[#D4AF37]/20">
                 Autofocusing
               </div>

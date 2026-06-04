@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -74,7 +75,7 @@ export default function Footer() {
             
             {/* Copyright Line */}
             <p className="font-space text-[0.55rem] text-[var(--muted-text)] tracking-[0.2em] uppercase mb-3 opacity-60">
-              © 2026 KP Photography. All Rights Reserved.
+              © 2026 Keshav Photography. All Rights Reserved.
             </p>
             
             {/* Credits Line */}
@@ -91,7 +92,13 @@ export default function Footer() {
             
             {/* Brand */}
             <div className="col-span-1 lg:col-span-1">
-              <h2 className="font-great-vibes text-5xl text-gradient-gold mb-2 pr-4 inline-block pt-2">KP&nbsp;</h2>
+              <Image 
+                src="/logo/Layer 0.png" 
+                alt="Keshav Photography" 
+                width={120} 
+                height={60} 
+                className="object-contain h-12 w-auto mb-2"
+              />
               <p className="font-cinzel text-xs tracking-[0.4em] uppercase text-[#D4AF37] mb-6">Photography</p>
               <p className="font-poppins text-sm text-[var(--muted-text)] leading-relaxed max-w-xs">
                 Capturing Emotions Forever. A luxury cinematic universe preserving your most precious memories in art.
@@ -166,7 +173,7 @@ export default function Footer() {
           {/* Bottom Bar */}
           <div className="pt-8 border-t border-[var(--border-color)] flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="font-poppins text-xs text-[var(--muted-text)]">
-              © 2026 KP Photography. All Rights Reserved.
+              © 2026 Keshav Photography. All Rights Reserved.
             </p>
             <p className="font-poppins text-xs text-[var(--muted-text)]">
               Designed & Developed by <span className="text-[#D4AF37]">Sadhiq Mohammad</span>

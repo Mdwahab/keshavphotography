@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { 
   LayoutDashboard, 
@@ -40,7 +41,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const renderSidebarContent = () => (
     <>
       <div className="p-6 border-b border-[var(--border-color)]">
-        <h2 className="font-cinzel text-xl text-[#D4AF37] leading-tight">Keshav Photography</h2>
+        <Image 
+          src="/logo/Layer 0.png" 
+          alt="Keshav Photography" 
+          width={120} 
+          height={60} 
+          className="object-contain h-8 w-auto mb-1" 
+        />
         <p className="font-space text-[10px] text-[var(--muted-text)] tracking-widest mt-2 uppercase">Admin Control Panel</p>
       </div>
 

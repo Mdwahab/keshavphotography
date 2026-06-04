@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import gsap from "gsap";
 import Loader from "@/components/ui/Loader";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Play, X } from "lucide-react";
 import { getBackgroundImages } from "./actions";
 
@@ -169,15 +170,20 @@ export default function Home() {
                  transition={{ duration: 2, delay: 2, ease: "easeInOut", repeat: Infinity, repeatDelay: 5 }}
                  className="absolute inset-0 z-10 w-1/3 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg]"
                />
-               <motion.h1 
+               <motion.div 
                  initial={{ opacity: 0, clipPath: "inset(0 100% 0 0)" }}
                  animate={{ opacity: 1, clipPath: "inset(0 0% 0 0)" }}
                  transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
-                 className="logo-text font-great-vibes text-7xl md:text-8xl lg:text-9xl text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] via-[#FFF3B0] to-[#D4AF37] font-normal tracking-normal relative z-0 py-4 pr-8 inline-block"
-                 style={{ lineHeight: '1.4' }}
+                 className="relative z-0 py-4 pr-8 inline-block"
                >
-                 KP&nbsp;
-               </motion.h1>
+                 <Image 
+                   src="/logo/Layer 0.png" 
+                   alt="Keshav Photography" 
+                   width={300} 
+                   height={150} 
+                   className="object-contain w-48 md:w-64 lg:w-80 h-auto filter drop-shadow-[0_0_15px_rgba(212,175,55,0.4)]" 
+                 />
+               </motion.div>
             </div>
 
             {/* "Photography" */}

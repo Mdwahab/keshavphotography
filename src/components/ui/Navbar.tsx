@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -40,12 +41,13 @@ export default function Navbar() {
         <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
           {/* Logo */}
           <Link href="/" className="relative z-50 group magnetic-item flex flex-col items-center transform scale-90 md:scale-100 origin-left">
-            <span className="font-great-vibes text-3xl md:text-4xl text-gradient-gold pr-2 inline-block pt-2">
-              KP&nbsp;
-            </span>
-            <span className="block font-cinzel text-[0.55rem] md:text-[0.55rem] tracking-[0.4em] uppercase text-[var(--muted-text)] group-hover:text-[var(--foreground)] transition-colors">
-              Photography
-            </span>
+            <Image 
+              src="/logo/Layer 0.png" 
+              alt="Keshav Photography" 
+              width={100} 
+              height={50} 
+              className="object-contain h-10 w-auto transition-transform group-hover:scale-105"
+            />
           </Link>
 
           {/* Desktop Nav */}
@@ -96,13 +98,14 @@ export default function Navbar() {
             className="fixed top-0 right-0 w-full h-full z-40 bg-[var(--background)] flex flex-col justify-center items-center border-l border-[var(--border-subtle)]"
           >
             {/* Animated Watermark */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-5 pointer-events-none flex flex-col items-center">
-              <span className="font-great-vibes text-8xl md:text-9xl text-[#D4AF37] pr-6 inline-block pt-4">
-                KP&nbsp;
-              </span>
-              <span className="font-cinzel text-xl md:text-2xl tracking-[0.8em] text-[#D4AF37] uppercase mt-4">
-                Photography
-              </span>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-10 pointer-events-none flex flex-col items-center">
+              <Image 
+                src="/logo/Layer 0.png" 
+                alt="Watermark" 
+                width={400} 
+                height={200} 
+                className="object-contain w-64 md:w-96 h-auto grayscale"
+              />
             </div>
 
             <div className="flex flex-col space-y-6 text-center relative z-10 w-full px-8">
