@@ -181,7 +181,7 @@ export default function Home() {
                    alt="Keshav Photography" 
                    width={300} 
                    height={150} 
-                   className="object-contain w-48 md:w-64 lg:w-80 h-auto filter drop-shadow-[0_0_15px_rgba(212,175,55,0.4)]" 
+                   className="object-contain w-[clamp(100px,15vw,200px)] h-auto filter drop-shadow-[0_0_15px_rgba(212,175,55,0.4)]" 
                  />
                </motion.div>
             </div>
