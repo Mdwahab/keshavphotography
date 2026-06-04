@@ -157,7 +157,16 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
               </motion.div>
             ))}
           </motion.div>
-          
+
+          {/* Stage 6: Cinematic Camera Flash Ending */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0, 1, 0] }}
+            transition={{ duration: 0.5, delay: 5.5, times: [0, 0.2, 1], ease: "easeOut" }}
+            className="fixed inset-0 z-[200] bg-white pointer-events-none"
+            style={{ mixBlendMode: 'screen' }}
+          />
+
         </motion.div>
       )}
     </AnimatePresence>
