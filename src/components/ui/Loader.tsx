@@ -9,7 +9,13 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
   const [shouldAnimate, setShouldAnimate] = useState(false); 
 
   useEffect(() => {
-    // Set shouldAnimate to true only on the client
+    const hasPlayed = sessionStorage.getItem("kpSplashShown");
+    if (hasPlayed) {
+      onComplete();
+      return;
+    }
+
+    // Set shouldAnimate to true only on the client if it hasn't played
     setShouldAnimate(true);
     
     console.log("[Splash] Splash mounted");
@@ -17,10 +23,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
     console.log("[Splash] Timer started (6000ms)");
 
     document.body.style.overflow = "hidden";
-    
-    // Temporarily disabled sessionStorage logic for testing
-    // const hasPlayed = sessionStorage.getItem("kp_intro_played_v5");
-    // if (hasPlayed) { ... }
+    sessionStorage.setItem("kpSplashShown", "true");
 
     const timer = setTimeout(() => {
       console.log("[Splash] Timer completed. Splash fading out.");

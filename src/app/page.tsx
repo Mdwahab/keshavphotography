@@ -6,7 +6,7 @@ import gsap from "gsap";
 import Loader from "@/components/ui/Loader";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Play, X } from "lucide-react";
+import { ArrowRight, Play, X, Eye, ThumbsUp, Calendar } from "lucide-react";
 import { getBackgroundImages } from "./actions";
 
 const YoutubeIcon = ({ size = 20, className = "" }: { size?: number, className?: string }) => (
@@ -47,12 +47,12 @@ const portals = [
 ];
 
 const cinematicVideos = [
-  { id: "gm26cEnjVqM", title: "Eternal Vows", description: "A beautiful cinematic journey of love and commitment." },
-  { id: "W2OUt-nRhY4", title: "The Grand Celebration", description: "Experiencing the magic of a timeless celebration." },
-  { id: "Bmc8xDWUKGw", title: "Moments of Joy", description: "Capturing the purest emotions and untold stories." },
-  { id: "wE0aYgtSy90", title: "A Love Story", description: "Two souls, one beautiful destination." },
-  { id: "wE0aYgtSy90", title: "The Haldi Ceremony", description: "Vibrant colors and unforgettable traditions." },
-  { id: "nHmXnY7teoQ", title: "A Magical Evening", description: "The grand reception filled with love and laughter." }
+  { id: "gm26cEnjVqM", title: "Eternal Vows", description: "A beautiful cinematic journey of love and commitment.", views: "142K", likes: "8.4K", date: "Jun 2026", duration: "4:12" },
+  { id: "W2OUt-nRhY4", title: "The Grand Celebration", description: "Experiencing the magic of a timeless celebration.", views: "89K", likes: "5.1K", date: "May 2026", duration: "5:30" },
+  { id: "Bmc8xDWUKGw", title: "Moments of Joy", description: "Capturing the purest emotions and untold stories.", views: "210K", likes: "12K", date: "Apr 2026", duration: "3:45" },
+  { id: "wE0aYgtSy90", title: "A Love Story", description: "Two souls, one beautiful destination.", views: "65K", likes: "3.2K", date: "Mar 2026", duration: "6:15" },
+  { id: "nHmXnY7teoQ", title: "The Haldi Ceremony", description: "Vibrant colors and unforgettable traditions.", views: "110K", likes: "6.7K", date: "Feb 2026", duration: "2:50" },
+  { id: "gm26cEnjVqM", title: "A Magical Evening", description: "The grand reception filled with love and laughter.", views: "175K", likes: "9.8K", date: "Jan 2026", duration: "4:40" }
 ];
 
 export default function Home() {
@@ -98,6 +98,18 @@ export default function Home() {
     }, 6000); // Changed to 6 seconds as requested
     return () => clearInterval(interval);
   }, [loading, slides.length]);
+
+  // Disable page scroll when video modal is open
+  useEffect(() => {
+    if (activeVideo) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [activeVideo]);
 
   return (
     <>
@@ -374,7 +386,7 @@ export default function Home() {
             </motion.div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-3 gap-3 sm:gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-8">
             {cinematicVideos.map((video, idx) => (
               <motion.div
                 key={idx}
@@ -383,33 +395,51 @@ export default function Home() {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.8, delay: (idx % 3) * 0.2 }}
                 onClick={() => setActiveVideo(video.id)}
-                className="group relative cursor-pointer magnetic-item rounded-sm overflow-hidden border border-[var(--border-subtle)] hover:border-[#D4AF37]/50 transition-colors duration-500 bg-white/5"
+                className="group relative cursor-pointer magnetic-item rounded-[14px] overflow-hidden border border-white/5 hover:border-[#D4AF37]/50 transition-all duration-300 bg-[var(--card-bg)] shadow-[0_4px_20px_rgba(0,0,0,0.4)] hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] flex flex-col active:scale-[1.03]"
               >
                 {/* Thumbnail Container */}
-                <div className="relative aspect-video overflow-hidden">
-                  <div className="absolute inset-0 bg-[var(--overlay-bg)] group-hover:bg-black/10 transition-colors duration-500 z-10" />
+                <div className="relative aspect-video overflow-hidden shrink-0 rounded-t-[14px]">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10 opacity-80" />
                   <img 
                     src={`https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`} 
                     alt={video.title}
                     loading="lazy"
-                    className="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700"
+                    className="w-full h-full object-cover transform scale-100 group-hover:scale-105 transition-transform duration-700"
                   />
                   {/* Play Button Overlay */}
                   <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
-                    <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-[var(--overlay-bg)] backdrop-blur-md border border-[var(--border-color)] flex items-center justify-center group-hover:bg-[#D4AF37] group-hover:border-[#D4AF37] transition-all duration-500 transform group-hover:scale-110 shadow-lg">
-                      <Play className="text-[var(--foreground)] group-hover:text-black ml-1 w-4 h-4 sm:w-6 sm:h-6" fill="currentColor" />
+                    <div className="w-8 h-8 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-full bg-black/40 backdrop-blur-md border border-[#D4AF37]/80 flex items-center justify-center group-hover:bg-[#D4AF37] transition-all duration-500 transform group-hover:scale-110 shadow-[0_0_20px_rgba(212,175,55,0.4)]">
+                      <Play className="text-white group-hover:text-black ml-0.5 md:ml-1 w-4 h-4 md:w-6 md:h-6" fill="currentColor" />
                     </div>
+                  </div>
+                  {/* Duration Badge */}
+                  <div className="absolute bottom-1 right-1 md:bottom-3 md:right-3 z-20 bg-black/80 backdrop-blur-sm px-1.5 py-0.5 md:px-2 md:py-1 rounded text-[8px] md:text-[10px] font-space tracking-wider text-white border border-white/10">
+                    {video.duration}
                   </div>
                 </div>
                 
                 {/* Content */}
-                <div className="p-3 sm:p-6 relative z-30">
-                  <h3 className="font-cinzel text-xs sm:text-xl text-[var(--foreground)] mb-1 sm:mb-2 group-hover:text-[#D4AF37] transition-colors line-clamp-1 sm:line-clamp-none">
-                    {video.title}
-                  </h3>
-                  <p className="font-poppins text-[0.6rem] sm:text-sm text-[var(--muted-text)] line-clamp-2">
-                    {video.description}
-                  </p>
+                <div className="p-2.5 md:p-5 lg:p-6 relative z-30 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="font-cinzel text-xs md:text-lg lg:text-xl text-[var(--foreground)] mb-1 md:mb-2 group-hover:text-[#D4AF37] transition-colors line-clamp-2 leading-tight">
+                      {video.title}
+                    </h3>
+                    <p className="hidden md:block font-poppins text-xs sm:text-sm text-[var(--muted-text)] line-clamp-2 leading-relaxed mb-4">
+                      {video.description}
+                    </p>
+                  </div>
+                  
+                  {/* Stats Row */}
+                  <div className="flex flex-col md:flex-row items-start md:items-center justify-between mt-auto pt-1.5 md:pt-4 border-t border-[var(--border-color)] gap-1 md:gap-0">
+                    <div className="flex items-center gap-2 md:gap-4 text-[9px] md:text-xs font-poppins text-[var(--muted-text)]">
+                      <span className="flex items-center gap-1 md:gap-1.5"><Eye size={10} className="text-[#D4AF37]/70 md:w-[14px] md:h-[14px]" /> {video.views}</span>
+                      <span className="flex items-center gap-1 md:gap-1.5"><ThumbsUp size={10} className="text-[#D4AF37]/70 md:w-[14px] md:h-[14px]" /> {video.likes}</span>
+                    </div>
+                    <div className="hidden md:flex items-center gap-1.5 text-[10px] md:text-xs font-space tracking-wider text-[var(--muted-text)]">
+                      <Calendar size={12} className="text-[#D4AF37]/70" />
+                      {video.date}
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -445,21 +475,22 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-[var(--overlay-bg-heavy)] backdrop-blur-xl flex items-center justify-center p-4 md:p-12"
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 md:p-8"
             onClick={() => setActiveVideo(null)}
           >
             <button 
-              className="absolute top-8 right-8 text-[var(--foreground)] hover:text-[#D4AF37] transition-colors z-[110] magnetic-item"
+              className="absolute top-4 right-4 md:top-8 md:right-8 text-[#D4AF37] hover:text-white transition-colors z-[110] magnetic-item p-2"
               onClick={() => setActiveVideo(null)}
             >
               <X size={32} />
             </button>
             <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 50 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 50 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="w-full max-w-6xl aspect-video bg-[var(--background)] rounded-sm overflow-hidden shadow-[0_0_50px_rgba(212,175,55,0.2)] border border-[#D4AF37]/20"
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="w-[95vw] max-w-[900px] aspect-video bg-black rounded-[16px] overflow-hidden shadow-[0_0_50px_rgba(212,175,55,0.3)] border border-[#D4AF37]/30"
               onClick={(e) => e.stopPropagation()}
             >
               <iframe 
@@ -470,7 +501,7 @@ export default function Home() {
                 frameBorder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                 allowFullScreen
-                className="w-full h-full"
+                className="w-full h-full rounded-[16px]"
               ></iframe>
             </motion.div>
           </motion.div>

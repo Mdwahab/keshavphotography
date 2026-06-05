@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowLeft } from "lucide-react";
+import { X, ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { categorySlugs } from "@/lib/constants";
 
 type GalleryImage = {
@@ -20,7 +20,7 @@ export default function CategoryGallery() {
   
   const dbCategory = categorySlugs[slug] || slug;
   
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -47,81 +47,120 @@ export default function CategoryGallery() {
     }
   }, [dbCategory]);
 
+  // Lock scroll when lightbox is open
+  useEffect(() => {
+    if (selectedIndex !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [selectedIndex]);
+
+  const handleNext = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (selectedIndex !== null && selectedIndex < images.length - 1) {
+      setSelectedIndex(selectedIndex + 1);
+    }
+  };
+
+  const handlePrev = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (selectedIndex !== null && selectedIndex > 0) {
+      setSelectedIndex(selectedIndex - 1);
+    }
+  };
+
   return (
-    <main className="bg-[var(--background)] min-h-screen pt-32 pb-20 overflow-hidden text-[var(--foreground)]">
+    <main className="bg-[var(--background)] min-h-screen pt-24 pb-20 overflow-hidden text-[var(--foreground)]">
       {/* Header */}
-      <section className="container mx-auto px-6 md:px-12 mb-16 relative z-10">
+      <section className="container mx-auto px-4 md:px-8 mb-8 md:mb-12 relative z-10">
         <button 
           onClick={() => router.push("/")}
-          className="flex items-center gap-2 text-[var(--muted-text)] hover:text-[#D4AF37] font-space text-xs tracking-widest uppercase transition-colors mb-8 group"
+          className="flex items-center gap-2 text-[var(--muted-text)] hover:text-[#D4AF37] font-space text-[10px] md:text-xs tracking-widest uppercase transition-colors mb-6 group"
         >
           <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
           Back to Home
         </button>
         
-        <div className="text-center">
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="font-cinzel text-4xl md:text-6xl mb-6 text-[var(--foreground)]"
-          >
-            {dbCategory} <span className="text-gradient-gold">Collection</span>
-          </motion.h1>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="font-cinzel text-3xl md:text-5xl text-[var(--foreground)] leading-tight"
+            >
+              {dbCategory} <span className="text-gradient-gold block sm:inline">Collection</span>
+            </motion.h1>
+          </div>
           <motion.div 
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="w-24 h-[2px] bg-[#D4AF37] mx-auto opacity-50" 
-          />
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="font-space text-[10px] md:text-xs tracking-widest text-[#D4AF37] uppercase bg-[#D4AF37]/10 px-4 py-2 rounded-full inline-block w-fit"
+          >
+            {loading ? "Loading..." : `${images.length} Photos`}
+          </motion.div>
         </div>
       </section>
 
       {/* Masonry Layout */}
-      <section className="container mx-auto px-6 md:px-8 relative z-10 min-h-[50vh]">
+      <section className="container mx-auto px-4 md:px-8 relative z-10 min-h-[50vh]">
         {loading ? (
-          <div className="flex justify-center items-center h-64">
-            <div className="w-12 h-12 border-4 border-[#D4AF37]/30 border-t-[#D4AF37] rounded-full animate-spin"></div>
+          <div className="columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-6 space-y-3 md:space-y-6">
+            {[...Array(12)].map((_, i) => {
+              // Predefined deterministic heights to avoid SSR hydration mismatch
+              const heights = [250, 320, 280, 350, 220, 380, 260, 310, 290, 340, 240, 360];
+              return (
+                <div 
+                  key={i} 
+                  className="w-full bg-white/5 animate-pulse rounded-[14px] border border-white/5"
+                  style={{ height: `${heights[i % heights.length]}px` }}
+                />
+              );
+            })}
           </div>
         ) : images.length === 0 ? (
           <motion.div 
             initial={{ opacity: 0 }} 
             animate={{ opacity: 1 }} 
-            className="flex flex-col items-center justify-center mt-20"
+            className="flex flex-col items-center justify-center mt-20 p-8 glass-panel border border-[var(--border-color)] rounded-[14px] text-center"
           >
-            <h2 className="font-cinzel text-3xl md:text-4xl text-[var(--muted-text)] mb-4">Gallery Coming Soon</h2>
-            <p className="font-poppins text-sm text-[var(--muted-text)] opacity-70">We are currently curating breathtaking moments for this collection.</p>
+            <h2 className="font-cinzel text-2xl md:text-3xl text-[var(--muted-text)] mb-4">Gallery Coming Soon</h2>
+            <p className="font-poppins text-xs md:text-sm text-[var(--muted-text)] opacity-70">We are currently curating breathtaking moments for this collection.</p>
           </motion.div>
         ) : (
           <motion.div 
             layout
-            className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 md:gap-6 space-y-4 md:space-y-6"
+            className="columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-6 space-y-3 md:space-y-6"
           >
             <AnimatePresence>
-              {images.map((img) => (
+              {images.map((img, idx) => (
                 <motion.div
                   layout
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.5, ease: "easeOut" }}
+                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.6, ease: "easeOut", delay: (idx % 10) * 0.05 }}
                   key={img.id}
-                  className="relative overflow-hidden rounded-sm cursor-pointer group break-inside-avoid magnetic-item"
-                  onClick={() => setSelectedImage(img.imageUrl)}
+                  className="relative overflow-hidden rounded-[14px] cursor-pointer group break-inside-avoid shadow-[0_4px_20px_rgba(0,0,0,0.5)] transition-all duration-300 hover:shadow-[0_0_20px_rgba(212,175,55,0.3)] active:scale-[0.98]"
+                  onClick={() => setSelectedIndex(idx)}
                 >
-                  <div className="absolute inset-0 bg-[var(--overlay-bg)] group-hover:bg-transparent transition-colors duration-500 z-10" />
-                  { }
-                  <motion.img 
-                    layoutId={`image-${img.imageUrl}`}
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500 z-10" />
+                  <img 
                     src={img.imageUrl} 
                     alt={img.title}
+                    loading="lazy"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?q=80&w=2070&auto=format&fit=crop";
                     }}
-                    className="w-full h-auto object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700"
+                    className="w-full h-auto object-cover transform scale-100 group-hover:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                    <div className="w-16 h-16 rounded-full border border-[#D4AF37]/50 flex items-center justify-center backdrop-blur-sm">
-                      <span className="font-space text-[0.5rem] tracking-[0.2em] text-[#D4AF37] uppercase">View</span>
+                    <div className="w-10 h-10 md:w-16 h-10 md:h-16 rounded-full border border-[#D4AF37]/50 flex items-center justify-center backdrop-blur-md bg-black/40 shadow-[0_0_15px_rgba(212,175,55,0.4)]">
+                      <span className="font-space text-[8px] md:text-[10px] tracking-[0.2em] text-[#D4AF37] uppercase">View</span>
                     </div>
                   </div>
                 </motion.div>
@@ -131,27 +170,72 @@ export default function CategoryGallery() {
         )}
       </section>
 
-      {/* Lightbox */}
+      {/* Advanced Fullscreen Lightbox */}
       <AnimatePresence>
-        {selectedImage && (
+        {selectedIndex !== null && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-[var(--overlay-bg-heavy)] backdrop-blur-xl flex items-center justify-center p-4"
-            onClick={() => setSelectedImage(null)}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[100] bg-black/98 backdrop-blur-xl flex items-center justify-center select-none"
+            onClick={() => setSelectedIndex(null)}
           >
-            <button 
-              className="absolute top-8 right-8 text-[var(--foreground)] hover:text-[#D4AF37] transition-colors z-[110] magnetic-item"
-              onClick={() => setSelectedImage(null)}
-            >
-              <X size={32} />
-            </button>
+            {/* Top Bar */}
+            <div className="absolute top-0 left-0 w-full p-4 md:p-6 flex justify-between items-center z-[110] bg-gradient-to-b from-black/80 to-transparent pointer-events-none">
+              <div className="font-space text-[10px] md:text-sm tracking-widest text-white/70">
+                {selectedIndex + 1} <span className="text-[#D4AF37]">/</span> {images.length}
+              </div>
+              <button 
+                className="text-white hover:text-[#D4AF37] transition-colors p-2 bg-black/50 rounded-full pointer-events-auto"
+                onClick={(e) => { e.stopPropagation(); setSelectedIndex(null); }}
+              >
+                <X size={24} className="md:w-8 md:h-8" />
+              </button>
+            </div>
+
+            {/* Previous Arrow (Desktop) */}
+            {selectedIndex > 0 && (
+              <button 
+                className="hidden md:flex absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-[110] text-white/50 hover:text-white bg-black/40 hover:bg-black/80 p-4 rounded-full transition-all hover:scale-110 border border-white/10"
+                onClick={handlePrev}
+              >
+                <ChevronLeft size={32} />
+              </button>
+            )}
+
+            {/* Next Arrow (Desktop) */}
+            {selectedIndex < images.length - 1 && (
+              <button 
+                className="hidden md:flex absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-[110] text-white/50 hover:text-white bg-black/40 hover:bg-black/80 p-4 rounded-full transition-all hover:scale-110 border border-white/10"
+                onClick={handleNext}
+              >
+                <ChevronRight size={32} />
+              </button>
+            )}
+
+            {/* Image Container */}
             <motion.img
-              layoutId={`image-${selectedImage}`}
-              src={selectedImage}
-              alt="Selected"
-              className="max-w-full max-h-[90vh] object-contain rounded-sm shadow-[0_0_50px_rgba(212,175,55,0.1)]"
+              key={selectedIndex}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.4 }}
+              src={images[selectedIndex].imageUrl}
+              alt={images[selectedIndex].title}
+              className="max-w-full max-h-[100vh] md:max-h-[90vh] object-contain cursor-grab active:cursor-grabbing shadow-[0_0_50px_rgba(212,175,55,0.05)]"
+              onClick={(e) => e.stopPropagation()}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.8}
+              onDragEnd={(e, { offset, velocity }) => {
+                const swipeThreshold = 50;
+                if (offset.x < -swipeThreshold) {
+                  handleNext();
+                } else if (offset.x > swipeThreshold) {
+                  handlePrev();
+                }
+              }}
             />
           </motion.div>
         )}

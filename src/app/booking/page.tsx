@@ -38,6 +38,7 @@ export default function Booking() {
     }
   };
 
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.phone.length < 10) {
@@ -244,13 +245,25 @@ ${new Date().toLocaleString()}
                 <div className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[#D4AF37]/50 to-[#D4AF37] w-0 transition-all duration-500 peer-focus:w-full md:hidden" />
               </motion.div>
 
-              {/* Specifications */}
+              {/* Specifications / Requirements */}
               <motion.div 
                 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-20px" }} transition={{ duration: 0.5, delay: 0.4 }}
                 className="relative group md:col-span-2 md:!opacity-100 md:!translate-y-0 md:!transform-none"
               >
-                <input type="text" name="specs" value={formData.specs} onChange={handleChange} className="w-full bg-transparent border-b border-[var(--border-color)] pb-3 md:pb-2 font-poppins text-[var(--foreground)] focus:outline-none focus:border-transparent md:focus:border-[#D4AF37] transition-all duration-300 peer focus:-translate-y-1 focus:shadow-[0_10px_20px_-10px_rgba(212,175,55,0.2)] md:focus:translate-y-0 md:focus:shadow-none relative z-10" placeholder=" " />
-                <label className="absolute left-0 top-0 text-[var(--muted-text)] font-poppins text-sm transform -translate-y-5 scale-75 origin-left transition-all duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-5 peer-focus:scale-75 peer-focus:text-[#D4AF37]">Photography Specifications (e.g., Drone, Cinematic Video)</label>
+                <textarea 
+                  name="specs" 
+                  value={formData.specs} 
+                  onChange={handleChange} 
+                  onInput={(e) => {
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = "auto";
+                    target.style.height = `${target.scrollHeight}px`;
+                  }}
+                  rows={1} 
+                  className="w-full bg-transparent border-b border-[var(--border-color)] pb-3 md:pb-2 font-poppins text-[var(--foreground)] focus:outline-none focus:border-transparent md:focus:border-[#D4AF37] transition-all duration-300 peer resize-none focus:-translate-y-1 focus:shadow-[0_10px_20px_-10px_rgba(212,175,55,0.2)] md:focus:translate-y-0 md:focus:shadow-none relative z-10 overflow-hidden placeholder-transparent focus:placeholder-[var(--muted-text)]/50 text-[15px] sm:text-base" 
+                  placeholder="Tell us your photography requirements (Drone, Cinematic Video, Live Streaming, LED Wall, etc.)" 
+                />
+                <label className="absolute left-0 top-0 text-[var(--muted-text)] font-poppins text-sm transform -translate-y-5 scale-75 origin-left transition-all duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-5 peer-focus:scale-75 peer-focus:text-[#D4AF37]">Photography Requirements</label>
                 <div className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[#D4AF37]/50 to-[#D4AF37] w-0 transition-all duration-500 peer-focus:w-full md:hidden" />
               </motion.div>
 

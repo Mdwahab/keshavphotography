@@ -39,16 +39,21 @@ export default async function AdminDashboard() {
         <p className="font-space text-xs tracking-widest text-[var(--muted-text)] uppercase">Overview of your gallery</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        <div className="glass-panel p-8 border border-[var(--border-color)] relative overflow-hidden group">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-12">
+        <div className="glass-panel p-6 md:p-8 border border-[var(--border-color)] relative overflow-hidden group rounded-xl md:rounded-sm">
           <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          <h3 className="font-space text-xs text-[var(--muted-text)] tracking-widest uppercase mb-2">Total Images</h3>
-          <p className="font-cinzel text-5xl text-[#D4AF37]">{totalImages}</p>
+          <h3 className="font-space text-[10px] md:text-xs text-[var(--muted-text)] tracking-widest uppercase mb-1 md:mb-2">Total Images</h3>
+          <p className="font-cinzel text-4xl md:text-5xl text-[#D4AF37] drop-shadow-sm">{totalImages}</p>
         </div>
-        <div className="glass-panel p-8 border border-[var(--border-color)] relative overflow-hidden group">
+        <div className="glass-panel p-6 md:p-8 border border-[var(--border-color)] relative overflow-hidden group rounded-xl md:rounded-sm">
           <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          <h3 className="font-space text-xs text-[var(--muted-text)] tracking-widest uppercase mb-2">Active Categories</h3>
-          <p className="font-cinzel text-5xl text-[#D4AF37]">{categoryCounts.length}</p>
+          <h3 className="font-space text-[10px] md:text-xs text-[var(--muted-text)] tracking-widest uppercase mb-1 md:mb-2">Total Videos</h3>
+          <p className="font-cinzel text-4xl md:text-5xl text-[#D4AF37] drop-shadow-sm">6</p>
+        </div>
+        <div className="glass-panel p-6 md:p-8 border border-[var(--border-color)] relative overflow-hidden group rounded-xl md:rounded-sm sm:col-span-2 md:col-span-1">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <h3 className="font-space text-[10px] md:text-xs text-[var(--muted-text)] tracking-widest uppercase mb-1 md:mb-2">Active Categories</h3>
+          <p className="font-cinzel text-4xl md:text-5xl text-[#D4AF37] drop-shadow-sm">{categoryCounts.length}</p>
         </div>
       </div>
 
