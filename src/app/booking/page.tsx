@@ -22,6 +22,17 @@ export default function Booking() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [phoneError, setPhoneError] = useState("");
 
+  const bookingServices = [
+    "Wedding",
+    "Engagement",
+    "Haldi",
+    "Reception",
+    "Pre-Wedding",
+    "Birthday",
+    "Corporate",
+    "Other"
+  ];
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -162,7 +173,7 @@ ${new Date().toLocaleString()}
               {/* Event Type Custom Dropdown */}
               <motion.div 
                 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-20px" }} transition={{ duration: 0.5, delay: 0.25 }}
-                className="relative group md:!opacity-100 md:!translate-y-0 md:!transform-none"
+                className={`relative group md:!opacity-100 md:!translate-y-0 md:!transform-none ${isDropdownOpen ? 'z-[60]' : 'z-10'}`}
               >
                 <div 
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -201,21 +212,23 @@ ${new Date().toLocaleString()}
                         className="absolute left-0 right-0 top-[calc(100%+8px)] bg-[#0A0A0A] border border-[#D4AF37]/30 rounded-md shadow-[0_10px_40px_rgba(0,0,0,0.8)] z-[50] overflow-hidden w-full max-w-full"
                       >
                         <div className="max-h-[200px] overflow-y-auto custom-scrollbar flex flex-col py-2">
-                          {categories.map((cat) => (
+                          {bookingServices.map((service) => (
                             <button
-                              key={cat}
+                              key={service}
                               type="button"
-                              onClick={() => {
-                                setFormData({ ...formData, eventType: cat });
+                              onPointerDown={(e) => {
+                                // use onPointerDown to fire immediately before blur or backdrop click
+                                e.preventDefault();
+                                setFormData({ ...formData, eventType: service });
                                 setIsDropdownOpen(false);
                               }}
                               className={`text-left px-5 py-3 font-poppins text-sm transition-colors ${
-                                formData.eventType === cat 
+                                formData.eventType === service 
                                   ? 'bg-[#D4AF37]/20 text-[#D4AF37] font-medium' 
                                   : 'text-white/80 hover:bg-[#D4AF37]/10 hover:text-[#D4AF37]'
                               }`}
                             >
-                              {cat}
+                              {service}
                             </button>
                           ))}
                         </div>
