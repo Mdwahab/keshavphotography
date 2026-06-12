@@ -1,7 +1,9 @@
 export const categories = [
   "Wedding", "Engagement", "Haldi", "Reception", "Pre Wedding",
-  "Maternity Shoot", "Baby Shoot", "Shoot", "Ceremony", "Birthday"
+  "Maternity", "Baby", "Ceremonies", "Birthday"
 ];
+
+export const adminCategories = [...categories, "USA / DUBAI"];
 
 export const categorySlugs: Record<string, string> = {
   "weddings": "Wedding",
@@ -9,9 +11,8 @@ export const categorySlugs: Record<string, string> = {
   "haldi": "Haldi",
   "reception": "Reception",
   "pre-weddings": "Pre Wedding",
-  "maternity-shoots": "Maternity Shoot",
-  "baby-shoots": "Baby Shoot",
-  "shoots": "Shoot",
-  "ceremonies": "Ceremony",
+  "maternity": "Maternity",
+  "baby": "Baby",
+  "ceremonies": "Ceremonies",
   "birthdays": "Birthday"
 };

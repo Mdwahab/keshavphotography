@@ -4,15 +4,13 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Upload, X } from "lucide-react";
 
-import { categories } from "@/lib/constants";
+import { adminCategories } from "@/lib/constants";
 
 export default function AdminUpload() {
   const router = useRouter();
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState(categories[0]);
+  const [category, setCategory] = useState(adminCategories[0]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -38,8 +36,6 @@ export default function AdminUpload() {
     try {
       const formData = new FormData();
       formData.append("image", file);
-      formData.append("title", title);
-      formData.append("description", description);
       formData.append("category", category);
 
       const res = await fetch("/api/upload", {
@@ -84,25 +80,25 @@ export default function AdminUpload() {
           </div>
         )}
 
-        <form onSubmit={handleUpload} className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <form onSubmit={handleUpload} className="max-w-xl mx-auto space-y-8">
           {/* Image Upload Area */}
           <div className="space-y-4">
             <label className="block font-space text-xs tracking-widest text-[var(--muted-text)] uppercase mb-2">Image File</label>
-            <div className="relative border-2 border-dashed border-[var(--border-color)] hover:border-[#D4AF37]/50 transition-colors rounded-sm h-64 flex items-center justify-center bg-[var(--overlay-bg)] overflow-hidden group">
+            <div className="relative border-2 border-dashed border-[var(--border-color)] hover:border-[#D4AF37]/50 transition-colors rounded-sm h-[300px] flex items-center justify-center bg-[var(--overlay-bg)] overflow-hidden group">
               {preview ? (
                 <>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={preview} alt="Preview" className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-[var(--overlay-bg)] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <button type="button" onClick={() => { setFile(null); setPreview(null); }} className="p-3 bg-red-500/20 text-red-400 rounded-full hover:bg-red-500/40">
-                      <X size={24} />
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
+                    <button type="button" onClick={() => { setFile(null); setPreview(null); }} className="p-3 bg-red-500/20 text-red-400 rounded-full hover:bg-red-500/40 transition-colors shadow-xl">
+                      <X size={28} />
                     </button>
                   </div>
                 </>
               ) : (
                 <div className="text-center p-6">
-                  <Upload size={32} className="mx-auto text-[var(--muted-text)] mb-4" />
-                  <p className="font-poppins text-sm text-[var(--muted-text)]">Click to browse or drag image here</p>
+                  <Upload size={40} className="mx-auto text-[#D4AF37] mb-4 opacity-70" />
+                  <p className="font-poppins text-sm text-[var(--foreground)]">Click to browse or drag image here</p>
                   <p className="font-space text-[10px] text-[var(--muted-text)] mt-2">JPG, PNG, WEBP (Max 5MB)</p>
                 </div>
               )}
@@ -116,50 +112,27 @@ export default function AdminUpload() {
             </div>
           </div>
 
-          {/* Details Area */}
-          <div className="space-y-6">
-            <div>
-              <label className="block font-space text-xs tracking-widest text-[var(--muted-text)] uppercase mb-2">Title</label>
-              <input 
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-                className="w-full bg-[var(--overlay-bg)] border border-[var(--border-color)] p-3 text-[var(--foreground)] font-poppins focus:outline-none focus:border-[#D4AF37]/50 transition-colors rounded-sm"
-                placeholder="E.g., Beautiful Beach Wedding"
-              />
-            </div>
+          {/* Category Area */}
+          <div className="space-y-4">
+            <label className="block font-space text-xs tracking-widest text-[var(--muted-text)] uppercase mb-2">Select Category</label>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full bg-[var(--overlay-bg)] border border-[var(--border-color)] p-4 text-[var(--foreground)] font-poppins focus:outline-none focus:border-[#D4AF37]/80 transition-colors rounded-sm cursor-pointer hover:border-[#D4AF37]/30 text-lg"
+            >
+              {adminCategories.map((c) => (
+                <option key={c} value={c} className="bg-[var(--background)] py-2">{c}</option>
+              ))}
+            </select>
+          </div>
 
-            <div>
-              <label className="block font-space text-xs tracking-widest text-[var(--muted-text)] uppercase mb-2">Category</label>
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-[var(--overlay-bg)] border border-[var(--border-color)] p-3 text-[var(--foreground)] font-poppins focus:outline-none focus:border-[#D4AF37]/50 transition-colors rounded-sm"
-              >
-                {categories.map((c) => (
-                  <option key={c} value={c} className="bg-[var(--background)]">{c}</option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block font-space text-xs tracking-widest text-[var(--muted-text)] uppercase mb-2">Description (Optional)</label>
-              <textarea 
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                rows={3}
-                className="w-full bg-[var(--overlay-bg)] border border-[var(--border-color)] p-3 text-[var(--foreground)] font-poppins focus:outline-none focus:border-[#D4AF37]/50 transition-colors rounded-sm resize-none custom-scrollbar"
-                placeholder="Brief description about the shot..."
-              />
-            </div>
-
+          <div className="pt-4">
             <button 
               type="submit"
               disabled={loading || !file}
-              className="w-full py-4 bg-[#D4AF37] text-black font-space text-xs tracking-[0.2em] uppercase hover:bg-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-4 bg-[#D4AF37] text-black font-space text-sm tracking-[0.2em] uppercase hover:bg-white hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none"
             >
-              {loading ? "Uploading..." : "Save Image"}
+              {loading ? "Uploading to Gallery..." : "Save Image to " + category}
             </button>
           </div>
         </form>

@@ -7,13 +7,14 @@ export async function POST(req: Request) {
     const formData = await req.formData();
     
     const file = formData.get("image") as File;
-    const title = formData.get("title") as string;
-    const description = formData.get("description") as string;
     const category = formData.get("category") as string;
 
-    if (!file || !title || !category) {
+    if (!file || !category) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
+
+    const title = `${category} Image - ${Date.now()}`;
+    const description = "";
 
     const buffer = Buffer.from(await file.arrayBuffer());
     

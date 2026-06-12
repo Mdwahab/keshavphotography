@@ -34,16 +34,15 @@ const initialSlides = [
 ];
 
 const portals = [
-  { name: "Weddings", image: encodeURI("/photos/Weddings/Bride Sparsha (1).jpg") },
-  { name: "Shoots", image: encodeURI("/photos/shoots/shoots1.jpg") },
-  { name: "Ceremonies", image: encodeURI("/photos/ceremonies/Family portraits (1).jpg") },
-  { name: "Birthdays", image: encodeURI("/photos/Birthdays/Screenshot 2026-06-01 114211.png") },
+  { name: "Wedding", image: encodeURI("/photos/Weddings/Bride Sparsha (1).jpg") },
+  { name: "Ceremonies", image: encodeURI("/photos/ceremonies/ceremonirs.jpeg") },
+  { name: "Birthday", image: encodeURI("/photos/Birthdays/Birthday.jpeg") },
   { name: "Engagement", image: encodeURI("/photos/engagement/Big Vows ❤️.jpg") },
   { name: "Haldi", image: encodeURI("/photos/haldi/Kalyan Sarika  Haldi @kalyan_gandham.jpg") },
-  { name: "Reception", image: encodeURI("/photos/Reception/Chandu ❤️ Vasudha (1).jpg") },
-  { name: "Pre Weddings", image: encodeURI("/photos/Pre Weddings/perwedding1.jpg") },
-  { name: "Baby Shoots", image: encodeURI("/photos/Baby Shoots/ButtaBomma (1).jpg") },
-  { name: "Maternity Shoots", image: encodeURI("/photos/Maternity Shoot/🤰🏻.jpg") }
+  { name: "Reception", image: encodeURI("/photos/Reception/Reception.jpeg") },
+  { name: "Pre Wedding", image: encodeURI("/photos/Pre Weddings/Pre wedding.jpeg") },
+  { name: "Baby", image: encodeURI("/photos/Baby Shoots/Baby shoot.jpeg") },
+  { name: "Maternity", image: encodeURI("/photos/Maternity Shoots/meternity.jpeg") }
 ];
 
 const cinematicVideos = [

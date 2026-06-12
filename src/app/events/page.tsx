@@ -4,16 +4,16 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 const events = [
-  { id: 1, title: "The Royal Union", date: "Oct 12, 2025", location: "Udaipur Palace", image: encodeURI("/photos/Weddings/Bride Sparsha (2).jpg"), desc: "A grand celebration of love amidst the heritage of Rajasthan." },
-  { id: 2, title: "Whispers of the Ocean", date: "Nov 05, 2025", location: "Maldives", image: encodeURI("/photos/Weddings/సూత్ర ధారణ.jpg"), desc: "An intimate beachside vow exchange under the stars." },
-  { id: 3, title: "Golden Hour Symphony", date: "Dec 20, 2025", location: "Tuscany", image: encodeURI("/photos/engagement/Bhavya 💖 Karthik (1).jpg"), desc: "Sun-kissed vineyards witnessed the beginning of forever." },
-  { id: 4, title: "Neon Nights", date: "Jan 14, 2026", location: "Mumbai", image: encodeURI("/photos/engagement/Congratulations on the engagement of Yogitha and Lohith! Its a wonderful occasion filled with l.jpg"), desc: "A high-energy, vibrant sangeet filled with cinematic lights." },
-  { id: 5, title: "Sacred Threads", date: "Feb 02, 2026", location: "Varanasi", image: encodeURI("/photos/haldi/Vintage soul ..............Shot by -- @swathi_photography ( kpteam ).jpg"), desc: "Traditional rituals captured in their raw, emotional essence." },
-  { id: 6, title: "The Secret Garden", date: "Mar 15, 2026", location: "Kashmir", image: encodeURI("/photos/Reception/Chandu ❤️ Vasudha.jpg"), desc: "A floral paradise setting for a mystical pre-wedding shoot." },
-  { id: 7, title: "Midnight Vows", date: "Apr 10, 2026", location: "Dubai", image: encodeURI("/photos/Pre Weddings/perwedding2.jpg"), desc: "Luxurious city lights framing a passionate desert celebration." },
-  { id: 8, title: "Ethereal Echoes", date: "May 22, 2026", location: "Bali", image: encodeURI("/photos/Baby Shoots/ButtaBomma (1).jpg"), desc: "Spiritual calm and wild jungle romance entwined." },
-  { id: 9, title: "Vintage Romance", date: "Jun 08, 2026", location: "Goa", image: encodeURI("/photos/shoots/shoots2.jpg"), desc: "A Portuguese villa hosted this intimate, classic celebration." },
-  { id: 10, title: "A Symphony of Souls", date: "Jul 17, 2026", location: "Kerala", image: encodeURI("/photos/ceremonies/Family portraits (1).jpg"), desc: "Backwaters mirroring the serene bond of two hearts." }
+  { id: 1, title: "The Royal Union", date: "Oct 12, 2025", location: "Udaipur Palace", image: encodeURI("/photos/Weddings/Bride Sparsha (1).jpg"), desc: "A grand celebration of love amidst the heritage of Rajasthan." },
+  { id: 2, title: "Whispers of the Ocean", date: "Nov 05, 2025", location: "Maldives", image: encodeURI("/photos/Weddings/Bride Sparsha (1).jpg"), desc: "An intimate beachside vow exchange under the stars." },
+  { id: 3, title: "Golden Hour Symphony", date: "Dec 20, 2025", location: "Tuscany", image: encodeURI("/photos/engagement/Big Vows ❤️.jpg"), desc: "Sun-kissed vineyards witnessed the beginning of forever." },
+  { id: 4, title: "Neon Nights", date: "Jan 14, 2026", location: "Mumbai", image: encodeURI("/photos/engagement/Big Vows ❤️.jpg"), desc: "A high-energy, vibrant sangeet filled with cinematic lights." },
+  { id: 5, title: "Sacred Threads", date: "Feb 02, 2026", location: "Varanasi", image: encodeURI("/photos/haldi/Kalyan Sarika  Haldi @kalyan_gandham.jpg"), desc: "Traditional rituals captured in their raw, emotional essence." },
+  { id: 6, title: "The Secret Garden", date: "Mar 15, 2026", location: "Kashmir", image: encodeURI("/photos/Reception/Reception.jpeg"), desc: "A floral paradise setting for a mystical pre-wedding shoot." },
+  { id: 7, title: "Midnight Vows", date: "Apr 10, 2026", location: "Dubai", image: encodeURI("/photos/Pre Weddings/Pre wedding.jpeg"), desc: "Luxurious city lights framing a passionate desert celebration." },
+  { id: 8, title: "Ethereal Echoes", date: "May 22, 2026", location: "Bali", image: encodeURI("/photos/Baby Shoots/Baby shoot.jpeg"), desc: "Spiritual calm and wild jungle romance entwined." },
+  { id: 9, title: "Vintage Romance", date: "Jun 08, 2026", location: "Goa", image: encodeURI("/photos/engagement/Big Vows ❤️.jpg"), desc: "A Portuguese villa hosted this intimate, classic celebration." },
+  { id: 10, title: "A Symphony of Souls", date: "Jul 17, 2026", location: "Kerala", image: encodeURI("/photos/ceremonies/ceremonirs.jpeg"), desc: "Backwaters mirroring the serene bond of two hearts." }
 ];
 
 export default function Events() {

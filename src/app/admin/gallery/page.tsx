@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { categories } from "@/lib/constants";
+import { adminCategories } from "@/lib/constants";
 import { Trash2, Edit2, X } from "lucide-react";
 
 type GalleryImage = {
@@ -106,7 +106,7 @@ export default function AdminGallery() {
               className="bg-[var(--overlay-bg)] border border-[var(--border-color)] p-3 text-sm text-[var(--foreground)] font-poppins focus:outline-none focus:border-[#D4AF37]/50 rounded-sm w-full sm:w-48"
             >
               <option value="All">All Categories</option>
-              {categories.map(c => <option key={c} value={c}>{c}</option>)}
+              {adminCategories.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
           </div>
         </div>
@@ -211,7 +211,7 @@ export default function AdminGallery() {
                   onChange={e => setEditCategory(e.target.value)}
                   className="w-full bg-[var(--overlay-bg)] border border-[var(--border-color)] p-3 text-[var(--foreground)] font-poppins focus:outline-none focus:border-[#D4AF37]/50"
                 >
-                  {categories.map(c => <option key={c} value={c}>{c}</option>)}
+                  {adminCategories.map(c => <option key={c} value={c}>{c}</option>)}
                 </select>
               </div>
               <button 
