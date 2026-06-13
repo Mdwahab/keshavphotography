@@ -35,13 +35,13 @@ const initialSlides = [
 
 const portals = [
   { name: "Wedding", image: encodeURI("/photos/Weddings/Bride Sparsha (1).jpg") },
-  { name: "Ceremonies", image: encodeURI("/photos/ceremonies/ceremonirs.jpeg") },
+  { name: "Half Saree Ceremonies", image: encodeURI("/photos/ceremonies/ceremonirs.jpeg") },
   { name: "Birthday", image: encodeURI("/photos/Birthdays/Birthday.jpeg") },
   { name: "Engagement", image: encodeURI("/photos/engagement/Big Vows ❤️.jpg") },
   { name: "Haldi", image: encodeURI("/photos/haldi/Kalyan Sarika  Haldi @kalyan_gandham.jpg") },
   { name: "Reception", image: encodeURI("/photos/Reception/Reception.jpeg") },
   { name: "Pre Wedding", image: encodeURI("/photos/Pre Weddings/Pre wedding.jpeg") },
-  { name: "Baby", image: encodeURI("/photos/Baby Shoots/Baby shoot.jpeg") },
+  { name: "Baby Shoots", image: encodeURI("/photos/Baby Shoots/Baby shoot.jpeg") },
   { name: "Maternity", image: encodeURI("/photos/Maternity Shoots/meternity.jpeg") }
 ];
 
@@ -139,11 +139,13 @@ export default function Home() {
             }}
           >
             <div className="absolute inset-0 bg-[var(--overlay-bg)] z-10 transition-colors duration-1000" />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img 
+            <Image 
               src={slide.image} 
               alt={slide.title}
-              className="w-full h-full object-cover"
+              fill
+              sizes="100vw"
+              priority={index === 0}
+              className="object-cover"
             />
           </motion.div>
         ))}
@@ -215,18 +217,15 @@ export default function Home() {
                   className="absolute inset-0 pointer-events-none -z-10"
                >
                   {[
-                    { ix: -80, iy: -40, ax: -30, ay: -20, d: 2 },
-                    { ix: 60, iy: 30, ax: 20, ay: 10, d: 3 },
-                    { ix: -40, iy: 60, ax: -10, ay: 30, d: 2.5 },
-                    { ix: 90, iy: -50, ax: 40, ay: -20, d: 4 },
-                    { ix: 10, iy: -80, ax: 5, ay: -40, d: 3.5 },
-                    { ix: -70, iy: 20, ax: -35, ay: 10, d: 2.8 }
+                    { ix: -80, iy: -40, ax: -30, ay: -20, d: 4 },
+                    { ix: 60, iy: 30, ax: 20, ay: 10, d: 5 },
+                    { ix: -40, iy: 60, ax: -10, ay: 30, d: 4.5 }
                   ].map((p, i) => (
                      <motion.div 
                         key={i}
-                        className="bokeh-particle absolute rounded-full left-1/2 top-1/2"
+                        className="bokeh-particle absolute rounded-full left-1/2 top-1/2 will-change-transform"
                         initial={{ x: p.ix, y: p.iy, opacity: 0 }}
-                        animate={{ x: p.ax, y: p.ay, opacity: [0, 0.8, 0] }}
+                        animate={{ x: p.ax, y: p.ay, opacity: [0, 0.5, 0] }}
                         transition={{ duration: p.d, repeat: Infinity, ease: "easeInOut" }}
                      />
                   ))}
@@ -304,16 +303,18 @@ export default function Home() {
                   <div className="absolute inset-0 border border-[var(--border-color)] group-hover:border-[#D4AF37]/50 transition-colors duration-700 z-20 pointer-events-none rounded-2xl md:rounded-sm" />
                   
                   {/* Image */}
-                  <img 
+                  <Image 
                     src={portal.image} 
                     alt={portal.name}
-                    className="absolute inset-0 w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-1000 ease-out"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transform scale-100 group-hover:scale-110 transition-transform duration-1000 ease-out"
                   />
 
                   {/* Text Content - Premium Bottom Left Glass Label */}
                   <div className="absolute inset-0 z-30 flex flex-col justify-end p-2 sm:p-4 md:p-8">
                     <div className="glass-panel backdrop-blur-md bg-black/40 border border-[#D4AF37]/30 group-hover:border-[#D4AF37] p-3 sm:p-5 md:p-8 rounded-xl inline-flex flex-col items-start transform translate-y-1 sm:translate-y-2 group-hover:translate-y-0 transition-all duration-500 w-[95%] md:w-fit max-w-sm group-hover:bg-black/60 shadow-[0_0_15px_rgba(212,175,55,0.1)] group-hover:shadow-[0_0_25px_rgba(212,175,55,0.3)]">
-                      <h3 className="font-cinzel text-sm sm:text-2xl md:text-4xl text-white opacity-90 group-hover:opacity-100 transition-opacity duration-700 text-left mb-1 sm:mb-3 leading-tight group-hover:text-[#D4AF37]">
+                      <h3 className={`font-cinzel text-white opacity-90 group-hover:opacity-100 transition-opacity duration-700 text-left mb-1 sm:mb-3 leading-tight group-hover:text-[#D4AF37] ${portal.name.length > 15 ? 'text-[10px] sm:text-xl md:text-3xl lg:text-4xl' : 'text-sm sm:text-2xl md:text-4xl'}`}>
                         {portal.name}
                       </h3>
                       <div className="opacity-80 group-hover:opacity-100 flex items-center gap-1 sm:gap-3">
@@ -399,11 +400,12 @@ export default function Home() {
                 {/* Thumbnail Container */}
                 <div className="relative aspect-video overflow-hidden shrink-0 rounded-t-[14px]">
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10 opacity-80" />
-                  <img 
+                  <Image 
                     src={`https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`} 
                     alt={video.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover transform scale-100 group-hover:scale-105 transition-transform duration-700"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transform scale-100 group-hover:scale-105 transition-transform duration-700"
                   />
                   {/* Play Button Overlay */}
                   <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">

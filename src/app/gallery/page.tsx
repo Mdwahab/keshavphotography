@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
+import Image from "next/image";
 
 import { categories as masterCategories } from "@/lib/constants";
 
@@ -19,7 +20,21 @@ export default function Gallery() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [images, setImages] = useState<GalleryImage[]>([]);
+  const [displayedImages, setDisplayedImages] = useState<GalleryImage[]>([]);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const itemsPerPage = 12;
+
+  useEffect(() => {
+    setDisplayedImages(images.slice(0, itemsPerPage));
+    setPage(1);
+  }, [images]);
+
+  const loadMore = () => {
+    const nextIdx = page * itemsPerPage;
+    setDisplayedImages(prev => [...prev, ...images.slice(nextIdx, nextIdx + itemsPerPage)]);
+    setPage(page + 1);
+  };
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -99,7 +114,7 @@ export default function Gallery() {
             className="columns-2 sm:columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-6 space-y-3 md:space-y-6"
           >
             <AnimatePresence>
-              {images.map((img) => (
+              {displayedImages.map((img) => (
                 <motion.div
                   layout
                   initial={{ opacity: 0, y: 20 }}
@@ -111,13 +126,12 @@ export default function Gallery() {
                   onClick={() => setSelectedImage(img.imageUrl)}
                 >
                   <div className="absolute inset-0 bg-[var(--overlay-bg)] group-hover:bg-transparent transition-colors duration-500 z-10" />
-                  <img 
+                  <Image 
                     src={img.imageUrl} 
                     alt={img.title}
-                    loading="lazy"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?q=80&w=2070&auto=format&fit=crop";
-                    }}
+                    width={800}
+                    height={1000}
+                    sizes="(max-width: 768px) 50vw, 33vw"
                     className="w-full h-auto object-cover transform scale-100 group-hover:scale-105 transition-transform duration-700"
                   />
                   {/* Hover UI */}
@@ -130,6 +144,17 @@ export default function Gallery() {
               ))}
             </AnimatePresence>
           </motion.div>
+        )}
+        
+        {!loading && displayedImages.length < images.length && (
+          <div className="flex justify-center mt-12 mb-8 relative z-20">
+            <button 
+              onClick={loadMore}
+              className="px-8 py-3 border border-[#D4AF37]/50 text-[#D4AF37] font-space text-xs tracking-widest uppercase hover:bg-[#D4AF37] hover:text-black transition-all duration-300 rounded-full"
+            >
+              Load More Photos
+            </button>
+          </div>
         )}
       </section>
 

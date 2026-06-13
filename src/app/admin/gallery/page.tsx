@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import Image from "next/image";
 import { adminCategories } from "@/lib/constants";
 import { Trash2, Edit2, X } from "lucide-react";
 
@@ -81,7 +82,19 @@ export default function AdminGallery() {
     }
   };
 
-  const filteredImages = images.filter(img => img.title.toLowerCase().includes(searchQuery.toLowerCase()));
+  const [displayedImagesCount, setDisplayedImagesCount] = useState(16);
+
+  useEffect(() => {
+    setDisplayedImagesCount(16);
+  }, [filter, searchQuery]);
+
+  const filteredImages = useMemo(() => {
+    return images.filter(img => img.title.toLowerCase().includes(searchQuery.toLowerCase()));
+  }, [images, searchQuery]);
+
+  const displayedImages = useMemo(() => {
+    return filteredImages.slice(0, displayedImagesCount);
+  }, [filteredImages, displayedImagesCount]);
 
   return (
     <div className="max-w-6xl mx-auto pb-20 md:pb-0">
@@ -132,53 +145,60 @@ export default function AdminGallery() {
           {searchQuery ? "No images match your search." : "No images found. Go to Upload to add some."}
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
-          {filteredImages.map(img => (
-            <div key={img.id} className="glass-panel border border-[var(--border-color)] overflow-hidden group flex flex-col rounded-md md:rounded-sm">
-              <div className="relative aspect-square overflow-hidden bg-[var(--overlay-bg)]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img 
-                  src={img.imageUrl} 
-                  alt={img.title}
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    target.parentElement?.classList.add('flex', 'items-center', 'justify-center', 'bg-red-950/20');
-                    target.insertAdjacentHTML('afterend', '<div class="text-red-400 font-space text-[10px] text-center p-4">⚠️ Image URL Invalid<br/><span class="text-[var(--muted-text)] text-[8px]">' + img.imageUrl + '</span></div>');
-                  }}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 active:scale-95"
-                  loading="lazy"
-                />
-                <div className="absolute top-1 right-1 md:top-2 md:right-2 flex gap-1 md:gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
-                  <button 
-                    onClick={() => {
-                      setEditingImage(img);
-                      setEditTitle(img.title);
-                      setEditCategory(img.category);
-                    }}
-                    className="p-1.5 md:p-2 bg-black/60 hover:bg-[#D4AF37] text-white hover:text-black rounded-sm backdrop-blur-md transition-colors shadow-lg active:scale-90"
-                  >
-                    <Edit2 size={12} className="md:w-[14px] md:h-[14px]" />
-                  </button>
-                  <button 
-                    onClick={() => handleDelete(img.id)}
-                    className="p-1.5 md:p-2 bg-black/60 hover:bg-red-600 text-white rounded-sm backdrop-blur-md transition-colors shadow-lg active:scale-90"
-                  >
-                    <Trash2 size={12} className="md:w-[14px] md:h-[14px]" />
-                  </button>
+        <div className="flex flex-col gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
+            {displayedImages.map(img => (
+              <div key={img.id} className="glass-panel border border-[var(--border-color)] overflow-hidden group flex flex-col rounded-md md:rounded-sm">
+                <div className="relative aspect-square overflow-hidden bg-[var(--overlay-bg)]">
+                  <Image 
+                    src={img.imageUrl} 
+                    alt={img.title}
+                    fill
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-110 active:scale-95"
+                  />
+                  <div className="absolute top-1 right-1 md:top-2 md:right-2 flex gap-1 md:gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                    <button 
+                      onClick={() => {
+                        setEditingImage(img);
+                        setEditTitle(img.title);
+                        setEditCategory(img.category);
+                      }}
+                      className="p-1.5 md:p-2 bg-black/60 hover:bg-[#D4AF37] text-white hover:text-black rounded-sm backdrop-blur-md transition-colors shadow-lg active:scale-90"
+                    >
+                      <Edit2 size={12} className="md:w-[14px] md:h-[14px]" />
+                    </button>
+                    <button 
+                      onClick={() => handleDelete(img.id)}
+                      className="p-1.5 md:p-2 bg-black/60 hover:bg-red-600 text-white rounded-sm backdrop-blur-md transition-colors shadow-lg active:scale-90"
+                    >
+                      <Trash2 size={12} className="md:w-[14px] md:h-[14px]" />
+                    </button>
+                  </div>
+                </div>
+                <div className="p-2 md:p-4 flex-1 flex flex-col bg-gradient-to-b from-transparent to-black/20">
+                  <h3 className="font-poppins text-[var(--foreground)] text-[10px] md:text-sm truncate mb-1" title={img.title}>{img.title}</h3>
+                  <div className="flex justify-between items-center mt-auto">
+                    <p className="font-space text-[8px] md:text-[10px] text-[#D4AF37] uppercase tracking-widest truncate max-w-[60%]">{img.category}</p>
+                    <p className="font-space text-[7px] md:text-[9px] text-[var(--muted-text)]">
+                      {new Date(img.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className="p-2 md:p-4 flex-1 flex flex-col bg-gradient-to-b from-transparent to-black/20">
-                <h3 className="font-poppins text-[var(--foreground)] text-[10px] md:text-sm truncate mb-1" title={img.title}>{img.title}</h3>
-                <div className="flex justify-between items-center mt-auto">
-                  <p className="font-space text-[8px] md:text-[10px] text-[#D4AF37] uppercase tracking-widest truncate max-w-[60%]">{img.category}</p>
-                  <p className="font-space text-[7px] md:text-[9px] text-[var(--muted-text)]">
-                    {new Date(img.createdAt).toLocaleDateString()}
-                  </p>
-                </div>
-              </div>
+            ))}
+          </div>
+          
+          {displayedImages.length < filteredImages.length && (
+            <div className="flex justify-center pt-8 pb-4">
+              <button 
+                onClick={() => setDisplayedImagesCount(prev => prev + 16)}
+                className="px-8 py-3 bg-[var(--overlay-bg)] border border-[#D4AF37]/30 hover:border-[#D4AF37] hover:bg-[#D4AF37]/10 text-[#D4AF37] font-space text-xs tracking-[0.2em] uppercase transition-all duration-300"
+              >
+                Load More
+              </button>
             </div>
-          ))}
+          )}
         </div>
       )}
 

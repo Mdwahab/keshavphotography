@@ -61,7 +61,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
             initial={{ x: "-100%", opacity: 0 }}
             animate={{ x: "100%", opacity: [0, 0.4, 0.4, 0] }}
             transition={{ duration: 6, times: [0, 0.16, 0.83, 1], ease: "easeInOut" }}
-            className="absolute top-1/2 -translate-y-1/2 w-[150vw] h-64 bg-[#D4AF37]/10 blur-[100px] pointer-events-none"
+            className="absolute top-1/2 -translate-y-1/2 w-[150vw] h-64 bg-[#D4AF37]/10 blur-[100px] pointer-events-none will-change-transform"
           />
 
           {/* Stage 3: Full-Height Cinematic Light Beam Sweep (Middle Layer) */}
@@ -69,25 +69,25 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
             initial={{ left: "-50vw" }}
             animate={{ left: "150vw" }}
             transition={{ duration: 2, delay: 1.8, ease: "easeInOut" }}
-            className="absolute top-0 h-[100vh] w-[40vw] bg-gradient-to-r from-transparent via-[#D4AF37]/20 to-transparent skew-x-[-25deg] pointer-events-none z-10"
+            className="absolute top-0 h-[100vh] w-[40vw] bg-gradient-to-r from-transparent via-[#D4AF37]/20 to-transparent skew-x-[-25deg] pointer-events-none z-10 will-change-transform"
             style={{ mixBlendMode: 'screen', filter: 'blur(8px)' }}
           />
 
           {/* Stage 1: Ambient Particles / Dust (Background Layer) */}
           <div className="absolute inset-0 pointer-events-none z-0">
-            {[...Array(50)].map((_, i) => (
+            {[...Array(15)].map((_, i) => (
               <motion.div
                 key={i}
                 initial={{ 
                   opacity: 0, 
                   scale: 0,
-                  x: Math.random() * window.innerWidth,
-                  y: Math.random() * window.innerHeight
+                  x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
+                  y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1000)
                 }}
                 animate={{ 
-                  opacity: [0, Math.random() * 0.8 + 0.2, 0],
-                  scale: [0, Math.random() * 1.5 + 0.5, 0],
-                  y: `+=${Math.random() * -60 - 20}`
+                  opacity: [0, Math.random() * 0.6 + 0.2, 0],
+                  scale: [0, Math.random() * 1.2 + 0.5, 0],
+                  y: `+=${Math.random() * -40 - 10}`
                 }}
                 transition={{ 
                   duration: Math.random() * 3 + 3,
@@ -96,7 +96,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
                   repeat: Infinity,
                   repeatType: "loop"
                 }}
-                className="absolute w-[2px] h-[2px] md:w-1 md:h-1 bg-[#D4AF37] rounded-full blur-[1px]"
+                className="absolute w-[2px] h-[2px] md:w-1 md:h-1 bg-[#D4AF37] rounded-full blur-[1px] will-change-transform"
               />
             ))}
           </div>
@@ -113,7 +113,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: [0, 0.8, 0.8, 1, 0], scale: [0.5, 1.2, 1.1, 1.4, 1.4] }}
               transition={{ duration: 4.9, delay: 1, times: [0, 0.2, 0.7, 0.96, 1], ease: "easeInOut" }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 md:w-64 md:h-64 bg-[#D4AF37] rounded-full blur-[60px] md:blur-[80px] pointer-events-none z-0"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 md:w-64 md:h-64 bg-[#D4AF37] rounded-full blur-[60px] md:blur-[80px] pointer-events-none z-0 will-change-transform"
             />
 
             {/* The Logo */}
@@ -131,7 +131,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
               initial={{ opacity: 0, scaleX: 0 }}
               animate={{ opacity: [0, 1, 0], scaleX: [0, 1.5, 0] }}
               transition={{ duration: 1.5, delay: 2, ease: "easeInOut" }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] md:w-[120%] h-[2px] bg-gradient-to-r from-transparent via-[#FFF3B0] to-transparent z-20 pointer-events-none"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] md:w-[120%] h-[2px] bg-gradient-to-r from-transparent via-[#FFF3B0] to-transparent z-20 pointer-events-none will-change-transform"
               style={{ boxShadow: '0 0 15px 2px rgba(212,175,55,0.8)' }}
             />
             
@@ -151,7 +151,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
                 initial={{ opacity: 0, scale: 0, rotate: 0 }}
                 animate={{ opacity: [0, 1, 0], scale: [0, 1.5, 0], rotate: 180 }}
                 transition={{ duration: 1.5, delay: sparkle.delay, ease: "easeInOut" }}
-                className="absolute w-4 h-4 md:w-6 md:h-6 z-30"
+                className="absolute w-4 h-4 md:w-6 md:h-6 z-30 will-change-transform"
                 style={{ top: sparkle.top, left: sparkle.left }}
               >
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

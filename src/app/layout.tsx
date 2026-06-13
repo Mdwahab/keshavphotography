@@ -132,7 +132,7 @@ export default async function RootLayout({
       }
     }
   } catch (error) {
-    console.error("Failed to fetch theme from DB", error);
+    console.warn("Failed to fetch theme from DB (database might be waking up). Proceeding with default theme.");
   }
 
   return (

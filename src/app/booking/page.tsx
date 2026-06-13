@@ -24,13 +24,15 @@ export default function Booking() {
 
   const bookingServices = [
     "Wedding",
+    "Reception",
     "Engagement",
     "Haldi",
-    "Reception",
-    "Pre-Wedding",
+    "Pre Wedding",
+    "Maternity",
+    "Baby Shoots",
     "Birthday",
-    "Corporate",
-    "Other"
+    "Half Saree Ceremonies",
+    "USA / Dubai"
   ];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {

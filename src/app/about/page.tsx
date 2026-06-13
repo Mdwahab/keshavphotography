@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useInView, animate } from "framer-motion";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import Image from "next/image";
 
 function Counter({ from = 0, to, duration = 2.5, suffix = "" }: { from?: number, to: number, duration?: number, suffix?: string }) {
   const nodeRef = useRef<HTMLSpanElement>(null);
@@ -78,8 +79,7 @@ export default function About() {
                {/* Left: Portrait */}
                <div className="w-[100px] shrink-0 relative">
                  <div className="aspect-[3/4] relative rounded-xl overflow-hidden border border-[#D4AF37]/40 shadow-[0_0_10px_rgba(212,175,55,0.15)]">
-                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                   <img src={encodeURI("/photos/about us/keshav.png")} alt="Keshav - Founder" className="absolute inset-0 w-full h-full object-cover grayscale" />
+                   <Image src={encodeURI("/photos/about us/keshav.png")} alt="Keshav - Founder" fill sizes="(max-width: 768px) 100vw, 33vw" priority className="object-cover grayscale" />
                  </div>
                </div>
                
@@ -145,11 +145,13 @@ export default function About() {
               <div className="absolute -inset-4 border border-[#D4AF37]/30 rounded-sm z-0" />
               <div className="absolute -inset-8 border border-[var(--border-subtle)] rounded-sm z-0" />
               
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img 
+              <Image 
                 src={encodeURI("/photos/about us/keshav.png")}
                 alt="Keshav - Founder"
-                className="absolute inset-0 w-full h-full object-cover rounded-sm z-10 grayscale hover:grayscale-0 transition-all duration-1000"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+                className="object-cover rounded-sm z-10 grayscale hover:grayscale-0 transition-all duration-1000"
               />
               
               {/* Floating Name Badge */}

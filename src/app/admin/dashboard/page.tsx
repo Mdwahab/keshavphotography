@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { GalleryImage } from "@prisma/client";
+import Image from "next/image";
 
 export const dynamic = "force-dynamic";
 
@@ -66,8 +67,7 @@ export default async function AdminDashboard() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {recentUploads.map((img) => (
               <div key={img.id} className="relative group rounded-sm overflow-hidden aspect-square border border-[var(--border-color)]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={img.imageUrl} alt={img.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                <Image src={img.imageUrl} alt={img.title} fill sizes="(max-width: 768px) 100vw, 25vw" className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[var(--overlay-bg-heavy)] via-[var(--overlay-bg)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
                   <p className="font-poppins text-[var(--foreground)] text-sm truncate">{img.title}</p>
                   <p className="font-space text-[10px] text-[#D4AF37] uppercase tracking-widest">{img.category}</p>
