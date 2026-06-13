@@ -4,6 +4,7 @@ import "./globals.css";
 import PublicLayout from "@/components/layout/PublicLayout";
 import prisma from "@/lib/prisma";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -150,6 +151,7 @@ export default async function RootLayout({
           <PublicLayout>
             {children}
           </PublicLayout>
+          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>
