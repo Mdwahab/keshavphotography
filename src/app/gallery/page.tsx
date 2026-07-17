@@ -128,7 +128,7 @@ export default function Gallery() {
                   <div className="absolute inset-0 bg-[var(--overlay-bg)] group-hover:bg-transparent transition-colors duration-500 z-10" />
                   <Image 
                     src={img.imageUrl} 
-                    alt={img.title}
+                    alt={`${img.title} - Keshav Photography ${activeCategory === 'All' ? 'Wedding' : activeCategory} Gallery`}
                     width={800}
                     height={1000}
                     sizes="(max-width: 768px) 50vw, 33vw"

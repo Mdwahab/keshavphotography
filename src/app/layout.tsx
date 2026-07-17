@@ -40,6 +40,9 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://www.keshavphotography.com'),
   title: "Keshav Photography | Capturing Emotions Forever",
   description: "Luxury wedding and event photography based in Eluru, India.",
+  alternates: {
+    canonical: "https://www.keshavphotography.com",
+  },
   openGraph: {
     title: "Keshav Photography | Capturing Emotions Forever",
     description: "Luxury wedding and event photography based in Eluru, India.",
@@ -104,14 +107,32 @@ const jsonLd = {
     },
     {
       "@type": "Organization",
+      "@id": "https://www.keshavphotography.com/#organization",
       "name": "Keshav Photography",
       "url": "https://www.keshavphotography.com",
-      "logo": "https://www.keshavphotography.com/logo/Layer%200.png"
+      "logo": {
+        "@type": "ImageObject",
+        "@id": "https://www.keshavphotography.com/#logo",
+        "inLanguage": "en-IN",
+        "url": "https://www.keshavphotography.com/logo/Layer%200.png",
+        "width": 1200,
+        "height": 630,
+        "caption": "Keshav Photography"
+      },
+      "sameAs": [
+        "https://www.instagram.com/keshav_fotographie",
+        "https://www.youtube.com/@keshavphotography",
+        "https://wa.me/918886644868"
+      ]
     },
     {
       "@type": "WebSite",
+      "@id": "https://www.keshavphotography.com/#website",
       "name": "Keshav Photography",
-      "url": "https://www.keshavphotography.com"
+      "url": "https://www.keshavphotography.com",
+      "publisher": {
+        "@id": "https://www.keshavphotography.com/#organization"
+      }
     }
   ]
 };

@@ -36,7 +36,7 @@ export default function Contact() {
               <div className="flex gap-5 items-center relative z-10">
                  <div className="w-[90px] shrink-0 relative">
                    <div className="aspect-[4/5] relative rounded-xl overflow-hidden border border-[#D4AF37]/40 shadow-[0_0_10px_rgba(212,175,55,0.15)]">
-                     <Image src={encodeURI("/photos/about us/keshav.png")} alt="Keshav" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover grayscale" />
+                     <Image src={encodeURI("/photos/about us/keshav.png")} alt="Keshav - Founder and Lead Wedding Photographer at Keshav Photography" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover grayscale" />
                    </div>
                  </div>
                  <div className="flex flex-col justify-center pt-1">
@@ -127,7 +127,7 @@ export default function Contact() {
             <div className="relative aspect-square max-w-md mx-auto overflow-hidden rounded-full border border-[var(--border-color)] group">
               <Image 
                 src={encodeURI("/photos/about us/keshav.png")}
-                alt="Keshav - Chief Photographer"
+                alt="Keshav - Chief Wedding Photographer at Keshav Photography"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-100 group-hover:scale-105"

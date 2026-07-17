@@ -79,7 +79,7 @@ export default function About() {
                {/* Left: Portrait */}
                <div className="w-[100px] shrink-0 relative">
                  <div className="aspect-[3/4] relative rounded-xl overflow-hidden border border-[#D4AF37]/40 shadow-[0_0_10px_rgba(212,175,55,0.15)]">
-                   <Image src={encodeURI("/photos/about us/keshav.png")} alt="Keshav - Founder" fill sizes="(max-width: 768px) 100vw, 33vw" priority className="object-cover grayscale" />
+                   <Image src={encodeURI("/photos/about us/keshav.png")} alt="Keshav - Founder and Lead Wedding Photographer at Keshav Photography" fill sizes="(max-width: 768px) 100vw, 33vw" priority className="object-cover grayscale" />
                  </div>
                </div>
                
@@ -147,7 +147,7 @@ export default function About() {
               
               <Image 
                 src={encodeURI("/photos/about us/keshav.png")}
-                alt="Keshav - Founder"
+                alt="Keshav - Founder and Lead Wedding Photographer at Keshav Photography"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority

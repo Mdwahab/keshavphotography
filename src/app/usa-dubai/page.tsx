@@ -88,7 +88,7 @@ export default function UsaDubaiGallery() {
                   <div className="absolute inset-0 bg-[var(--overlay-bg)] group-hover:bg-transparent transition-colors duration-500 z-10" />
                   <img 
                     src={img.imageUrl} 
-                    alt={img.title}
+                    alt={`${img.title} - Keshav Photography USA & Dubai Collection`}
                     loading="lazy"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?q=80&w=2070&auto=format&fit=crop";

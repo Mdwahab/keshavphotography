@@ -159,6 +159,8 @@ export default function Home() {
         >
 
 
+          <h1 className="sr-only">Keshav Photography | Luxury Wedding Photographer in Eluru</h1>
+
           <motion.p 
             initial={{ opacity: 0, letterSpacing: "0em" }}
             animate={{ opacity: 1, letterSpacing: "0.4em" }}
@@ -305,7 +307,7 @@ export default function Home() {
                   {/* Image */}
                   <Image 
                     src={portal.image} 
-                    alt={portal.name}
+                    alt={`${portal.name} Photography by Keshav Photography`}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover transform scale-100 group-hover:scale-110 transition-transform duration-1000 ease-out"
@@ -402,7 +404,7 @@ export default function Home() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10 opacity-80" />
                   <Image 
                     src={`https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`} 
-                    alt={video.title}
+                    alt={`${video.title} - Keshav Photography Cinematic Film`}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover transform scale-100 group-hover:scale-105 transition-transform duration-700"

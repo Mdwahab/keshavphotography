@@ -166,7 +166,7 @@ export default function CategoryGallery() {
                   <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500 z-10" />
                   <Image 
                     src={img.imageUrl} 
-                    alt={img.title}
+                    alt={`${img.title} - Keshav Photography ${dbCategory} Collection`}
                     width={800}
                     height={1000}
                     sizes="(max-width: 768px) 50vw, 33vw"
@@ -247,7 +247,7 @@ export default function CategoryGallery() {
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.4 }}
               src={images[selectedIndex].imageUrl}
-              alt={images[selectedIndex].title}
+              alt={`${images[selectedIndex].title} - Keshav Photography ${dbCategory} Collection`}
               className="max-w-full max-h-[100vh] md:max-h-[90vh] object-contain cursor-grab active:cursor-grabbing shadow-[0_0_50px_rgba(212,175,55,0.05)]"
               onClick={(e) => e.stopPropagation()}
               drag="x"
