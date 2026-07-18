@@ -37,23 +37,26 @@ const greatVibes = Great_Vibes({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.keshavphotography.com'),
-  title: "Keshav Photography | Capturing Emotions Forever",
-  description: "Luxury wedding and event photography based in Eluru, India.",
+  metadataBase: new URL('https://keshavphotography.com'),
+  title: "Keshav Photography | Premium Wedding Photographer in Eluru, Hyderabad, USA & Dubai",
+  description: "Keshav Photography provides premium wedding photography, pre wedding shoots, engagement photography, maternity shoots, baby photography, birthday photography, half saree ceremonies and cinematic photography services in Eluru, Hyderabad, USA and Dubai.",
+  keywords: "Keshav Photography, Wedding Photographer Eluru, Wedding Photography Hyderabad, Best Wedding Photographer, Pre Wedding Photography, Wedding Shoot, Cinematic Wedding Photography, Engagement Photography, Haldi Photography, Reception Photography, Maternity Photography, Baby Photography, Birthday Photography, Half Saree Ceremony Photography, Luxury Photography, USA Wedding Photographer, Dubai Wedding Photographer",
+  authors: [{ name: "Keshav Photography" }],
+  robots: "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
   alternates: {
-    canonical: "https://www.keshavphotography.com",
+    canonical: "https://keshavphotography.com",
   },
   openGraph: {
-    title: "Keshav Photography | Capturing Emotions Forever",
-    description: "Luxury wedding and event photography based in Eluru, India.",
-    url: "https://www.keshavphotography.com",
+    title: "Keshav Photography | Premium Wedding Photographer in Eluru, Hyderabad, USA & Dubai",
+    description: "Keshav Photography provides premium wedding photography, pre wedding shoots, engagement photography, maternity shoots, baby photography, birthday photography, half saree ceremonies and cinematic photography services in Eluru, Hyderabad, USA and Dubai.",
+    url: "https://keshavphotography.com",
     siteName: "Keshav Photography",
     images: [
       {
-        url: "/opengraph-image.png",
+        url: "/logo/logo.png",
         width: 1200,
         height: 630,
-        alt: "Keshav Photography Logo",
+        alt: "Keshav Photography",
       },
     ],
     locale: "en_IN",
@@ -61,9 +64,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Keshav Photography | Capturing Emotions Forever",
-    description: "Luxury wedding and event photography based in Eluru, India.",
-    images: ["/twitter-image.png"],
+    title: "Keshav Photography | Premium Wedding Photographer in Eluru, Hyderabad, USA & Dubai",
+    description: "Keshav Photography provides premium wedding photography, pre wedding shoots, engagement photography, maternity shoots, baby photography, birthday photography, half saree ceremonies and cinematic photography services in Eluru, Hyderabad, USA and Dubai.",
+    images: ["/logo/logo.png"],
   },
   icons: {
     icon: [
@@ -81,40 +84,41 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "LocalBusiness",
-      "@id": "https://www.keshavphotography.com/#localbusiness",
+      "@type": ["LocalBusiness", "PhotographyBusiness", "ProfessionalService"],
+      "@id": "https://keshavphotography.com/#localbusiness",
       "name": "Keshav Photography",
-      "image": "https://www.keshavphotography.com/logo/Layer%200.png",
+      "image": "https://keshavphotography.com/logo/logo.png",
       "telephone": "+918886644868",
-      "url": "https://www.keshavphotography.com",
+      "url": "https://keshavphotography.com",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Eluru",
         "addressRegion": "Andhra Pradesh",
         "addressCountry": "IN"
       },
+      "areaServed": [
+        { "@type": "City", "name": "Eluru" },
+        { "@type": "City", "name": "Hyderabad" },
+        { "@type": "State", "name": "Andhra Pradesh" },
+        { "@type": "Country", "name": "USA" },
+        { "@type": "City", "name": "Dubai" }
+      ],
       "sameAs": [
-        "https://www.instagram.com/keshav_photography",
+        "https://www.instagram.com/keshav_fotographie",
         "https://www.youtube.com/@keshavphotography",
         "https://wa.me/918886644868"
       ]
     },
     {
-      "@type": "PhotographyBusiness",
-      "name": "Keshav Photography",
-      "description": "Luxury wedding and event photography based in Eluru, India.",
-      "url": "https://www.keshavphotography.com"
-    },
-    {
       "@type": "Organization",
-      "@id": "https://www.keshavphotography.com/#organization",
+      "@id": "https://keshavphotography.com/#organization",
       "name": "Keshav Photography",
-      "url": "https://www.keshavphotography.com",
+      "url": "https://keshavphotography.com",
       "logo": {
         "@type": "ImageObject",
-        "@id": "https://www.keshavphotography.com/#logo",
+        "@id": "https://keshavphotography.com/#logo",
         "inLanguage": "en-IN",
-        "url": "https://www.keshavphotography.com/logo/Layer%200.png",
+        "url": "https://keshavphotography.com/logo/logo.png",
         "width": 1200,
         "height": 630,
         "caption": "Keshav Photography"
@@ -127,12 +131,36 @@ const jsonLd = {
     },
     {
       "@type": "WebSite",
-      "@id": "https://www.keshavphotography.com/#website",
+      "@id": "https://keshavphotography.com/#website",
       "name": "Keshav Photography",
-      "url": "https://www.keshavphotography.com",
+      "url": "https://keshavphotography.com",
       "publisher": {
-        "@id": "https://www.keshavphotography.com/#organization"
+        "@id": "https://keshavphotography.com/#organization"
       }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://keshavphotography.com/#webpage",
+      "url": "https://keshavphotography.com",
+      "name": "Keshav Photography | Premium Wedding Photographer in Eluru, Hyderabad, USA & Dubai",
+      "isPartOf": {
+        "@id": "https://keshavphotography.com/#website"
+      },
+      "about": {
+        "@id": "https://keshavphotography.com/#organization"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://keshavphotography.com/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://keshavphotography.com/"
+        }
+      ]
     }
   ]
 };

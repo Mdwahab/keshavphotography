@@ -3,7 +3,7 @@ import { MetadataRoute } from 'next';
 import { categorySlugs } from '@/lib/constants';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://www.keshavphotography.com';
+  const baseUrl = 'https://keshavphotography.com';
   
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${baseUrl}`, lastModified: new Date(), changeFrequency: 'monthly', priority: 1 },

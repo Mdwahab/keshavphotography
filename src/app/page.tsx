@@ -141,7 +141,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-[var(--overlay-bg)] z-10 transition-colors duration-1000" />
             <Image 
               src={slide.image} 
-              alt={slide.title}
+              alt="Luxury Wedding Portrait - Keshav Photography"
               fill
               sizes="100vw"
               priority={index === 0}
@@ -159,7 +159,7 @@ export default function Home() {
         >
 
 
-          <h1 className="sr-only">Keshav Photography | Luxury Wedding Photographer in Eluru</h1>
+          <h1 className="sr-only">Keshav Photography | Premium Wedding Photographer in Eluru, Hyderabad, USA & Dubai</h1>
 
           <motion.p 
             initial={{ opacity: 0, letterSpacing: "0em" }}

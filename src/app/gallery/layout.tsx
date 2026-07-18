@@ -1,19 +1,25 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Gallery | Keshav Photography Portfolio",
-  description: "Explore the Keshav Photography gallery featuring our best work in luxury weddings, engagements, maternity, and more across India and internationally.",
+  title: "Gallery | Keshav Photography Premium Portfolio",
+  description: "Explore the premium Keshav Photography gallery featuring luxury weddings, engagements, maternity, baby shoots, and more in Eluru, Hyderabad, USA, and Dubai.",
+  keywords: "Gallery Keshav Photography, Wedding Portfolio Eluru, Premium Photography Portfolio, Cinematic Wedding Gallery",
   alternates: {
-    canonical: "https://www.keshavphotography.com/gallery",
+    canonical: "https://keshavphotography.com/gallery",
   },
   openGraph: {
-    title: "Gallery | Keshav Photography Portfolio",
-    description: "Explore the Keshav Photography gallery featuring our best work in luxury weddings, engagements, maternity, and more.",
-    url: "https://www.keshavphotography.com/gallery",
+    title: "Gallery | Keshav Photography Premium Portfolio",
+    description: "Explore the premium Keshav Photography gallery featuring luxury weddings, engagements, maternity, baby shoots, and more in Eluru, Hyderabad, USA, and Dubai.",
+    url: "https://keshavphotography.com/gallery",
+    images: ["/logo/logo.png"],
+    type: "website",
+    siteName: "Keshav Photography",
   },
   twitter: {
-    title: "Gallery | Keshav Photography Portfolio",
-    description: "Explore the Keshav Photography gallery featuring our best work.",
+    card: "summary_large_image",
+    title: "Gallery | Keshav Photography Premium Portfolio",
+    description: "Explore the premium Keshav Photography gallery featuring luxury weddings, engagements, maternity, baby shoots, and more in Eluru, Hyderabad, USA, and Dubai.",
+    images: ["/logo/logo.png"],
   },
 };
 
@@ -31,13 +37,13 @@ export default function GalleryLayout({ children }: { children: React.ReactNode 
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://www.keshavphotography.com"
+                "item": "https://keshavphotography.com"
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Gallery",
-                "item": "https://www.keshavphotography.com/gallery"
+                "item": "https://keshavphotography.com/gallery"
               }
             ]
           })

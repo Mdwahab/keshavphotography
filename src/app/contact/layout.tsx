@@ -1,19 +1,25 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact Keshav Photography | Book Your Luxury Shoot",
-  description: "Get in touch with Keshav Photography. Call us at +91 88866 44868 or visit our studio in Eluru, Andhra Pradesh. Let's capture your timeless moments.",
+  title: "Contact Keshav Photography | Book Your Luxury Wedding Shoot in Eluru",
+  description: "Contact Keshav Photography for premium wedding, engagement, and cinematic photography in Eluru, Hyderabad, USA, and Dubai. Call us at +91 88866 44868.",
+  keywords: "Contact Keshav Photography, Wedding Photographer Eluru Contact, Book Wedding Photographer Hyderabad, USA Dubai Photography",
   alternates: {
-    canonical: "https://www.keshavphotography.com/contact",
+    canonical: "https://keshavphotography.com/contact",
   },
   openGraph: {
-    title: "Contact Keshav Photography | Book Your Luxury Shoot",
-    description: "Get in touch with Keshav Photography. Call us at +91 88866 44868 or visit our studio in Eluru, Andhra Pradesh.",
-    url: "https://www.keshavphotography.com/contact",
+    title: "Contact Keshav Photography | Book Your Luxury Wedding Shoot in Eluru",
+    description: "Contact Keshav Photography for premium wedding, engagement, and cinematic photography in Eluru, Hyderabad, USA, and Dubai.",
+    url: "https://keshavphotography.com/contact",
+    images: ["/logo/logo.png"],
+    type: "website",
+    siteName: "Keshav Photography",
   },
   twitter: {
-    title: "Contact Keshav Photography | Book Your Luxury Shoot",
-    description: "Get in touch with Keshav Photography. Call us at +91 88866 44868.",
+    card: "summary_large_image",
+    title: "Contact Keshav Photography | Book Your Luxury Wedding Shoot in Eluru",
+    description: "Contact Keshav Photography for premium wedding, engagement, and cinematic photography in Eluru, Hyderabad, USA, and Dubai.",
+    images: ["/logo/logo.png"],
   },
 };
 
@@ -31,13 +37,13 @@ export default function ContactLayout({ children }: { children: React.ReactNode 
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://www.keshavphotography.com"
+                "item": "https://keshavphotography.com"
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Contact",
-                "item": "https://www.keshavphotography.com/contact"
+                "item": "https://keshavphotography.com/contact"
               }
             ]
           })

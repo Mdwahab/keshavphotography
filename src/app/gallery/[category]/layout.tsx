@@ -19,13 +19,15 @@ export async function generateMetadata(
     }
   }
 
-  const title = `${categoryName} Photography | Keshav Photography`;
-  const description = `View our exclusive ${categoryName.toLowerCase()} photography gallery. Keshav Photography specializes in capturing timeless, luxury moments in Eluru and beyond.`;
-  const url = `https://www.keshavphotography.com/gallery/${category}`;
+  const title = `${categoryName} Photography | Premium Wedding Photographer in Eluru & Hyderabad`;
+  const description = `View our exclusive ${categoryName.toLowerCase()} photography gallery. Keshav Photography specializes in capturing timeless, luxury moments in Eluru, Hyderabad, USA, and Dubai.`;
+  const keywords = `${categoryName} Photography, Keshav Photography ${categoryName}, Wedding Photographer Eluru, Luxury ${categoryName} Shoot, Dubai Wedding Photographer, USA Wedding Photographer`;
+  const url = `https://keshavphotography.com/gallery/${category}`;
 
   return {
     title,
     description,
+    keywords,
     alternates: {
       canonical: url,
     },
@@ -33,10 +35,15 @@ export async function generateMetadata(
       title,
       description,
       url,
+      images: ["/logo/logo.png"],
+      type: "website",
+      siteName: "Keshav Photography",
     },
     twitter: {
+      card: "summary_large_image",
       title,
       description,
+      images: ["/logo/logo.png"],
     },
   };
 }
@@ -71,19 +78,19 @@ export default async function CategoryLayout({
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://www.keshavphotography.com"
+                "item": "https://keshavphotography.com"
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Gallery",
-                "item": "https://www.keshavphotography.com/gallery"
+                "item": "https://keshavphotography.com/gallery"
               },
               {
                 "@type": "ListItem",
                 "position": 3,
                 "name": categoryName,
-                "item": `https://www.keshavphotography.com/gallery/${category}`
+                "item": `https://keshavphotography.com/gallery/${category}`
               }
             ]
           })

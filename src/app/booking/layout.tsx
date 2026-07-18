@@ -1,19 +1,25 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Book Keshav Photography | Wedding & Event Photography",
-  description: "Ready to capture your special moments? Book Keshav Photography for weddings, engagements, haldi, maternity, and pre-wedding shoots.",
+  title: "Book Keshav Photography | Wedding Photographer Booking Eluru",
+  description: "Book Keshav Photography for premium wedding photography, maternity shoots, engagement, and half saree ceremonies in Eluru, Hyderabad, USA, and Dubai.",
+  keywords: "Book Keshav Photography, Wedding Photography Booking, Eluru Wedding Photographer, Maternity Shoot Booking, Best Wedding Photographer",
   alternates: {
-    canonical: "https://www.keshavphotography.com/booking",
+    canonical: "https://keshavphotography.com/booking",
   },
   openGraph: {
-    title: "Book Keshav Photography | Wedding & Event Photography",
-    description: "Ready to capture your special moments? Book Keshav Photography for weddings, engagements, haldi, maternity, and pre-wedding shoots.",
-    url: "https://www.keshavphotography.com/booking",
+    title: "Book Keshav Photography | Wedding Photographer Booking Eluru",
+    description: "Book Keshav Photography for premium wedding photography, maternity shoots, engagement, and half saree ceremonies in Eluru, Hyderabad, USA, and Dubai.",
+    url: "https://keshavphotography.com/booking",
+    images: ["/logo/logo.png"],
+    type: "website",
+    siteName: "Keshav Photography",
   },
   twitter: {
-    title: "Book Keshav Photography | Wedding & Event Photography",
-    description: "Ready to capture your special moments? Book Keshav Photography.",
+    card: "summary_large_image",
+    title: "Book Keshav Photography | Wedding Photographer Booking Eluru",
+    description: "Book Keshav Photography for premium wedding photography, maternity shoots, engagement, and half saree ceremonies in Eluru, Hyderabad, USA, and Dubai.",
+    images: ["/logo/logo.png"],
   },
 };
 
@@ -66,13 +72,13 @@ export default function BookingLayout({ children }: { children: React.ReactNode 
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://www.keshavphotography.com"
+                "item": "https://keshavphotography.com"
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Booking",
-                "item": "https://www.keshavphotography.com/booking"
+                "item": "https://keshavphotography.com/booking"
               }
             ]
           })

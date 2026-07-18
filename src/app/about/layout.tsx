@@ -1,20 +1,25 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Keshav Photography | The Story Behind the Lens",
-  description: "Learn more about Keshav, the visionary behind Keshav Photography. Discover our 16+ years of experience capturing over 1000 luxury weddings in Eluru and beyond.",
+  title: "About Keshav Photography | Leading Wedding Photographer in Eluru",
+  description: "Learn about Keshav Photography, the leading luxury wedding and cinematic photographer in Eluru, Hyderabad, USA, and Dubai. 16+ years of capturing eternal memories.",
+  keywords: "About Keshav Photography, Wedding Photographer Eluru, Luxury Photographer, Best Wedding Photographer Hyderabad",
   alternates: {
-    canonical: "https://www.keshavphotography.com/about",
+    canonical: "https://keshavphotography.com/about",
   },
   openGraph: {
-    title: "About Keshav Photography | The Story Behind the Lens",
-    description: "Learn more about Keshav, the visionary behind Keshav Photography. Discover our 16+ years of experience capturing over 1000 luxury weddings in Eluru and beyond.",
-    url: "https://www.keshavphotography.com/about",
+    title: "About Keshav Photography | Leading Wedding Photographer in Eluru",
+    description: "Learn about Keshav Photography, the leading luxury wedding and cinematic photographer in Eluru, Hyderabad, USA, and Dubai.",
+    url: "https://keshavphotography.com/about",
     images: ["/photos/about us/keshav.png"],
+    type: "website",
+    siteName: "Keshav Photography",
   },
   twitter: {
-    title: "About Keshav Photography | The Story Behind the Lens",
-    description: "Learn more about Keshav, the visionary behind Keshav Photography.",
+    card: "summary_large_image",
+    title: "About Keshav Photography | Leading Wedding Photographer in Eluru",
+    description: "Learn about Keshav Photography, the leading luxury wedding and cinematic photographer in Eluru, Hyderabad, USA, and Dubai.",
+    images: ["/photos/about us/keshav.png"],
   },
 };
 
@@ -32,13 +37,13 @@ export default function AboutLayout({ children }: { children: React.ReactNode })
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://www.keshavphotography.com"
+                "item": "https://keshavphotography.com"
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "About",
-                "item": "https://www.keshavphotography.com/about"
+                "item": "https://keshavphotography.com/about"
               }
             ]
           })
