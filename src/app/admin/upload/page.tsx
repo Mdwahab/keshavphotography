@@ -6,6 +6,14 @@ import { Upload, X, Trash2, ImagePlus, CheckCircle2, AlertCircle, Loader2 } from
 
 import { adminCategories } from "@/lib/constants";
 
+const AVAILABLE_COUNTRIES = [
+  "USA", "Canada", "United Kingdom", "Dubai (UAE)", "Australia",
+  "New Zealand", "Singapore", "Malaysia", "Germany", "France",
+  "Italy", "Switzerland", "Netherlands", "Japan", "South Korea",
+  "Thailand", "Maldives", "Sri Lanka", "Qatar", "Saudi Arabia",
+  "Oman", "Kuwait", "Bahrain", "South Africa", "Other"
+];
+
 type SelectedFile = {
   id: string;
   file: File;
@@ -21,6 +29,8 @@ export default function AdminUpload() {
   const router = useRouter();
   const [files, setFiles] = useState<SelectedFile[]>([]);
   const [category, setCategory] = useState(adminCategories[0]);
+  const [country, setCountry] = useState("USA");
+  const [customCountry, setCustomCountry] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [globalError, setGlobalError] = useState("");
   const [overallProgress, setOverallProgress] = useState(0);
@@ -121,6 +131,9 @@ export default function AdminUpload() {
         const formData = new FormData();
         formData.append("image", selectedFile.file);
         formData.append("category", category);
+        if (category === "International Shoots") {
+          formData.append("country", country === "Other" ? customCountry : country);
+        }
 
         const res = await fetch("/api/upload", {
           method: "POST",
@@ -199,18 +212,51 @@ export default function AdminUpload() {
 
         <form onSubmit={handleBatchUpload} className="space-y-8">
           {/* Category Area */}
-          <div className="max-w-xl">
-            <label className="block font-space text-xs tracking-widest text-[var(--muted-text)] uppercase mb-2">Target Category</label>
-            <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              disabled={isUploading}
-              className="w-full bg-[var(--overlay-bg)] border border-[var(--border-color)] p-4 text-[var(--foreground)] font-poppins focus:outline-none focus:border-[#D4AF37]/80 transition-colors rounded-sm cursor-pointer hover:border-[#D4AF37]/30 text-lg disabled:opacity-50"
-            >
-              {adminCategories.map((c) => (
-                <option key={c} value={c} className="bg-[var(--background)] py-2">{c}</option>
-              ))}
-            </select>
+          <div className="max-w-xl space-y-4">
+            <div>
+              <label className="block font-space text-xs tracking-widest text-[var(--muted-text)] uppercase mb-2">Target Category</label>
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                disabled={isUploading}
+                className="w-full bg-[var(--overlay-bg)] border border-[var(--border-color)] p-4 text-[var(--foreground)] font-poppins focus:outline-none focus:border-[#D4AF37]/80 transition-colors rounded-sm cursor-pointer hover:border-[#D4AF37]/30 text-lg disabled:opacity-50"
+              >
+                {adminCategories.map((c) => (
+                  <option key={c} value={c} className="bg-[var(--background)] py-2">{c}</option>
+                ))}
+              </select>
+            </div>
+
+            {category === "International Shoots" && (
+              <div className="space-y-4 animate-in slide-in-from-top-2 fade-in duration-300">
+                <div>
+                  <label className="block font-space text-xs tracking-widest text-[var(--muted-text)] uppercase mb-2">Country</label>
+                  <select
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                    disabled={isUploading}
+                    className="w-full bg-[var(--overlay-bg)] border border-[var(--border-color)] p-4 text-[var(--foreground)] font-poppins focus:outline-none focus:border-[#D4AF37]/80 transition-colors rounded-sm cursor-pointer hover:border-[#D4AF37]/30 text-lg disabled:opacity-50"
+                  >
+                    {AVAILABLE_COUNTRIES.map((c) => (
+                      <option key={c} value={c} className="bg-[var(--background)] py-2">{c}</option>
+                    ))}
+                  </select>
+                </div>
+                {country === "Other" && (
+                  <div>
+                    <label className="block font-space text-xs tracking-widest text-[var(--muted-text)] uppercase mb-2">Custom Country Name</label>
+                    <input
+                      type="text"
+                      value={customCountry}
+                      onChange={(e) => setCustomCountry(e.target.value)}
+                      placeholder="Enter country name"
+                      className="w-full bg-[var(--overlay-bg)] border border-[var(--border-color)] p-4 text-[var(--foreground)] font-poppins focus:outline-none focus:border-[#D4AF37]/80 rounded-sm"
+                      required={country === "Other"}
+                    />
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Upload Area */}

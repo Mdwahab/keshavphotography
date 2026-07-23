@@ -5,11 +5,16 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const category = searchParams.get("category");
 
+  const country = searchParams.get("country");
+
   try {
     let where: any = {};
     if (category && category !== "All") {
       if (category === "International Shoots") {
-        where = { category: { in: ["International Shoots", "USA / DUBAI"] } };
+        where = { 
+          category: { in: ["International Shoots", "USA / DUBAI"] },
+          ...(country && country !== "All" ? { country } : {})
+        };
       } else {
         where = { category };
       }

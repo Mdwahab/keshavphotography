@@ -5,12 +5,21 @@ import Image from "next/image";
 import { adminCategories } from "@/lib/constants";
 import { Trash2, Edit2, X } from "lucide-react";
 
+const AVAILABLE_COUNTRIES = [
+  "USA", "Canada", "United Kingdom", "Dubai (UAE)", "Australia",
+  "New Zealand", "Singapore", "Malaysia", "Germany", "France",
+  "Italy", "Switzerland", "Netherlands", "Japan", "South Korea",
+  "Thailand", "Maldives", "Sri Lanka", "Qatar", "Saudi Arabia",
+  "Oman", "Kuwait", "Bahrain", "South Africa", "Other"
+];
+
 type GalleryImage = {
   id: string;
   imageUrl: string;
   title: string;
   description: string | null;
   category: string;
+  country?: string | null;
   createdAt: string;
 };
 
@@ -18,18 +27,24 @@ export default function AdminGallery() {
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("All");
+  const [countryFilter, setCountryFilter] = useState("All");
   
   // Edit Modal State
   const [editingImage, setEditingImage] = useState<GalleryImage | null>(null);
   const [editTitle, setEditTitle] = useState("");
   const [editCategory, setEditCategory] = useState("");
+  const [editCountry, setEditCountry] = useState("USA");
+  const [editCustomCountry, setEditCustomCountry] = useState("");
 
   const [searchQuery, setSearchQuery] = useState("");
 
   const fetchImages = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/images?category=${filter}`);
+      const url = filter === "International Shoots" && countryFilter !== "All"
+        ? `/api/images?category=${filter}&country=${encodeURIComponent(countryFilter)}`
+        : `/api/images?category=${filter}`;
+      const res = await fetch(url);
       const data = await res.json();
       if (Array.isArray(data)) {
         setImages(data);
@@ -47,7 +62,7 @@ export default function AdminGallery() {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchImages();
-  }, [filter]);
+  }, [filter, countryFilter]);
 
   const handleDelete = async (id: string) => {
     if (!window.confirm("Are you sure you want to delete this image?")) return;
@@ -70,7 +85,11 @@ export default function AdminGallery() {
       const res = await fetch(`/api/images/${editingImage.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title: editTitle, category: editCategory })
+        body: JSON.stringify({ 
+          title: editTitle, 
+          category: editCategory,
+          country: editCategory === "International Shoots" ? (editCountry === "Other" ? editCustomCountry : editCountry) : null
+        })
       });
       if (res.ok) {
         const { image: updated } = await res.json();
@@ -79,6 +98,22 @@ export default function AdminGallery() {
       }
     } catch (err) {
       alert("Failed to update");
+    }
+  };
+
+  const handleBulkDeleteByCountry = async () => {
+    if (filter !== "International Shoots" || countryFilter === "All") return;
+    if (!window.confirm(`Are you sure you want to delete ALL images from ${countryFilter}? This cannot be undone.`)) return;
+
+    const imagesToDelete = images.filter(img => img.category === "International Shoots" && img.country === countryFilter);
+    if (imagesToDelete.length === 0) return;
+
+    try {
+      const deletePromises = imagesToDelete.map(img => fetch(`/api/images/${img.id}`, { method: "DELETE" }));
+      await Promise.all(deletePromises);
+      setImages(images.filter(img => !(img.category === "International Shoots" && img.country === countryFilter)));
+    } catch (err) {
+      alert("Failed to delete some images");
     }
   };
 
@@ -121,6 +156,27 @@ export default function AdminGallery() {
               <option value="All">All Categories</option>
               {adminCategories.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
+            
+            {filter === "International Shoots" && (
+              <select
+                value={countryFilter}
+                onChange={(e) => setCountryFilter(e.target.value)}
+                className="bg-[var(--overlay-bg)] border border-[var(--border-color)] p-3 text-sm text-[var(--foreground)] font-poppins focus:outline-none focus:border-[#D4AF37]/50 rounded-sm w-full sm:w-48"
+              >
+                <option value="All">All Countries</option>
+                {AVAILABLE_COUNTRIES.filter(c => c !== "Other").map(c => <option key={c} value={c}>{c}</option>)}
+              </select>
+            )}
+
+            {filter === "International Shoots" && countryFilter !== "All" && (
+              <button 
+                onClick={handleBulkDeleteByCountry}
+                className="bg-red-950/20 border border-red-900/30 hover:border-red-500/50 text-red-400 px-4 py-3 font-space text-xs tracking-widest uppercase transition-colors flex items-center gap-2 rounded-sm"
+              >
+                <Trash2 size={16} />
+                Clear
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -163,6 +219,18 @@ export default function AdminGallery() {
                         setEditingImage(img);
                         setEditTitle(img.title);
                         setEditCategory(img.category);
+                        if (img.country) {
+                          if (AVAILABLE_COUNTRIES.includes(img.country)) {
+                            setEditCountry(img.country);
+                            setEditCustomCountry("");
+                          } else {
+                            setEditCountry("Other");
+                            setEditCustomCountry(img.country);
+                          }
+                        } else {
+                          setEditCountry("USA");
+                          setEditCustomCountry("");
+                        }
                       }}
                       className="p-1.5 md:p-2 bg-black/60 hover:bg-[#D4AF37] text-white hover:text-black rounded-sm backdrop-blur-md transition-colors shadow-lg active:scale-90"
                     >
@@ -179,7 +247,9 @@ export default function AdminGallery() {
                 <div className="p-2 md:p-4 flex-1 flex flex-col bg-gradient-to-b from-transparent to-black/20">
                   <h3 className="font-poppins text-[var(--foreground)] text-[10px] md:text-sm truncate mb-1" title={img.title}>{img.title}</h3>
                   <div className="flex justify-between items-center mt-auto">
-                    <p className="font-space text-[8px] md:text-[10px] text-[#D4AF37] uppercase tracking-widest truncate max-w-[60%]">{img.category}</p>
+                    <p className="font-space text-[8px] md:text-[10px] text-[#D4AF37] uppercase tracking-widest truncate max-w-[60%]">
+                      {img.category} {img.country && `- ${img.country}`}
+                    </p>
                     <p className="font-space text-[7px] md:text-[9px] text-[var(--muted-text)]">
                       {new Date(img.createdAt).toLocaleDateString()}
                     </p>
@@ -234,6 +304,34 @@ export default function AdminGallery() {
                   {adminCategories.map(c => <option key={c} value={c}>{c}</option>)}
                 </select>
               </div>
+              
+              {editCategory === "International Shoots" && (
+                <>
+                  <div>
+                    <label className="block font-space text-xs tracking-widest text-[var(--muted-text)] uppercase mb-2">Country</label>
+                    <select
+                      value={editCountry}
+                      onChange={e => setEditCountry(e.target.value)}
+                      className="w-full bg-[var(--overlay-bg)] border border-[var(--border-color)] p-3 text-[var(--foreground)] font-poppins focus:outline-none focus:border-[#D4AF37]/50"
+                    >
+                      {AVAILABLE_COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
+                    </select>
+                  </div>
+                  {editCountry === "Other" && (
+                    <div>
+                      <label className="block font-space text-xs tracking-widest text-[var(--muted-text)] uppercase mb-2">Custom Country Name</label>
+                      <input 
+                        type="text"
+                        value={editCustomCountry}
+                        onChange={e => setEditCustomCountry(e.target.value)}
+                        placeholder="Enter custom country"
+                        className="w-full bg-[var(--overlay-bg)] border border-[var(--border-color)] p-3 text-[var(--foreground)] font-poppins focus:outline-none focus:border-[#D4AF37]/50"
+                        required
+                      />
+                    </div>
+                  )}
+                </>
+              )}
               <button 
                 type="submit"
                 className="w-full py-3 mt-4 bg-[#D4AF37] text-black font-space text-xs tracking-[0.2em] uppercase hover:bg-white transition-colors"

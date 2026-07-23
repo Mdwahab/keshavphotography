@@ -45,7 +45,8 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
       data: {
         title: data.title,
         description: data.description,
-        category: data.category
+        category: data.category,
+        country: data.country
       }
     });
 

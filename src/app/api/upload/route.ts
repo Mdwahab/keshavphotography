@@ -8,6 +8,7 @@ export async function POST(req: Request) {
     
     const file = formData.get("image") as File;
     const category = formData.get("category") as string;
+    const country = formData.get("country") as string | null;
 
     if (!file || !category) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -38,6 +39,7 @@ export async function POST(req: Request) {
         title,
         description,
         category,
+        country,
         imageUrl,
         publicId,
       }
