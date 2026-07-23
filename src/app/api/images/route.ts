@@ -6,7 +6,15 @@ export async function GET(req: Request) {
   const category = searchParams.get("category");
 
   try {
-    const where = category && category !== "All" ? { category } : {};
+    let where: any = {};
+    if (category && category !== "All") {
+      if (category === "International Shoots") {
+        where = { category: { in: ["International Shoots", "USA / DUBAI"] } };
+      } else {
+        where = { category };
+      }
+    }
+    
     const images = await prisma.galleryImage.findMany({
       where,
       orderBy: { createdAt: "desc" },

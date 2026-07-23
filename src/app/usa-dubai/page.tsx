@@ -20,7 +20,7 @@ export default function UsaDubaiGallery() {
     const fetchImages = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`/api/images?category=${encodeURIComponent("USA / DUBAI")}`);
+        const res = await fetch(`/api/images?category=${encodeURIComponent("International Shoots")}`);
         const data = await res.json();
         if (Array.isArray(data)) {
           setImages(data);
@@ -46,7 +46,7 @@ export default function UsaDubaiGallery() {
           animate={{ opacity: 1, y: 0 }}
           className="font-cinzel text-4xl md:text-6xl mb-4 md:mb-6 uppercase"
         >
-          <span className="text-gradient-gold">USA / DUBAI</span> COLLECTION
+          <span className="text-gradient-gold">INTERNATIONAL</span> SHOOTS
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -54,7 +54,7 @@ export default function UsaDubaiGallery() {
           transition={{ delay: 0.2 }}
           className="font-space tracking-widest text-xs md:text-sm text-[var(--muted-text)] max-w-2xl mx-auto uppercase"
         >
-          Capturing international stories across USA and Dubai.
+          Capturing beautiful stories across international destinations.
         </motion.p>
       </section>
 
@@ -88,7 +88,7 @@ export default function UsaDubaiGallery() {
                   <div className="absolute inset-0 bg-[var(--overlay-bg)] group-hover:bg-transparent transition-colors duration-500 z-10" />
                   <img 
                     src={img.imageUrl} 
-                    alt={`${img.title} - Keshav Photography USA & Dubai Collection`}
+                    alt={`${img.title} - Keshav Photography International Shoots`}
                     loading="lazy"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?q=80&w=2070&auto=format&fit=crop";

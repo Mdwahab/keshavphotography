@@ -3,7 +3,7 @@ export const categories = [
   "Maternity", "Baby Shoots", "Half Saree Ceremonies", "Birthday"
 ];
 
-export const adminCategories = [...categories, "USA / DUBAI"];
+export const adminCategories = [...categories, "International Shoots"];
 
 export const categorySlugs: Record<string, string> = {
   "weddings": "Wedding",
